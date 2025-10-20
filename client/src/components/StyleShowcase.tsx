@@ -1,52 +1,67 @@
 import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import CategoryNav from "./CategoryNav";
 import style1 from "@assets/stock_images/professional_portrai_d6c070ec.jpg";
 import style2 from "@assets/stock_images/professional_portrai_7825c2db.jpg";
 import style3 from "@assets/stock_images/professional_portrai_821b54c0.jpg";
 import style4 from "@assets/stock_images/professional_portrai_57d8c6c4.jpg";
 import style5 from "@assets/stock_images/professional_portrai_45a60435.jpg";
 import style6 from "@assets/stock_images/professional_portrai_c3263eb1.jpg";
+import avatar1 from "@assets/stock_images/professional_headsho_e7733723.jpg";
+import avatar2 from "@assets/stock_images/professional_headsho_075d0ea6.jpg";
 
 const styles = [
-  { id: 1, name: "水彩风格", image: style1 },
-  { id: 2, name: "油画风格", image: style2 },
-  { id: 3, name: "素描风格", image: style3 },
-  { id: 4, name: "复古风格", image: style4 },
-  { id: 5, name: "现代艺术", image: style5 },
-  { id: 6, name: "印象派", image: style6 },
+  { id: 1, image: style1, bgColor: "bg-gray-100 dark:bg-gray-800", hasSale: true, hasComing: false },
+  { id: 2, image: style2, bgColor: "bg-blue-100 dark:bg-blue-900", hasSale: false, hasComing: true },
+  { id: 3, image: style3, bgColor: "bg-blue-200 dark:bg-blue-800", hasSale: false, hasComing: false },
+  { id: 4, image: avatar1, bgColor: "bg-gray-50 dark:bg-gray-900", hasSale: false, hasComing: false },
+  { id: 5, image: avatar2, bgColor: "bg-amber-50 dark:bg-amber-900", hasSale: false, hasComing: false },
+  { id: 6, image: style4, bgColor: "bg-blue-100 dark:bg-blue-900", hasSale: false, hasComing: false },
+  { id: 7, image: style5, bgColor: "bg-gray-100 dark:bg-gray-800", hasSale: false, hasComing: false },
+  { id: 8, image: style6, bgColor: "bg-amber-100 dark:bg-amber-900", hasSale: false, hasComing: false },
 ];
 
 export default function StyleShowcase() {
   return (
-    <section className="py-20 lg:py-32 px-6 lg:px-8 bg-background">
+    <section className="py-16 px-6 lg:px-16 bg-background">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="font-heading font-bold text-4xl lg:text-5xl text-foreground mb-4" data-testid="text-styles-title">
-            探索多样风格
-          </h2>
-          <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto" data-testid="text-styles-subtitle">
-            从经典艺术到现代创意，为你的照片找到完美的表达方式
-          </p>
+        <div className="mb-8">
+          <CategoryNav />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {styles.map((style) => (
             <Card 
               key={style.id} 
-              className="group relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 hover:scale-105 hover-elevate active-elevate-2"
+              className={`relative overflow-hidden rounded-2xl border-none ${style.bgColor} hover-elevate active-elevate-2 transition-all duration-300 cursor-pointer`}
               data-testid={`card-style-${style.id}`}
             >
-              <div className="aspect-[4/3] relative overflow-hidden">
+              <div className="aspect-[3/4] relative p-4">
+                {style.hasSale && (
+                  <Badge 
+                    className="absolute top-6 left-6 bg-red-500 dark:bg-red-600 text-white rounded-md text-xs z-10"
+                    data-testid="badge-sale"
+                  >
+                    Sale
+                  </Badge>
+                )}
                 <img 
                   src={style.image} 
-                  alt={style.name}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  alt={`Style ${style.id}`}
+                  className="w-full h-full object-cover rounded-xl"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <h3 className="text-white font-semibold text-xl" data-testid={`text-style-name-${style.id}`}>
-                    {style.name}
-                  </h3>
-                </div>
+                {style.hasComing && (
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
+                    <Button 
+                      size="sm"
+                      className="bg-primary text-primary-foreground rounded-full"
+                      data-testid="button-coming"
+                    >
+                      Coming
+                    </Button>
+                  </div>
+                )}
               </div>
             </Card>
           ))}
