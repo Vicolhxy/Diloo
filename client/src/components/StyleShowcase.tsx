@@ -1,7 +1,5 @@
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import CategoryNav from "./CategoryNav";
 import style1 from "@assets/stock_images/professional_portrai_d6c070ec.jpg";
 import style2 from "@assets/stock_images/professional_portrai_7825c2db.jpg";
 import style3 from "@assets/stock_images/professional_portrai_821b54c0.jpg";
@@ -12,61 +10,57 @@ import avatar1 from "@assets/stock_images/professional_headsho_e7733723.jpg";
 import avatar2 from "@assets/stock_images/professional_headsho_075d0ea6.jpg";
 
 const styles = [
-  { id: 1, image: style1, bgColor: "bg-gray-100 dark:bg-gray-800", hasSale: true, hasComing: false },
-  { id: 2, image: style2, bgColor: "bg-blue-100 dark:bg-blue-900", hasSale: false, hasComing: true },
-  { id: 3, image: style3, bgColor: "bg-blue-200 dark:bg-blue-800", hasSale: false, hasComing: false },
-  { id: 4, image: avatar1, bgColor: "bg-gray-50 dark:bg-gray-900", hasSale: false, hasComing: false },
-  { id: 5, image: avatar2, bgColor: "bg-amber-50 dark:bg-amber-900", hasSale: false, hasComing: false },
-  { id: 6, image: style4, bgColor: "bg-blue-100 dark:bg-blue-900", hasSale: false, hasComing: false },
-  { id: 7, image: style5, bgColor: "bg-gray-100 dark:bg-gray-800", hasSale: false, hasComing: false },
-  { id: 8, image: style6, bgColor: "bg-amber-100 dark:bg-amber-900", hasSale: false, hasComing: false },
+  { id: 1, image: style1, hasNew: true, hasCreate: false },
+  { id: 2, image: style2, hasNew: false, hasCreate: true },
+  { id: 3, image: style3, hasNew: false, hasCreate: false },
+  { id: 4, image: style4, hasNew: false, hasCreate: false },
+  { id: 5, image: avatar1, hasNew: false, hasCreate: false },
+  { id: 6, image: avatar2, hasNew: false, hasCreate: false },
+  { id: 7, image: style5, hasNew: false, hasCreate: false },
+  { id: 8, image: style6, hasNew: false, hasCreate: false },
 ];
 
 export default function StyleShowcase() {
   return (
-    <section className="py-16 px-6 lg:px-16 bg-background">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <CategoryNav />
-        </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {styles.map((style) => (
-            <Card 
-              key={style.id} 
-              className={`relative overflow-hidden rounded-2xl border-none ${style.bgColor} hover-elevate active-elevate-2 transition-all duration-300 cursor-pointer`}
-              data-testid={`card-style-${style.id}`}
-            >
-              <div className="aspect-[3/4] relative p-4">
-                {style.hasSale && (
-                  <Badge 
-                    className="absolute top-6 left-6 bg-red-500 dark:bg-red-600 text-white rounded-md text-xs z-10"
-                    data-testid="badge-sale"
-                  >
-                    Sale
-                  </Badge>
-                )}
-                <img 
-                  src={style.image} 
-                  alt={`Style ${style.id}`}
-                  className="w-full h-full object-cover rounded-xl"
-                />
-                {style.hasComing && (
-                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
-                    <Button 
-                      size="sm"
-                      className="bg-primary text-primary-foreground rounded-full"
-                      data-testid="button-coming"
-                    >
-                      Coming
-                    </Button>
-                  </div>
-                )}
+    <section className="w-full max-w-[1920px] flex flex-wrap items-start content-start gap-y-20 gap-x-16 px-[100px] pt-5 pb-20">
+      {styles.map((style) => (
+        <div 
+          key={style.id} 
+          className="relative w-[382px] h-[500px] rounded-[20px] overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
+          data-testid={`card-style-${style.id}`}
+        >
+          <img 
+            src={style.image} 
+            alt={`Style ${style.id}`}
+            className="w-full h-full object-cover"
+          />
+          
+          {style.hasNew && (
+            <div className="absolute top-0 right-0 bg-[#ff6969] rounded-bl-xl inline-flex justify-center items-center gap-2 px-2.5 py-1">
+              <Badge 
+                className="bg-transparent border-none text-[#f0f0f0] text-sm font-bold p-0 hover:bg-transparent"
+                data-testid="badge-new"
+              >
+                NEW
+              </Badge>
+            </div>
+          )}
+          
+          {style.hasCreate && (
+            <div className="absolute bottom-0 left-0 right-0 w-full h-[100px] overflow-hidden">
+              <div className="absolute inset-0 bg-black opacity-50" />
+              <div className="absolute bottom-1/2 left-1/2 -translate-x-1/2 translate-y-1/2">
+                <Button 
+                  className="bg-[#25ced1] text-white font-bold text-base rounded-3xl px-8 py-2.5"
+                  data-testid="button-create"
+                >
+                  Create
+                </Button>
               </div>
-            </Card>
-          ))}
+            </div>
+          )}
         </div>
-      </div>
+      ))}
     </section>
   );
 }

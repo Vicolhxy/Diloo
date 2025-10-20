@@ -1,19 +1,23 @@
 export default function SimpleSections() {
   return (
-    <section className="py-20 px-6 lg:px-16 bg-background">
-      <div className="max-w-7xl mx-auto space-y-16 text-center">
-        <h2 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-foreground" data-testid="text-how-it-works">
+    <div className="w-full flex flex-col">
+      <div className="w-full max-w-[1920px] h-[113px] flex justify-center items-center gap-[30px] px-[100px] py-5 overflow-hidden">
+        <h2 className="font-sans font-bold text-[60px] leading-normal text-black" data-testid="text-how-it-works">
           How It Works
         </h2>
-        
-        <h2 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-foreground" data-testid="text-why-choose-us">
+      </div>
+      
+      <div className="w-full max-w-[1920px] h-[113px] flex justify-center items-center gap-[30px] px-[100px] py-5 overflow-hidden">
+        <h2 className="font-sans font-bold text-[60px] leading-normal text-black" data-testid="text-why-choose-us">
           Why Choose Us
         </h2>
-        
-        <h2 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-foreground" data-testid="text-what-users-say">
+      </div>
+      
+      <div className="w-full max-w-[1920px] h-[113px] flex justify-center items-center gap-[30px] px-[100px] py-5 overflow-hidden">
+        <h2 className="font-sans font-bold text-[60px] leading-normal text-black" data-testid="text-what-users-say">
           What Our Users Say
         </h2>
       </div>
-    </section>
+    </div>
   );
 }

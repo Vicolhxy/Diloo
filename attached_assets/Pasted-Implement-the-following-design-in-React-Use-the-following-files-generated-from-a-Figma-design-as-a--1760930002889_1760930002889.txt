@@ -1,0 +1,469 @@
+Implement the following design in React. Use the following files generated from a Figma design as a specification and guide:
+
+```src/styles/Frame_1.module.css
+@import "https://fonts.googleapis.com/css?family=Hahmlet:0,700&display=swap";
+@import "https://fonts.googleapis.com/css?family=Inter:0,700;0,400&display=swap";
+@import "https://fonts.googleapis.com/css?family=Hahmlet:0,700&display=swap";
+.Frame_1_20_2 {
+  background: #fff;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+}
+.HeroSection_20_3 {
+  background: #d3d3d3 url(<path-to-image>) 50% / cover no-repeat;
+  flex-shrink: 0;
+  width: 100%;
+  height: 800px;
+  overflow: hidden;
+}
+.UnsplashWyc7vHXfCdq_36_333 {
+  background: #d3d3d3 url(<path-to-image>) -0.503px 0/100.052% 160.851% no-repeat;
+  flex-shrink: 0;
+  width: 1920px;
+  height: 800px;
+}
+.Frame_17_42_23 {
+  align-items: center;
+  gap: 4px;
+  display: inline-flex;
+}
+.ScrollToExplore_42_24 {
+  color: #000;
+  font-family: Helvetica;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: inline-block;
+}
+.ArrowDownLongLine_42_25 {
+  width: 16px;
+  height: 16px;
+  overflow: hidden;
+}
+.Frame_32_42_28 {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 13px;
+  width: 528px;
+  display: flex;
+}
+.ExpertCraftedAiStyles_42_21,
+.AlwaysOnTrend_42_22 {
+  color: #000;
+  font-family: Hahmlet;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: inline-block;
+}
+.Tabs_20_4 {
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 1920px;
+  height: 79px;
+  padding: 20px 100px;
+  display: flex;
+  overflow: hidden;
+}
+.Tab_23_65 {
+  background: #25ced1;
+  border-radius: 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 32px;
+  display: flex;
+}
+.ProHeadshot_23_60 {
+  color: #fff;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: inline-block;
+}
+.Tab_23_67 {
+  box-sizing: border-box;
+  border: 1px solid #43bc72;
+  border-radius: 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 32px;
+  display: flex;
+}
+.ProHeadshot_23_51 {
+  color: #000;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: inline-block;
+}
+.Tab_23_70,
+.Tab_23_73 {
+  box-sizing: border-box;
+  border: 1px solid #43bc72;
+  border-radius: 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 32px;
+  display: flex;
+}
+.Tab_23_80 {
+  box-sizing: border-box;
+  border-radius: 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 32px;
+  display: flex;
+}
+.MoreComingSoon_23_79 {
+  color: #959595;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: inline-block;
+}
+.SamplePhotoSection_20_12 {
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 80px 64px;
+  width: 100%;
+  max-width: 1920px;
+  padding: 20px 100px 80px;
+  display: flex;
+}
+.SamplePics_42_45 {
+  border-radius: 20px;
+  width: 382px;
+  height: 500px;
+}
+.Pics_42_145 {
+  aspect-ratio: 191/250;
+  flex-direction: column;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 382px;
+  height: 500px;
+  display: flex;
+}
+.PicsW1_42_79 {
+  background: #d3d3d3 url(<path-to-image>) -59px 0/130.89% 100% no-repeat;
+  flex-shrink: 0;
+  width: 382px;
+  height: 500px;
+}
+.Frame_16_42_37 {
+  background: #ff6969;
+  border-radius: 0 0 0 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 10px;
+  display: inline-flex;
+}
+.New_42_38 {
+  color: #f0f0f0;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: inline-block;
+}
+.SamplePics_42_49 {
+  border-radius: 20px;
+  width: 382px;
+  height: 500px;
+  box-shadow: 8px 8px 16px #54545440;
+}
+.Pics_42_181 {
+  aspect-ratio: 191/250;
+  flex-direction: column;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 382px;
+  height: 500px;
+  display: flex;
+}
+.PicsY1_42_80 {
+  background: #d3d3d3 url(<path-to-image>) -59px 0/130.89% 100% no-repeat;
+  flex-shrink: 0;
+  width: 382px;
+  height: 500px;
+}
+.Frame_33_42_33 {
+  flex-shrink: 0;
+  width: 382px;
+  height: 100px;
+  overflow: hidden;
+}
+.Rectangle_19_42_36 {
+  opacity: 0.5;
+  background: #000;
+  flex-shrink: 0;
+  width: 382px;
+  height: 100px;
+}
+.Tab_42_34 {
+  background: #25ced1;
+  border-radius: 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 32px;
+  display: inline-flex;
+}
+.SamplePics_42_54 {
+  border-radius: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 382px;
+  height: 500px;
+  display: flex;
+}
+.PicsW2_42_81 {
+  background: #d3d3d3 url(<path-to-image>) -43px 0/130.89% 100% no-repeat;
+  flex-shrink: 0;
+  width: 382px;
+  height: 500px;
+}
+.SamplePics_42_58 {
+  border-radius: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 382px;
+  height: 500px;
+  display: flex;
+}
+.PicsB1_42_82 {
+  background: #d3d3d3 url(<path-to-image>) -59px 0/130.89% 100% no-repeat;
+  flex-shrink: 0;
+  width: 382px;
+  height: 500px;
+}
+.SamplePics_42_62 {
+  border-radius: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 382px;
+  height: 500px;
+  display: flex;
+}
+.PicsY2_42_83 {
+  background: #d3d3d3 url(<path-to-image>) -59px 0/130.89% 100% no-repeat;
+  flex-shrink: 0;
+  width: 382px;
+  height: 500px;
+}
+.SamplePics_42_66 {
+  border-radius: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 382px;
+  height: 500px;
+  display: flex;
+}
+.PicsB2_42_84 {
+  background: #d3d3d3 url(<path-to-image>) -59px 0/130.89% 100% no-repeat;
+  flex-shrink: 0;
+  width: 382px;
+  height: 500px;
+}
+.SamplePics_42_70 {
+  border-radius: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 382px;
+  height: 500px;
+  display: flex;
+}
+.PicsW3_42_85 {
+  background: #d3d3d3 url(<path-to-image>) -59px 0/130.89% 100% no-repeat;
+  flex-shrink: 0;
+  width: 382px;
+  height: 500px;
+}
+.SamplePics_42_74 {
+  border-radius: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 382px;
+  height: 500px;
+  display: flex;
+}
+.PicsI1_42_86 {
+  background: #d3d3d3 url(<path-to-image>) -59px 0/130.89% 100% no-repeat;
+  flex-shrink: 0;
+  width: 382px;
+  height: 500px;
+}
+.Tabs_34_317 {
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 1920px;
+  height: 113px;
+  padding: 20px 100px;
+  display: flex;
+  overflow: hidden;
+}
+.HowItWorks_34_328 {
+  color: #000;
+  font-family: Inter;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: inline-block;
+}
+.Tabs_36_335 {
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 1920px;
+  height: 113px;
+  padding: 20px 100px;
+  display: flex;
+  overflow: hidden;
+}
+.WhyChooseUs_36_336 {
+  color: #000;
+  font-family: Inter;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: inline-block;
+}
+.Tabs_38_9 {
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 1920px;
+  height: 113px;
+  padding: 20px 100px;
+  display: flex;
+  overflow: hidden;
+}
+.WhatOurUsersSay_38_10 {
+  color: #000;
+  font-family: Inter;
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: inline-block;
+}
+
+```
+
+---
+
+```src/components/Frame_1.tsx
+import React from 'react';
+import styles from '../styles/Frame_1.module.css';
+
+
+export default function Frame_1() {
+  return (
+    <div className={styles.Frame_1_20_2}>
+      <div className={styles.HeroSection_20_3}>
+        <div className={styles.UnsplashWyc7vHXfCdq_36_333}></div>
+        <div className={styles.Frame_17_42_23}><span className={styles.ScrollToExplore_42_24}>Scroll to explore</span>
+          <div className={styles.ArrowDownLongLine_42_25}><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.66657 1.3331L7.3333 1.33301V12.1143L4.70013 9.48114L3.75732 10.4239L7.99997 14.6666L12.2426 10.4239L11.2998 9.48114L8.66664 12.1143L8.66657 1.3331Z" fill="black" />
+            </svg>
+          </div>
+        </div>
+        <div className={styles.Frame_32_42_28}><span className={styles.ExpertCraftedAiStyles_42_21}>Expert-crafted AI styles.</span><span className={styles.AlwaysOnTrend_42_22}>Always on trend.</span></div>
+      </div>
+      <div className={styles.Tabs_20_4}>
+        <div className={styles.Tab_23_65}><span className={styles.ProHeadshot_23_60}>Pro Headshot</span></div>
+        <div className={styles.Tab_23_67}><span className={styles.ProHeadshot_23_51}>B&#x26;W Portrait</span></div>
+        <div className={styles.Tab_23_70}><span className={styles.ProHeadshot_23_51}>ID Photo</span></div>
+        <div className={styles.Tab_23_73}><span className={styles.ProHeadshot_23_51}>Social Avatar Decors</span></div>
+        <div className={styles.Tab_23_80}><span className={styles.MoreComingSoon_23_79}>More Coming Soon...</span></div>
+      </div>
+      <div className={styles.SamplePhotoSection_20_12}>
+        <div className={styles.SamplePics_42_45}>
+          <div className={styles.Pics_42_145}>
+            <div className={styles.PicsW1_42_79}></div>
+          </div>
+          <div className={styles.Frame_16_42_37}><span className={styles.New_42_38}>NEW</span></div>
+        </div>
+        <div className={styles.SamplePics_42_49}>
+          <div className={styles.Pics_42_181}>
+            <div className={styles.PicsY1_42_80}></div>
+          </div>
+          <div className={styles.Frame_33_42_33}>
+            <div className={styles.Rectangle_19_42_36}></div>
+            <div className={styles.Tab_42_34}><span className={styles.ProHeadshot_23_60}>Create</span></div>
+          </div>
+        </div>
+        <div className={styles.SamplePics_42_54}>
+          <div className={styles.Pics_42_145}>
+            <div className={styles.PicsW2_42_81}></div>
+          </div>
+        </div>
+        <div className={styles.SamplePics_42_58}>
+          <div className={styles.Pics_42_145}>
+            <div className={styles.PicsB1_42_82}></div>
+          </div>
+        </div>
+        <div className={styles.SamplePics_42_62}>
+          <div className={styles.Pics_42_145}>
+            <div className={styles.PicsY2_42_83}></div>
+          </div>
+        </div>
+        <div className={styles.SamplePics_42_66}>
+          <div className={styles.Pics_42_145}>
+            <div className={styles.PicsB2_42_84}></div>
+          </div>
+        </div>
+        <div className={styles.SamplePics_42_70}>
+          <div className={styles.Pics_42_145}>
+            <div className={styles.PicsW3_42_85}></div>
+          </div>
+        </div>
+        <div className={styles.SamplePics_42_74}>
+          <div className={styles.Pics_42_145}>
+            <div className={styles.PicsI1_42_86}></div>
+          </div>
+        </div>
+      </div>
+      <div className={styles.Tabs_34_317}><span className={styles.HowItWorks_34_328}>How It Works</span></div>
+      <div className={styles.Tabs_36_335}><span className={styles.WhyChooseUs_36_336}>Why Choose Us</span></div>
+      <div className={styles.Tabs_38_9}><span className={styles.WhatOurUsersSay_38_10}>What Our Users Say</span></div>
+    </div>
+  );
+}
+```
+
