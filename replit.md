@@ -12,6 +12,11 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
 - Added brand slogan to footer: "Expert-crafted AI styles. Always on trend."
 - Unified CategoryNav and StyleShowcase background colors for seamless visual flow
 - Reduced StyleShowcase top padding to 1/4 of original for tighter layout
+- Added interactive hover effects to style showcase cards:
+  - Image zoom (110% scale) on hover
+  - Bottom overlay slides up with semi-transparent black background (100px height)
+  - White "Create" button appears in overlay
+  - Smooth 300ms transitions with ease-out timing
 
 ## User Preferences
 
@@ -136,6 +141,10 @@ Preferred communication style: Simple, everyday language.
 - **HeroSection**: Banner.png background with dark gradient overlay, white typography
 - **CategoryNav**: 4 style categories + "More Coming Soon" text, unified gray-50 background
 - **StyleShowcase**: 8-photo responsive grid (2 cols mobile, 4 cols desktop), 3:4 aspect ratio cards
+  - Interactive hover effects: image zoom (110% scale)
+  - Bottom overlay (100px) with semi-transparent black background
+  - "Create" button appears on hover, centered in overlay
+  - Smooth transitions using GPU-accelerated transforms
 - **HowItWorks**: 3-step process cards with icons and numbered badges
 - **WhyChooseUs**: Teal background section with 3 feature highlights
 - **Testimonials**: Horizontal auto-scrolling carousel with infinite loop
