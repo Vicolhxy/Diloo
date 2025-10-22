@@ -1,164 +1,188 @@
 # Diloo AI Photo Style Transfer Platform - Design Guidelines
 
 ## Design Approach
-**Reference-Based Approach** inspired by modern AI services (Midjourney, Replicate) combined with e-commerce aesthetics (Shopify, Etsy) to create a visually striking platform that showcases photo transformation capabilities while maintaining professional credibility.
+**Reference-Based Approach** inspired by modern AI services (Midjourney, Replicate) combined with professional SaaS aesthetics (Linear, Stripe) to create a warm, trustworthy platform emphasizing human connection through AI-enhanced photography.
 
 ## Core Design Principles
-1. **Visual-First**: Photography and transformations are the hero - let images breathe
-2. **Trust & Professionalism**: Clean, modern design that conveys AI expertise
-3. **Smooth & Delightful**: Subtle animations enhance but never distract
-4. **Conversion-Focused**: Clear flow from discovery to action
+1. **Warm & Professional**: Organic textures and teal accents create approachability
+2. **Human-Centered**: Real headshots and testimonials build trust
+3. **Clear Value Path**: Intuitive flow from understanding to conversion
+4. **Visual Excellence**: Photography quality showcases AI capabilities
 
 ## Color Palette
 
 ### Primary Colors
-- **Primary Brand**: 280 65% 55% (Rich purple - AI/creative tech association)
-- **Primary Light**: 280 70% 92% (Soft purple backgrounds)
-- **Primary Dark**: 280 70% 35% (Deep purple accents)
+- **Primary Brand**: 181 70% 48% (Vibrant teal - professional yet friendly)
+- **Primary Light**: 181 60% 92% (Soft teal backgrounds)
+- **Primary Dark**: 181 75% 35% (Deep teal accents)
 
-### Accent & Supporting
-- **Accent**: 200 90% 50% (Vibrant cyan - contrasts beautifully with purple)
-- **Success**: 145 65% 45% (Emerald green for confirmations)
-- **Neutral Dark**: 240 10% 15% (Rich charcoal for text)
-- **Neutral Light**: 240 5% 96% (Subtle backgrounds)
+### Warm Neutrals & Supporting
+- **Warm Beige**: 35 25% 88% (Background sections, warmth)
+- **Wood Tone**: 30 15% 75% (Subtle texture references)
+- **Success**: 145 65% 45% (Emerald green confirmations)
+- **Neutral Dark**: 215 15% 20% (Professional text)
+- **Neutral Light**: 35 20% 96% (Soft backgrounds)
 
 ### Dark Mode
-- Background: 240 15% 8%
-- Surface: 240 12% 12%
+- Background: 215 20% 10%
+- Surface: 215 15% 14%
+- Teal Muted: 181 40% 35%
 - Text Primary: 0 0% 95%
 - Text Secondary: 0 0% 70%
 
 ## Typography
 
 **Font Families**:
-- Primary: 'Inter' (Google Fonts) - Clean, modern sans-serif for UI
-- Headings: 'Poppins' (Google Fonts) - Friendly, distinctive for headlines
+- Primary: 'Inter' (clean UI, professional)
+- Headings: 'Poppins' (distinctive, friendly authority)
 
-**Scale**:
-- Hero Headline: text-6xl lg:text-7xl, font-bold (Poppins)
-- Section Headers: text-4xl lg:text-5xl, font-bold (Poppins)
-- Card Titles: text-xl lg:text-2xl, font-semibold
+**Hierarchy**:
+- Hero Headline: text-5xl lg:text-7xl font-bold (Poppins)
+- Section Headers: text-3xl lg:text-5xl font-bold (Poppins)
+- Card Titles: text-xl lg:text-2xl font-semibold
 - Body Text: text-base lg:text-lg
-- Captions: text-sm
+- Captions: text-sm text-gray-600
 
 ## Layout System
 
-**Spacing Primitives**: Use Tailwind units of **2, 4, 8, 12, 16, 20, 24, 32**
+**Spacing Primitives**: Tailwind units of **4, 8, 12, 16, 20, 24, 32**
 
 **Container Strategy**:
-- Max-width: max-w-7xl for main content
-- Section padding: py-20 lg:py-32
-- Card spacing: gap-8 lg:gap-12
-- Mobile padding: px-6, Desktop: px-8
+- Max-width: max-w-7xl for content sections
+- Hero padding: py-24 lg:py-32
+- Section padding: py-16 lg:py-24
+- Card gaps: gap-8 lg:gap-12
+- Mobile: px-6, Desktop: px-12
 
 **Grid Systems**:
-- Three-column cards: grid-cols-1 md:grid-cols-3 gap-8
-- Testimonials: Horizontal scroll with snap points
+- Headshot grid: grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4
+- Process cards: grid-cols-1 md:grid-cols-3 gap-8
+- Feature cards: grid-cols-1 md:grid-cols-2 gap-12
 
 ## Component Library
 
 ### Hero Section
-- Full-viewport height (min-h-screen) with gradient overlay
-- Large hero image showcasing style transformations
-- Centered headline + subheadline + CTA button
-- Gradient background: from-purple-900 via-purple-700 to-indigo-800
+- Height: min-h-[85vh] with warm beige/wood desk background image
+- Subtle wood grain texture overlay for depth
+- Two-column layout on desktop: Left (60%) text content, Right (40%) visual
+- Left: Headline + subheadline + description paragraph + CTA button
+- Right: Before/after photo comparison or style transformation showcase
+- Background treatment: Gradient overlay from-beige-100/80 to-white/90
 
-### Style Showcase Cards
-- Grid layout with hover scale effects (hover:scale-105)
+### Professional Headshot Grid
+- Six-column grid (2 cols mobile, 4 tablet, 6 desktop)
+- Square aspect ratio: aspect-square
 - Rounded corners: rounded-2xl
-- Subtle shadow: shadow-lg hover:shadow-2xl
-- Image aspect ratio: aspect-[4/3] or aspect-square
-- Overlay gradient on hover to show style name
+- Each image: Professional headshots demonstrating style variety
+- Subtle hover effect: hover:scale-105 transition-transform
+- Positioned below hero or within "Our Transformations" section
+- Grid showcases AI's ability to handle diverse faces/styles
 
-### How It Works Section
-- Three horizontal cards with icons
-- Card structure: Icon (top) → Title → Description
-- Icons: Use Heroicons (outline style, size: w-12 h-12)
-- Card background: bg-white/5 with backdrop-blur-sm in dark mode
-- Numbered steps (1, 2, 3) in circular badges
-
-**Content**:
-1. "选择喜欢的风格" - Icon: photo/image icon
-2. "上传自己的照片" - Icon: upload/cloud-upload icon  
-3. "生成风格化照片" - Icon: sparkles/stars icon
-
-### Why Choose Us Section
-- Three horizontal cards with icons
-- Similar card styling to How It Works
-- Icons: Use Heroicons (solid style for emphasis)
-- Subtle border: border border-purple-500/20
+### Step-by-Step Process Cards
+- Three-column horizontal layout
+- Numbered circular badges: Large numbers (text-4xl) in teal circles
+- Card structure: Number badge → Icon (Heroicons, w-16 h-16) → Title → Description
+- Background: bg-white with border-2 border-teal-100
+- Shadow: shadow-lg hover:shadow-xl
+- Icons: photo (choose style), cloud-upload (upload), sparkles (generate)
 
 **Content**:
-1. "真实自然" - Icon: check-badge / shield-check
-2. "专业团队" - Icon: users-group / academic-cap
-3. "快速生成" - Icon: bolt / rocket-launch
+1. "选择喜欢的风格" - Browse style gallery
+2. "上传自己的照片" - Simple upload process
+3. "获得专业照片" - Receive transformed images
 
-### What Our Users Say Section
-- Horizontally scrolling container with auto-scroll animation
-- Individual testimonial cards: w-80 flex-shrink-0
-- Card components:
-  - Random avatar (40x40, rounded-full)
-  - User name (font-semibold)
-  - 5-star rating (use star icons, text-yellow-400)
-  - Review text (text-sm, text-gray-300)
-- Infinite scroll with CSS animation (20-30s duration)
-- Duplicate testimonials for seamless loop
+### Feature Highlights Section
+- Full-width teal background: bg-gradient-to-br from-teal-500 to-teal-600
+- Two-column alternating layout for 4-6 features
+- Each feature: Icon + Headline + Multi-line description
+- Text color: text-white
+- Icons: Heroicons solid style, w-12 h-12
+- Generous spacing: py-24 with feature gap-16
 
-**Sample Testimonials** (8-10 cards):
-- Generic positive reviews about quality, speed, results
-- Mix of Chinese names: "李明", "王芳", "张伟", "刘洋", "陈静"
+**Features**:
+1. "真实自然的效果" - Natural-looking results
+2. "专业级AI技术" - Advanced AI algorithms
+3. "快速交付" - Quick turnaround time
+4. "多种风格选择" - Diverse style options
+5. "隐私保护" - Data security guaranteed
+6. "专业支持" - Expert customer service
+
+### Testimonial Cards
+- Three-column grid (1 col mobile, 2 tablet, 3 desktop)
+- Card structure: 5-star rating → Quote text → Avatar + Name + Title
+- Background: bg-white with subtle shadow
+- Rounded: rounded-xl
+- Star icons: text-yellow-400 filled stars
+- Avatars: 48px rounded-full with color variety
+- Quote marks decoration: Large teal quotation marks
+
+**Sample Testimonials** (6-9 cards):
+- Mix professional contexts: "公司HR主管", "自由摄影师", "市场总监"
+- Names: "李明", "王芳", "张伟", "刘洋", "陈静", "赵强"
+- Focus: Quality, professionalism, transformation accuracy
+
+### Call-to-Action Section
+- Full-width with warm beige background
+- Centered content: max-w-3xl
+- Large headline + supporting text + primary CTA button
+- Optional: Small trust indicators (user count, rating)
 
 ### Footer
-- Two-column layout on desktop, stacked on mobile
-- Background: bg-purple-900 or primary brand color
-- Text color: text-white/90
+- Teal background: bg-teal-600
+- Three-column layout desktop, stacked mobile
+- Text: text-white/90
 
-**Left Column**:
-- Logo placeholder (h-12 w-12 bg-white/20 rounded)
-- "Diloo" (text-2xl font-bold)
-- Slogan: "让每一张照片都成为艺术" (text-sm text-white/70)
+**Columns**:
+1. Brand: Logo + "Diloo" + tagline "让每一张照片都成为艺术"
+2. Links: 产品、公司、法律 sections with navigation
+3. Contact: Email, social icons (WeChat, Weibo placeholders)
 
-**Right Column** - Links in columns:
-- Column 1: "产品" (选择风格, 上传照片, 价格)
-- Column 2: "公司" (About Us, Contact Us, 隐私政策)
-- Column 3: Social icons (placeholder)
+## Buttons & CTAs
 
-### Buttons & CTAs
-- Primary CTA: bg-gradient-to-r from-purple-600 to-indigo-600
-- Size: px-8 py-4 text-lg font-semibold
+- Primary: bg-teal-500 hover:bg-teal-600
+- Size variants: px-8 py-4 (large), px-6 py-3 (medium)
 - Rounded: rounded-full
-- Hover: hover:shadow-xl hover:scale-105
-- Outlined variant on images: backdrop-blur-md bg-white/10 border-2 border-white/30
+- Font: font-semibold text-white
+- Shadow: shadow-lg hover:shadow-xl
+- Transition: transition-all duration-200
+- On images: backdrop-blur-md bg-white/20 border-2 border-white/40 text-white
 
 ## Images
 
-**Hero Section**: 
-- Large background image showcasing before/after style transformation
-- Image should be high-quality, demonstrate the AI capability
-- Suggested: Split-screen or side-by-side comparison of original vs styled photo
-- Apply gradient overlay for text readability
+**Hero Background**: 
+- Warm wood desk/workspace scene with soft lighting
+- Professional photographer's workspace aesthetic
+- Subtle depth with bokeh or soft focus
+- Overlay: Light gradient for text readability
 
-**Style Showcase Grid**:
-- 6-9 style example cards with representative photos
-- Each shows a different artistic style (watercolor, oil painting, sketch, vintage, etc.)
-- Images should be vibrant and eye-catching
+**Headshot Grid**:
+- 12-18 professional headshot photos
+- Diverse ages, genders, expressions
+- Consistent lighting and quality
+- Mix of style transformations (business, artistic, vintage)
+
+**Before/After Comparisons**:
+- Side-by-side or slider format
+- High-resolution portraits
+- Clear style transformation demonstration
+- Place in hero section or dedicated showcase
+
+**Feature Section Icons/Graphics**:
+- Use Heroicons consistently
+- Supplement with small accent illustrations if desired
 
 ## Animations
 
-**Use Sparingly**:
-- Card hover: Subtle scale (scale-105) and shadow transitions
-- Testimonial scroll: Smooth infinite horizontal scroll
-- Button hover: Gentle scale and glow effect
-- Page sections: Fade-in on scroll (intersection observer)
-
-**No animations for**:
-- Text typing effects
-- Excessive parallax
-- Distracting particle effects
+**Minimal & Purposeful**:
+- Card hover: scale-105 with shadow transition
+- Button hover: Subtle scale and brightness shift
+- Scroll reveals: Gentle fade-in for sections
+- No auto-scrolling or distracting motion
 
 ## Accessibility
-- Maintain WCAG AA contrast ratios
-- Dark mode optimized for comfortable viewing
-- Focus states on all interactive elements
-- Semantic HTML structure
-- Alt text for all images
+
+- WCAG AA contrast: Ensure teal text on white, white on teal pass
+- Dark mode: Muted teal tones, proper contrast ratios
+- Focus indicators: Visible teal outline on interactive elements
+- Semantic HTML: Proper heading hierarchy
+- Alt text: Descriptive for all transformation examples

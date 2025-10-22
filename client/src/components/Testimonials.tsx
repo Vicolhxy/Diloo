@@ -1,94 +1,109 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Star } from "lucide-react";
-import avatar1 from "@assets/stock_images/professional_headsho_e7733723.jpg";
-import avatar2 from "@assets/stock_images/professional_headsho_075d0ea6.jpg";
-import avatar3 from "@assets/stock_images/professional_headsho_fd62cb19.jpg";
-import avatar4 from "@assets/stock_images/professional_headsho_470526a4.jpg";
-import avatar5 from "@assets/stock_images/professional_headsho_a32e74cd.jpg";
+import w1Img from "@assets/W1_1761159011555.png";
+import y1Img from "@assets/Y1_1761159011566.png";
+import w2Img from "@assets/W2_1761159011568.png";
+import b1Img from "@assets/B1_1761159011569.png";
+import y2Img from "@assets/Y2_1761159011570.png";
+import b2Img from "@assets/B2_1761159011571.png";
 
 const testimonials = [
   {
     id: 1,
-    name: "李明",
-    avatar: avatar1,
+    name: "Emma Rodriguez",
+    role: "Marketing Director",
+    avatar: w1Img,
     rating: 5,
-    comment: "效果超出预期！照片变得非常有艺术感，而且处理速度很快。",
+    comment: "This AI-enhanced style is a Lifesaver! I can easily get great professional photos for our website."
   },
   {
     id: 2,
-    name: "王芳",
-    avatar: avatar2,
+    name: "James Wilson",
+    role: "Freelance Designer",
+    avatar: y1Img,
     rating: 5,
-    comment: "非常专业的服务，生成的照片保留了原片的自然美感。",
+    comment: "The quality is outstanding and the turnaround time is incredibly fast. Highly recommend!"
   },
   {
     id: 3,
-    name: "张伟",
-    avatar: avatar3,
+    name: "Sarah Chen",
+    role: "HR Manager",
+    avatar: w2Img,
     rating: 5,
-    comment: "操作简单，风格多样，完全满足了我的需求。强烈推荐！",
+    comment: "Perfect for our team headshots. Natural results that look professional and authentic."
   },
   {
     id: 4,
-    name: "刘洋",
-    avatar: avatar4,
+    name: "Michael Brown",
+    role: "Content Creator",
+    avatar: b1Img,
     rating: 5,
-    comment: "AI技术真的很强大，几秒钟就完成了专业级的照片处理。",
+    comment: "Amazing variety of styles. The AI technology is impressive and easy to use."
   },
   {
     id: 5,
-    name: "陈静",
-    avatar: avatar5,
+    name: "Lisa Anderson",
+    role: "Small Business Owner",
+    avatar: y2Img,
     rating: 5,
-    comment: "价格合理，质量优秀，已经推荐给身边的朋友了。",
+    comment: "Great value for money. Professional quality photos without the professional photography price tag."
   },
+  {
+    id: 6,
+    name: "David Kim",
+    role: "Sales Executive",
+    avatar: b2Img,
+    rating: 5,
+    comment: "Quick and efficient service. My LinkedIn profile has never looked better!"
+  }
 ];
 
 export default function Testimonials() {
-  const doubledTestimonials = [...testimonials, ...testimonials];
-
   return (
-    <section className="py-20 lg:py-32 px-6 lg:px-8 bg-muted/30 overflow-hidden">
-      <div className="max-w-7xl mx-auto mb-16">
-        <div className="text-center">
-          <h2 className="font-heading font-bold text-4xl lg:text-5xl text-foreground mb-4" data-testid="text-testimonials-title">
-            用户评价
+    <section className="w-full bg-white py-16 md:py-24" data-testid="testimonials">
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4" data-testid="text-testimonials-title">
+            What Our Users say
           </h2>
-          <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto" data-testid="text-testimonials-subtitle">
-            来自真实用户的反馈
+          <p className="text-gray-600 max-w-2xl mx-auto" data-testid="text-testimonials-subtitle">
+            We turn our clients into fanatics. Over 500 five star reviews and growing
           </p>
         </div>
-      </div>
-      
-      <div className="relative">
-        <div className="flex gap-6 animate-scroll">
-          {doubledTestimonials.map((testimonial, index) => (
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {testimonials.map((testimonial) => (
             <Card 
-              key={`${testimonial.id}-${index}`} 
-              className="w-80 flex-shrink-0 hover-elevate"
+              key={testimonial.id} 
+              className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
               data-testid={`card-testimonial-${testimonial.id}`}
             >
               <CardContent className="p-6">
-                <div className="flex items-center gap-4 mb-4">
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: testimonial.rating }).map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="text-sm text-gray-700 mb-4" data-testid={`text-comment-${testimonial.id}`}>
+                  "{testimonial.comment}"
+                </p>
+                <div className="flex items-center gap-3">
                   <Avatar className="w-10 h-10">
                     <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
-                    <AvatarFallback>{testimonial.name[0]}</AvatarFallback>
+                    <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                      {testimonial.name.split(' ').map(n => n[0]).join('')}
+                    </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-semibold text-foreground" data-testid={`text-name-${testimonial.id}`}>
+                    <p className="font-semibold text-gray-900 text-sm" data-testid={`text-name-${testimonial.id}`}>
                       {testimonial.name}
                     </p>
-                    <div className="flex gap-1">
-                      {Array.from({ length: testimonial.rating }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                      ))}
-                    </div>
+                    <p className="text-xs text-gray-500" data-testid={`text-role-${testimonial.id}`}>
+                      {testimonial.role}
+                    </p>
                   </div>
                 </div>
-                <p className="text-sm text-muted-foreground" data-testid={`text-comment-${testimonial.id}`}>
-                  {testimonial.comment}
-                </p>
               </CardContent>
             </Card>
           ))}

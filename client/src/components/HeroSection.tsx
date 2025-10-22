@@ -1,20 +1,27 @@
 import { ChevronDown } from "lucide-react";
+import bannerImg from "@assets/Banner_1761159003003.png";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full flex-shrink-0" style={{height: '800px', backgroundImage: "url('https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1920')", backgroundSize: 'cover', backgroundPosition: 'center', overflow: 'hidden'}}>
-      <div className="absolute bottom-16 left-16 flex flex-col items-start gap-3 w-[528px]">
-        <h1 className="font-heading font-bold text-[64px] leading-normal text-black" data-testid="text-hero-title">
-          Expert-crafted AI styles.
-        </h1>
-        <h2 className="font-heading font-bold text-[64px] leading-normal text-black" data-testid="text-hero-subtitle">
-          Always on trend.
-        </h2>
-      </div>
+    <section 
+      className="relative w-full h-[600px] md:h-[500px] flex items-center bg-cover bg-center"
+      style={{backgroundImage: `url(${bannerImg})`}}
+      data-testid="hero-section"
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent"></div>
       
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-1" data-testid="scroll-hint">
-        <span className="text-base text-black font-normal">Scroll to explore</span>
-        <ChevronDown className="w-4 h-4 text-black" />
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
+        <div className="max-w-xl">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4" data-testid="text-hero-title">
+            Expert-crafted AI styles.
+            <br />
+            Always on trend.
+          </h1>
+          <div className="mt-8 flex items-center gap-2 text-sm text-white" data-testid="scroll-hint">
+            <span>Scroll to explore</span>
+            <ChevronDown className="w-4 h-4" />
+          </div>
+        </div>
       </div>
     </section>
   );

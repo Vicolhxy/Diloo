@@ -1,63 +1,58 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { ShieldCheck, Users, Zap } from "lucide-react";
+import { Award, DollarSign, Zap } from "lucide-react";
 
 const features = [
   {
     id: 1,
-    title: "真实自然",
-    description: "我们追求真实而避免过度修图，保留照片的自然美感与真实情感",
-    icon: ShieldCheck,
+    title: "Professional Quality",
+    description: "AI tools fine-tuned by our expert team ensuring professional results every time",
+    icon: Award,
   },
   {
     id: 2,
-    title: "专业团队",
-    description: "我们专业的团队精心调理AI生成工具，确保每一张照片都达到专业水准",
-    icon: Users,
+    title: "Affordable Prices",
+    description: "Premium quality photos at pricing that fit any budget, making AI art accessible",
+    icon: DollarSign,
   },
   {
     id: 3,
-    title: "快速生成",
-    description: "我们可以在数秒内完成照片生成，让你即刻欣赏到艺术化的作品",
+    title: "Lightning Fast",
+    description: "Get your enhanced photos in seconds - no more waiting days for professional results",
     icon: Zap,
   },
 ];
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-20 lg:py-32 px-6 lg:px-8 bg-background">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="font-heading font-bold text-4xl lg:text-5xl text-foreground mb-4" data-testid="text-why-title">
-            为什么选择我们
+    <section className="w-full bg-primary py-16 md:py-24" data-testid="why-choose-us">
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4" data-testid="text-why-choose-us-title">
+            Why Choose Us
           </h2>
-          <p className="text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto" data-testid="text-why-subtitle">
-            专业、真实、高效的AI照片处理服务
+          <p className="text-white/80 max-w-2xl mx-auto" data-testid="text-why-choose-us-subtitle">
+            Fast delivery to the inbox
           </p>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {features.map((feature) => {
-            const Icon = feature.icon;
+            const IconComponent = feature.icon;
             return (
-              <Card 
-                key={feature.id} 
-                className="border-primary/20 hover-elevate active-elevate-2 transition-all duration-300"
+              <div
+                key={feature.id}
+                className="flex flex-col items-center text-center text-white"
                 data-testid={`card-feature-${feature.id}`}
               >
-                <CardContent className="p-8 text-center">
-                  <div className="mb-6 flex justify-center">
-                    <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center shadow-lg">
-                      <Icon className="w-8 h-8" />
-                    </div>
-                  </div>
-                  <h3 className="font-semibold text-xl lg:text-2xl text-foreground mb-4" data-testid={`text-feature-title-${feature.id}`}>
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground" data-testid={`text-feature-desc-${feature.id}`}>
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/20 flex items-center justify-center mb-6">
+                  <IconComponent className="w-8 h-8 md:w-10 md:h-10" />
+                </div>
+                <h3 className="text-xl md:text-2xl font-semibold mb-3" data-testid={`text-feature-${feature.id}-title`}>
+                  {feature.title}
+                </h3>
+                <p className="text-white/80" data-testid={`text-feature-${feature.id}-description`}>
+                  {feature.description}
+                </p>
+              </div>
             );
           })}
         </div>
