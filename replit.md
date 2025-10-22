@@ -4,6 +4,15 @@
 
 Diloo is an AI-powered photo style transfer platform that enables users to transform their photos into artistic renditions by applying professional AI-generated styles. The platform features a curated collection of style presets (Pre-Processed, Hard Portrait, AI Photo, Social Avatar Deluxe) with a focus on natural, professional results. Built as a full-stack web application with a modern React frontend and Express backend, the platform emphasizes visual-first design, trust, and conversion-focused user experience.
 
+## Recent Changes
+
+**October 22, 2025**
+- Implemented horizontal auto-scrolling testimonials carousel with infinite loop animation
+- Removed job titles from testimonial cards (now showing only avatar, name, rating, and comment)
+- Added brand slogan to footer: "Expert-crafted AI styles. Always on trend."
+- Unified CategoryNav and StyleShowcase background colors for seamless visual flow
+- Reduced StyleShowcase top padding to 1/4 of original for tighter layout
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
@@ -25,11 +34,12 @@ Preferred communication style: Simple, everyday language.
 - Comprehensive set of pre-built components (40+ UI components including dialogs, forms, navigation, data display)
 
 **Design System**
-- Custom color palette centered around purple primary (`280 65% 55%`) and cyan accent (`200 90% 50%`)
+- Custom color palette centered around teal primary (`181 70% 48%` / #25ced1) matching Homepage.png reference
 - Typography system using Inter (UI) and Poppins (headings) from Google Fonts
 - Spacing system based on Tailwind's 8-point grid (2, 4, 8, 12, 16, 20, 24, 32)
 - Dark mode support with HSL color tokens
 - Hover and active states using elevation overlays (rgba overlays for depth)
+- Custom CSS animations for testimonials carousel (30s linear infinite scroll)
 
 **State Management Philosophy**
 - Server state managed via TanStack Query with optimistic updates
@@ -115,9 +125,25 @@ Preferred communication style: Simple, everyday language.
 - `lucide-react` - Icon library
 
 **Image Assets**
-- Stock images stored in `attached_assets/stock_images/` directory
-- Professional portrait and headshot images for style showcase
+- Banner.png - Hero section background (warm wood desk scene)
+- Diloo-logo.png - Brand logo used in footer
+- 8 professional portrait photos (W1, Y1, W2, B1, Y2, B2, W3, I1) used in:
+  - StyleShowcase section (8-photo grid)
+  - Testimonials section (avatar images)
 - Images referenced via Vite's asset resolution (`@assets` alias)
+
+**UI Components & Features**
+- **HeroSection**: Banner.png background with dark gradient overlay, white typography
+- **CategoryNav**: 4 style categories + "More Coming Soon" text, unified gray-50 background
+- **StyleShowcase**: 8-photo responsive grid (2 cols mobile, 4 cols desktop), 3:4 aspect ratio cards
+- **HowItWorks**: 3-step process cards with icons and numbered badges
+- **WhyChooseUs**: Teal background section with 3 feature highlights
+- **Testimonials**: Horizontal auto-scrolling carousel with infinite loop
+  - 30-second animation cycle
+  - Pause on hover functionality
+  - Shows avatar, name, 5-star rating, and comment (no job titles)
+  - Duplicated array for seamless loop
+- **Footer**: Teal background with logo, brand name, slogan, and copyright
 
 **Configuration Philosophy**
 - Path aliases configured in both `tsconfig.json` and `vite.config.ts` for consistency

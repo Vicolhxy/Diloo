@@ -12,7 +12,6 @@ const testimonials = [
   {
     id: 1,
     name: "Emma Rodriguez",
-    role: "Marketing Director",
     avatar: w1Img,
     rating: 5,
     comment: "This AI-enhanced style is a Lifesaver! I can easily get great professional photos for our website."
@@ -20,7 +19,6 @@ const testimonials = [
   {
     id: 2,
     name: "James Wilson",
-    role: "Freelance Designer",
     avatar: y1Img,
     rating: 5,
     comment: "The quality is outstanding and the turnaround time is incredibly fast. Highly recommend!"
@@ -28,7 +26,6 @@ const testimonials = [
   {
     id: 3,
     name: "Sarah Chen",
-    role: "HR Manager",
     avatar: w2Img,
     rating: 5,
     comment: "Perfect for our team headshots. Natural results that look professional and authentic."
@@ -36,7 +33,6 @@ const testimonials = [
   {
     id: 4,
     name: "Michael Brown",
-    role: "Content Creator",
     avatar: b1Img,
     rating: 5,
     comment: "Amazing variety of styles. The AI technology is impressive and easy to use."
@@ -44,7 +40,6 @@ const testimonials = [
   {
     id: 5,
     name: "Lisa Anderson",
-    role: "Small Business Owner",
     avatar: y2Img,
     rating: 5,
     comment: "Great value for money. Professional quality photos without the professional photography price tag."
@@ -52,7 +47,6 @@ const testimonials = [
   {
     id: 6,
     name: "David Kim",
-    role: "Sales Executive",
     avatar: b2Img,
     rating: 5,
     comment: "Quick and efficient service. My LinkedIn profile has never looked better!"
@@ -60,24 +54,34 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
+  const duplicatedTestimonials = [...testimonials, ...testimonials];
+
   return (
-    <section className="w-full bg-white py-16 md:py-24" data-testid="testimonials">
-      <div className="container mx-auto px-6 md:px-12 max-w-7xl">
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4" data-testid="text-testimonials-title">
-            What Our Users say
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto" data-testid="text-testimonials-subtitle">
-            We turn our clients into fanatics. Over 500 five star reviews and growing
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((testimonial) => (
+    <section className="w-full bg-white py-16 md:py-24 overflow-hidden" data-testid="testimonials">
+      <div className="mb-12 md:mb-16 text-center px-6">
+        <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4" data-testid="text-testimonials-title">
+          What Our Users say
+        </h2>
+        <p className="text-gray-600 max-w-2xl mx-auto" data-testid="text-testimonials-subtitle">
+          We turn our clients into fanatics. Over 500 five star reviews and growing
+        </p>
+      </div>
+      
+      <div className="relative w-full">
+        <div 
+          className="flex gap-6"
+          style={{
+            animation: 'scroll-left 30s linear infinite',
+            width: 'max-content'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.animationPlayState = 'paused'}
+          onMouseLeave={(e) => e.currentTarget.style.animationPlayState = 'running'}
+        >
+          {duplicatedTestimonials.map((testimonial, index) => (
             <Card 
-              key={testimonial.id} 
-              className="border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
-              data-testid={`card-testimonial-${testimonial.id}`}
+              key={`${testimonial.id}-${index}`}
+              className="flex-shrink-0 w-80 border border-gray-200 shadow-sm"
+              data-testid={index < 6 ? `card-testimonial-${testimonial.id}` : undefined}
             >
               <CardContent className="p-6">
                 <div className="flex gap-1 mb-4">
@@ -85,7 +89,7 @@ export default function Testimonials() {
                     <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
-                <p className="text-sm text-gray-700 mb-4" data-testid={`text-comment-${testimonial.id}`}>
+                <p className="text-sm text-gray-700 mb-4" data-testid={index < 6 ? `text-comment-${testimonial.id}` : undefined}>
                   "{testimonial.comment}"
                 </p>
                 <div className="flex items-center gap-3">
@@ -96,11 +100,8 @@ export default function Testimonials() {
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-semibold text-gray-900 text-sm" data-testid={`text-name-${testimonial.id}`}>
+                    <p className="font-semibold text-gray-900 text-sm" data-testid={index < 6 ? `text-name-${testimonial.id}` : undefined}>
                       {testimonial.name}
-                    </p>
-                    <p className="text-xs text-gray-500" data-testid={`text-role-${testimonial.id}`}>
-                      {testimonial.role}
                     </p>
                   </div>
                 </div>
