@@ -11,7 +11,7 @@ export default function CategoryNav() {
   const [activeCategory, setActiveCategory] = useState("pro-headshot");
 
   return (
-    <div className="w-full bg-white border-b border-gray-200" data-testid="category-nav">
+    <div className="w-full border-b border-gray-200" data-testid="category-nav">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl py-4">
         <div className="flex flex-wrap items-center gap-3">
           {categories.map((category) => (
