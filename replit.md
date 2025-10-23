@@ -7,16 +7,22 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
 ## Recent Changes
 
 **October 23, 2025**
-- Added top Navigation bar with frosted glass effect (fixed positioning, semi-transparent black background, backdrop blur)
+- Added top Navigation bar with frosted glass effect:
+  - Fixed positioning with white semi-transparent background (70% opacity) + backdrop blur
+  - Left: Diloo logo and brand name
+  - Right: Home and Feedback tabs with dynamic active states
+  - Active tab shows teal color with 2px bottom border
 - Created Upload page with two-column responsive layout:
   - Left column: Sample photo display (professional portrait in white card)
   - Right column: Upload and customization controls
   - Two upload areas (required + optional) with teal dashed borders
+  - Concise format support text: "PNG and JPG only"
   - Customization options: Background Color (5 options), Coat Material (4 options), Coat Color (5 options)
 - Implemented client-side routing with Wouter:
   - Added /upload route
   - StyleShowcase Create buttons now navigate to Upload page
   - "Back to Home" link returns to homepage
+  - Tab navigation with automatic active state tracking
 - All end-to-end tests passed for navigation flow
 
 **October 22, 2025**
@@ -156,10 +162,12 @@ Preferred communication style: Simple, everyday language.
 
 *Homepage Components:*
 - **Navigation**: Fixed top navigation bar with frosted glass effect
-  - Semi-transparent black background (70% opacity) + backdrop blur
-  - Left: Diloo logo (teal "D" square) + brand name
-  - Right: "Get Started" CTA button
-  - White border bottom with 10% opacity
+  - Semi-transparent white background (70% opacity) + backdrop blur
+  - Left: Diloo logo (teal "D" square) + dark brand name
+  - Right: Home and Feedback tabs with dynamic active states
+  - Active tab: teal text color + 2px teal bottom border
+  - Inactive tab: gray text color + hover effect
+  - Subtle gray border bottom
 - **HeroSection**: Banner.png background with dark gradient overlay, white typography
 - **CategoryNav**: 4 style categories + "More Coming Soon" text, unified gray-50 background
 - **StyleShowcase**: 8-photo responsive grid (2 cols mobile, 4 cols desktop), 3:4 aspect ratio cards
@@ -182,8 +190,9 @@ Preferred communication style: Simple, everyday language.
   - Right column: Upload and customization controls
 - **Upload Areas**: 
   - Primary upload (required): Teal dashed border, user icon, solid teal button
+  - Format support text: "PNG and JPG only"
   - Secondary upload (optional): Teal dashed border, outline user icon, outline teal button
-  - File format support: PNG and JPG
+  - Optional label for second upload area
 - **Customization Controls**:
   - Background Color selector: 5 color swatches with teal ring selection indicator
   - Coat Material selector: 4 material buttons with gray selected state
