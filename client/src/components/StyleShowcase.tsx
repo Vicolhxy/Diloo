@@ -37,7 +37,7 @@ export default function StyleShowcase() {
                 className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-110"
               />
               
-              <div className="absolute bottom-0 left-0 right-0 h-[100px] bg-black/30 backdrop-blur-md translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out flex items-center justify-center">
+              <div className="absolute bottom-0 left-0 right-0 h-[67px] bg-black/10 backdrop-blur-md translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out flex items-center justify-center">
                 <Link href={`/upload?style=${style.id}`}>
                   <Button 
                     variant="default"

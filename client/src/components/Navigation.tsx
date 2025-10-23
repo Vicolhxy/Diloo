@@ -13,7 +13,7 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" data-testid="link-home-logo">
             <div className="flex items-center gap-2 cursor-pointer hover-elevate rounded-lg px-3 py-2 -ml-3">
-              <img src={dilooLogoOriginal} alt="Diloo Logo" className="w-8 h-8" data-testid="img-logo-nav" />
+              <img src={dilooLogoOriginal} alt="Diloo Logo" className="w-6 h-6" data-testid="img-logo-nav" />
               <span className="text-gray-900 font-semibold text-lg hidden sm:inline">Diloo</span>
             </div>
           </Link>
