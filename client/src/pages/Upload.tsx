@@ -58,10 +58,13 @@ export default function Upload() {
   const primaryInputRef = useRef<HTMLInputElement>(null);
   const optionalInputRef = useRef<HTMLInputElement>(null);
 
-  const selectedStyleImage = useMemo(() => {
+  const { styleId, selectedStyleImage } = useMemo(() => {
     const params = new URLSearchParams(searchString);
     const styleId = params.get('style') || "3";
-    return styleImages[styleId as keyof typeof styleImages] || w2Img;
+    return {
+      styleId,
+      selectedStyleImage: styleImages[styleId as keyof typeof styleImages] || w2Img,
+    };
   }, [searchString]);
 
   const handleImageUpload = (
@@ -286,7 +289,7 @@ export default function Upload() {
               </div>
 
               <div className="bg-white rounded-2xl p-8" data-testid="section-cta">
-                <Link href={`/checkout?bgColor=${selectedBgColor}&material=${selectedMaterial}&coatColor=${selectedCoatColor}`}>
+                <Link href={`/checkout?style=${styleId}&bgColor=${selectedBgColor}&material=${selectedMaterial}&coatColor=${selectedCoatColor}`}>
                   <Button 
                     className="w-full bg-primary text-white hover:bg-primary/90 h-12 text-base"
                     data-testid="button-create-now"
