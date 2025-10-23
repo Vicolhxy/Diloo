@@ -103,7 +103,7 @@ export default function Upload() {
                       className="bg-primary text-white hover:bg-primary/90"
                       data-testid="button-upload-primary"
                     >
-                      Select from my device
+                      Greate Now
                     </Button>
                   </div>
 
