@@ -286,12 +286,14 @@ export default function Upload() {
               </div>
 
               <div className="bg-white rounded-2xl p-8" data-testid="section-cta">
-                <Button 
-                  className="w-full bg-primary text-white hover:bg-primary/90 h-12 text-base"
-                  data-testid="button-create-now"
-                >
-                  Create Now
-                </Button>
+                <Link href={`/checkout?bgColor=${selectedBgColor}&material=${selectedMaterial}&coatColor=${selectedCoatColor}`}>
+                  <Button 
+                    className="w-full bg-primary text-white hover:bg-primary/90 h-12 text-base"
+                    data-testid="button-create-now"
+                  >
+                    Create Now
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
