@@ -73,7 +73,7 @@ export default function Upload() {
                       <User className="w-8 h-8 text-white" />
                     </div>
                     <p className="text-gray-900 font-medium mb-1">Upload your photo</p>
-                    <p className="text-gray-500 text-sm mb-4">Supports PNG and JPG formats only</p>
+                    <p className="text-gray-500 text-sm mb-4">PNG and JPG only</p>
                     <Button 
                       className="bg-primary text-white hover:bg-primary/90"
                       data-testid="button-upload-primary"
