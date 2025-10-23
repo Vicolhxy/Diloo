@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { Link, useSearch } from "wouter";
 import { ChevronLeft, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -52,12 +52,33 @@ export default function Upload() {
   const [selectedBgColor, setSelectedBgColor] = useState(1);
   const [selectedMaterial, setSelectedMaterial] = useState(1);
   const [selectedCoatColor, setSelectedCoatColor] = useState(1);
+  const [primaryImage, setPrimaryImage] = useState<string | null>(null);
+  const [optionalImage, setOptionalImage] = useState<string | null>(null);
+  
+  const primaryInputRef = useRef<HTMLInputElement>(null);
+  const optionalInputRef = useRef<HTMLInputElement>(null);
 
   const selectedStyleImage = useMemo(() => {
     const params = new URLSearchParams(searchString);
     const styleId = params.get('style') || "3";
     return styleImages[styleId as keyof typeof styleImages] || w2Img;
   }, [searchString]);
+
+  const handleImageUpload = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    setImage: (url: string | null) => void
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.type === 'image/jpeg' || file.type === 'image/png') {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImage(e.target?.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen w-full bg-gray-50">
@@ -91,38 +112,104 @@ export default function Upload() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div 
-                    className="border-2 border-dashed border-primary rounded-xl p-8 flex flex-col items-center justify-center min-h-[280px] cursor-pointer hover:border-primary/70 transition-colors"
+                    className="border-2 border-dashed border-primary rounded-xl overflow-hidden relative group"
                     data-testid="upload-area-primary"
                   >
-                    <div className="w-16 h-16 bg-primary rounded-lg flex items-center justify-center mb-4">
-                      <User className="w-8 h-8 text-white" />
-                    </div>
-                    <p className="text-gray-900 font-medium mb-1">Upload your photo</p>
-                    <p className="text-gray-500 text-sm mb-4">PNG and JPG only</p>
-                    <Button 
-                      className="bg-primary text-white hover:bg-primary/90"
-                      data-testid="button-upload-primary"
-                    >
-                      Select from my device
-                    </Button>
+                    <input
+                      ref={primaryInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png"
+                      onChange={(e) => handleImageUpload(e, setPrimaryImage)}
+                      className="hidden"
+                      data-testid="input-file-primary"
+                    />
+                    
+                    {primaryImage ? (
+                      <div className="relative aspect-[3/4]">
+                        <img 
+                          src={primaryImage} 
+                          alt="Uploaded primary photo" 
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <Button 
+                            onClick={() => primaryInputRef.current?.click()}
+                            className="bg-white text-gray-900 hover:bg-white/90"
+                            data-testid="button-change-primary"
+                          >
+                            Change
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div 
+                        className="p-8 flex flex-col items-center justify-center min-h-[280px] cursor-pointer hover:border-primary/70 transition-colors"
+                        onClick={() => primaryInputRef.current?.click()}
+                      >
+                        <div className="w-16 h-16 bg-primary rounded-lg flex items-center justify-center mb-4">
+                          <User className="w-8 h-8 text-white" />
+                        </div>
+                        <p className="text-gray-900 font-medium mb-1">Upload your photo</p>
+                        <p className="text-gray-500 text-sm mb-4">PNG and JPG only</p>
+                        <Button 
+                          className="bg-primary text-white hover:bg-primary/90"
+                          data-testid="button-upload-primary"
+                        >
+                          Select from my device
+                        </Button>
+                      </div>
+                    )}
                   </div>
 
                   <div 
-                    className="border-2 border-dashed border-primary rounded-xl p-8 flex flex-col items-center justify-center min-h-[280px] cursor-pointer hover:border-primary/70 transition-colors"
+                    className="border-2 border-dashed border-primary rounded-xl overflow-hidden relative group"
                     data-testid="upload-area-optional"
                   >
-                    <div className="w-16 h-16 border-2 border-primary rounded-lg flex items-center justify-center mb-4">
-                      <User className="w-8 h-8 text-primary" />
-                    </div>
-                    <p className="text-gray-900 font-medium mb-1">Upload your photo</p>
-                    <p className="text-gray-500 text-sm mb-4">Optional</p>
-                    <Button 
-                      variant="outline"
-                      className="border-primary text-primary hover:bg-primary/10"
-                      data-testid="button-upload-optional"
-                    >
-                      Select from my device
-                    </Button>
+                    <input
+                      ref={optionalInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png"
+                      onChange={(e) => handleImageUpload(e, setOptionalImage)}
+                      className="hidden"
+                      data-testid="input-file-optional"
+                    />
+                    
+                    {optionalImage ? (
+                      <div className="relative aspect-[3/4]">
+                        <img 
+                          src={optionalImage} 
+                          alt="Uploaded optional photo" 
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <Button 
+                            onClick={() => optionalInputRef.current?.click()}
+                            className="bg-white text-gray-900 hover:bg-white/90"
+                            data-testid="button-change-optional"
+                          >
+                            Change
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div 
+                        className="p-8 flex flex-col items-center justify-center min-h-[280px] cursor-pointer hover:border-primary/70 transition-colors"
+                        onClick={() => optionalInputRef.current?.click()}
+                      >
+                        <div className="w-16 h-16 border-2 border-primary rounded-lg flex items-center justify-center mb-4">
+                          <User className="w-8 h-8 text-primary" />
+                        </div>
+                        <p className="text-gray-900 font-medium mb-1">Upload your photo</p>
+                        <p className="text-gray-500 text-sm mb-4">Optional</p>
+                        <Button 
+                          variant="outline"
+                          className="border-primary text-primary hover:bg-primary/10"
+                          data-testid="button-upload-optional"
+                        >
+                          Select from my device
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -195,14 +282,16 @@ export default function Upload() {
                       ))}
                     </div>
                   </div>
-
-                  <Button 
-                    className="w-full bg-primary text-white hover:bg-primary/90 h-12 text-base"
-                    data-testid="button-generate"
-                  >
-                    Select from my device
-                  </Button>
                 </div>
+              </div>
+
+              <div className="bg-white rounded-2xl p-8" data-testid="section-cta">
+                <Button 
+                  className="w-full bg-primary text-white hover:bg-primary/90 h-12 text-base"
+                  data-testid="button-create-now"
+                >
+                  Create Now
+                </Button>
               </div>
             </div>
           </div>
