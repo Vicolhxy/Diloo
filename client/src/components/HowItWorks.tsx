@@ -46,7 +46,7 @@ export default function HowItWorks() {
                 <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary/10 flex items-center justify-center mb-6">
                   <div className="relative">
                     <IconComponent className="w-8 h-8 md:w-10 md:h-10 text-primary" />
-                    <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center">
+                    <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-primary text-black text-xs font-bold flex items-center justify-center">
                       {step.id}
                     </div>
                   </div>

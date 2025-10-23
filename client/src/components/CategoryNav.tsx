@@ -19,7 +19,7 @@ export default function CategoryNav() {
               key={category.id}
               className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
                 activeCategory === category.id
-                  ? 'bg-primary text-white'
+                  ? 'bg-primary text-black font-bold'
                   : 'bg-white border border-gray-300 text-gray-700 hover:border-primary'
               }`}
               onClick={() => setActiveCategory(category.id)}

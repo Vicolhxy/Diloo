@@ -154,7 +154,7 @@ export default function Checkout() {
                               transform: 'rotate(-45deg)',
                             }}
                           >
-                            DILOO
+                            Diloo
                           </div>
                         );
                       })}
@@ -242,7 +242,7 @@ export default function Checkout() {
                       {/* Submit Button */}
                       <Button 
                         type="submit"
-                        className="w-full bg-primary text-white hover:bg-primary/90 h-12 text-base"
+                        className="w-full bg-primary text-black font-bold hover:bg-primary/90 h-12 text-base"
                         data-testid="button-pay-now"
                       >
                         Proceed to Payment
@@ -263,48 +263,54 @@ export default function Checkout() {
   // Processing State
   if (pageState === 'processing') {
     return (
-      <div className="min-h-screen w-full bg-gray-50 flex items-center justify-center">
-        <div className="max-w-2xl mx-auto px-6">
-          <div className="bg-white rounded-2xl p-12 text-center" data-testid="section-processing">
-            <div className="flex justify-center mb-6">
-              <Loader2 className="w-16 h-16 text-primary animate-spin" />
-            </div>
-            
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Payment Processing</h1>
-            
-            <p className="text-lg text-gray-600 mb-2">
-              Your payment is being processed...
-            </p>
-            
-            <p className="text-base text-gray-600 mb-8">
-              After successful payment, your photo will be sent to:{" "}
-              <span className="font-semibold text-gray-900" data-testid="text-user-email">{userEmail}</span>
-            </p>
+      <div className="min-h-screen w-full bg-gray-50">
+        <Navigation />
+        
+        <div className="pt-24 pb-12 px-6 flex items-center justify-center min-h-[calc(100vh-80px)]">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white rounded-2xl p-12 text-center" data-testid="section-processing">
+              <div className="flex justify-center mb-6">
+                <Loader2 className="w-16 h-16 text-primary animate-spin" />
+              </div>
+              
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">Payment Processing</h1>
+              
+              <p className="text-lg text-gray-600 mb-2">
+                Your payment is being processed...
+              </p>
+              
+              <p className="text-base text-gray-600 mb-8">
+                After successful payment, your photo will be sent to:{" "}
+                <span className="font-semibold text-gray-900" data-testid="text-user-email">{userEmail}</span>
+              </p>
 
-            <div className="border-t border-gray-200 pt-8 mt-8">
-              <p className="text-sm text-gray-500 mb-4">Test Payment Status (Development Only)</p>
-              <div className="flex gap-4 justify-center">
-                <Button
-                  onClick={handleSuccess}
-                  className="bg-green-600 hover:bg-green-700 text-white"
-                  data-testid="button-test-success"
-                >
-                  <CheckCircle2 className="w-5 h-5 mr-2" />
-                  Simulate Success
-                </Button>
-                <Button
-                  onClick={handleFailure}
-                  variant="destructive"
-                  className="bg-red-600 hover:bg-red-700"
-                  data-testid="button-test-failure"
-                >
-                  <XCircle className="w-5 h-5 mr-2" />
-                  Simulate Failure
-                </Button>
+              <div className="border-t border-gray-200 pt-8 mt-8">
+                <p className="text-sm text-gray-500 mb-4">Test Payment Status (Development Only)</p>
+                <div className="flex gap-4 justify-center">
+                  <Button
+                    onClick={handleSuccess}
+                    className="bg-green-600 hover:bg-green-700 text-white"
+                    data-testid="button-test-success"
+                  >
+                    <CheckCircle2 className="w-5 h-5 mr-2" />
+                    Simulate Success
+                  </Button>
+                  <Button
+                    onClick={handleFailure}
+                    variant="destructive"
+                    className="bg-red-600 hover:bg-red-700"
+                    data-testid="button-test-failure"
+                  >
+                    <XCircle className="w-5 h-5 mr-2" />
+                    Simulate Failure
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <Footer />
       </div>
     );
   }
@@ -312,38 +318,44 @@ export default function Checkout() {
   // Success State
   if (pageState === 'success') {
     return (
-      <div className="min-h-screen w-full bg-gray-50 flex items-center justify-center">
-        <div className="max-w-2xl mx-auto px-6">
-          <div className="bg-white rounded-2xl p-12 text-center" data-testid="section-success">
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
-                <CheckCircle2 className="w-12 h-12 text-green-600" />
+      <div className="min-h-screen w-full bg-gray-50">
+        <Navigation />
+        
+        <div className="pt-24 pb-12 px-6 flex items-center justify-center min-h-[calc(100vh-80px)]">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white rounded-2xl p-12 text-center" data-testid="section-success">
+              <div className="flex justify-center mb-6">
+                <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
+                  <CheckCircle2 className="w-12 h-12 text-green-600" />
+                </div>
               </div>
-            </div>
-            
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Payment Successful!</h1>
-            
-            <p className="text-lg text-gray-600 mb-4">
-              Thank you for your purchase. Your payment has been processed successfully.
-            </p>
-            
-            <div className="bg-primary/10 rounded-xl p-6 mb-8">
-              <p className="text-base text-gray-700">
-                Your high-resolution photo without watermark has been sent to:
+              
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">Payment Successful!</h1>
+              
+              <p className="text-lg text-gray-600 mb-4">
+                Thank you for your purchase. Your payment has been processed successfully.
               </p>
-              <p className="text-lg font-semibold text-gray-900 mt-2" data-testid="text-success-email">
-                {userEmail}
-              </p>
-              <p className="text-sm text-gray-600 mt-4">
-                Please check your inbox (and spam folder) within the next few minutes.
-              </p>
-            </div>
+              
+              <div className="bg-primary/10 rounded-xl p-6 mb-8">
+                <p className="text-base text-gray-700">
+                  Your high-resolution photo without watermark has been sent to:
+                </p>
+                <p className="text-lg font-semibold text-gray-900 mt-2" data-testid="text-success-email">
+                  {userEmail}
+                </p>
+                <p className="text-sm text-gray-600 mt-4">
+                  Please check your inbox (and spam folder) within the next few minutes.
+                </p>
+              </div>
 
-            <p className="text-sm text-gray-500">
-              You can safely close this page now.
-            </p>
+              <p className="text-sm text-gray-500">
+                You can safely close this page now.
+              </p>
+            </div>
           </div>
         </div>
+
+        <Footer />
       </div>
     );
   }
@@ -351,31 +363,37 @@ export default function Checkout() {
   // Failure State
   if (pageState === 'failure') {
     return (
-      <div className="min-h-screen w-full bg-gray-50 flex items-center justify-center">
-        <div className="max-w-2xl mx-auto px-6">
-          <div className="bg-white rounded-2xl p-12 text-center" data-testid="section-failure">
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center">
-                <XCircle className="w-12 h-12 text-red-600" />
+      <div className="min-h-screen w-full bg-gray-50">
+        <Navigation />
+        
+        <div className="pt-24 pb-12 px-6 flex items-center justify-center min-h-[calc(100vh-80px)]">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white rounded-2xl p-12 text-center" data-testid="section-failure">
+              <div className="flex justify-center mb-6">
+                <div className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center">
+                  <XCircle className="w-12 h-12 text-red-600" />
+                </div>
               </div>
-            </div>
-            
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Payment Failed</h1>
-            
-            <p className="text-lg text-gray-600 mb-8">
-              We're sorry, but your payment could not be processed. Please try again.
-            </p>
+              
+              <h1 className="text-3xl font-bold text-gray-900 mb-4">Payment Failed</h1>
+              
+              <p className="text-lg text-gray-600 mb-8">
+                We're sorry, but your payment could not be processed. Please try again.
+              </p>
 
-            <Button
-              onClick={handleBackToCheckout}
-              className="bg-primary text-white hover:bg-primary/90"
-              data-testid="button-back-to-checkout"
-            >
-              <ChevronLeft className="w-5 h-5 mr-2" />
-              Back to Checkout
-            </Button>
+              <Button
+                onClick={handleBackToCheckout}
+                className="bg-primary text-black font-bold hover:bg-primary/90"
+                data-testid="button-back-to-checkout"
+              >
+                <ChevronLeft className="w-5 h-5 mr-2" />
+                Back to Checkout
+              </Button>
+            </div>
           </div>
         </div>
+
+        <Footer />
       </div>
     );
   }

@@ -155,7 +155,7 @@ export default function Upload() {
                         <p className="text-gray-900 font-medium mb-1">Upload your photo</p>
                         <p className="text-gray-500 text-sm mb-4">PNG and JPG only</p>
                         <Button 
-                          className="bg-primary text-white hover:bg-primary/90"
+                          className="bg-primary text-black font-bold hover:bg-primary/90"
                           data-testid="button-upload-primary"
                         >
                           Select from my device
@@ -291,7 +291,7 @@ export default function Upload() {
               <div className="bg-white rounded-2xl p-8" data-testid="section-cta">
                 <Link href={`/checkout?style=${styleId}&bgColor=${selectedBgColor}&material=${selectedMaterial}&coatColor=${selectedCoatColor}`}>
                   <Button 
-                    className="w-full bg-primary text-white hover:bg-primary/90 h-12 text-base"
+                    className="w-full bg-primary text-black font-bold hover:bg-primary/90 h-12 text-base"
                     data-testid="button-create-now"
                   >
                     Create Now
