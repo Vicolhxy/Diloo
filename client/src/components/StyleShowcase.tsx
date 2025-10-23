@@ -41,7 +41,7 @@ export default function StyleShowcase() {
                 <Link href={`/upload?style=${style.id}`}>
                   <Button 
                     variant="default"
-                    className="bg-white text-gray-900"
+                    className="bg-primary text-white hover:bg-primary/90"
                     data-testid={`button-create-${style.id}`}
                   >
                     Create
