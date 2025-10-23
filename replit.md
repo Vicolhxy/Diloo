@@ -7,6 +7,22 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
 ## Recent Changes
 
 **October 23, 2025 (Latest)**
+- Updated StyleShowcase Create buttons to use primary teal background (was white)
+- Implemented full image upload functionality on Upload page:
+  - Two upload areas (primary required, optional) support JPG and PNG files
+  - Click "Select from my device" button to choose files via native file picker
+  - FileReader API converts uploaded images to data URLs for preview
+  - Uploaded images display with 3:4 aspect ratio
+  - Hover over uploaded image shows "Change" button for re-selection
+  - Primary upload: solid teal icon and button
+  - Optional upload: outlined teal icon and button
+- Restructured Upload page layout into three independent sections:
+  - Upload Your Photo: two upload areas with file inputs
+  - Customize Your Photo: background color, coat material, coat color selectors
+  - Call-to-Action: separate section with "Create Now" button (moved from Customize section)
+- All end-to-end tests passed: verified button colors, layout structure, and upload UI
+
+**October 23, 2025 (Earlier)**
 - Reduced Navigation bar transparency to 14% (from 70%):
   - Changed from bg-white/70 to bg-white/[0.14] for more transparent frosted glass effect
   - Maintains backdrop-blur-md for proper frosting
