@@ -5,7 +5,7 @@ export default function Navigation() {
 
   return (
     <nav 
-      className="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-md border-b border-gray-200/50"
+      className="fixed top-0 left-0 right-0 z-50 bg-white/[0.14] backdrop-blur-md border-b border-gray-200/50"
       data-testid="nav-bar"
     >
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">

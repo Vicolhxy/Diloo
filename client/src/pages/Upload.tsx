@@ -1,10 +1,28 @@
-import { useState } from "react";
-import { Link } from "wouter";
+import { useState, useMemo } from "react";
+import { Link, useSearch } from "wouter";
 import { ChevronLeft, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import w1Img from "@assets/W1_1761159011555.png";
+import y1Img from "@assets/Y1_1761159011566.png";
 import w2Img from "@assets/W2_1761159011568.png";
+import b1Img from "@assets/B1_1761159011569.png";
+import y2Img from "@assets/Y2_1761159011570.png";
+import b2Img from "@assets/B2_1761159011571.png";
+import w3Img from "@assets/W3_1761159011572.png";
+import i1Img from "@assets/I1_1761159011573.png";
+
+const styleImages = {
+  "1": w1Img,
+  "2": y1Img,
+  "3": w2Img,
+  "4": b1Img,
+  "5": y2Img,
+  "6": b2Img,
+  "7": w3Img,
+  "8": i1Img,
+};
 
 const backgroundColors = [
   { id: 1, color: "bg-gray-400", hex: "#9CA3AF" },
@@ -30,9 +48,16 @@ const materials = [
 ];
 
 export default function Upload() {
+  const searchString = useSearch();
   const [selectedBgColor, setSelectedBgColor] = useState(1);
   const [selectedMaterial, setSelectedMaterial] = useState(1);
   const [selectedCoatColor, setSelectedCoatColor] = useState(1);
+
+  const selectedStyleImage = useMemo(() => {
+    const params = new URLSearchParams(searchString);
+    const styleId = params.get('style') || "3";
+    return styleImages[styleId as keyof typeof styleImages] || w2Img;
+  }, [searchString]);
 
   return (
     <div className="min-h-screen w-full bg-gray-50">
@@ -52,8 +77,8 @@ export default function Upload() {
               <h2 className="text-xl font-semibold mb-6 text-gray-900">Sample Photo</h2>
               <div className="aspect-[3/4] rounded-xl overflow-hidden bg-gray-100">
                 <img 
-                  src={w2Img} 
-                  alt="Sample professional photo" 
+                  src={selectedStyleImage} 
+                  alt="Selected style sample photo" 
                   className="w-full h-full object-cover"
                   data-testid="img-sample-photo"
                 />
