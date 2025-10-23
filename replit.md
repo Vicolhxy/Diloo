@@ -6,9 +6,22 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
 
 ## Recent Changes
 
-**October 23, 2025**
+**October 23, 2025 (Latest)**
+- Reduced Navigation bar transparency to 14% (from 70%):
+  - Changed from bg-white/70 to bg-white/[0.14] for more transparent frosted glass effect
+  - Maintains backdrop-blur-md for proper frosting
+- Implemented dynamic style selection flow:
+  - StyleShowcase Create buttons now pass style ID via URL parameter (?style=1-8)
+  - Upload page displays the selected style image based on query parameter
+  - Uses wouter's useSearch() hook for SSR-compatible URL parsing
+  - useMemo reactively computes image when searchString changes
+  - Image mapping: style 1→W1, 2→Y1, 3→W2, 4→B1, 5→Y2, 6→B2, 7→W3, 8→I1
+  - Defaults to style 3 (W2) when no parameter present
+- All end-to-end tests passed: verified all 8 styles show correct unique images on Upload page
+
+**October 23, 2025 (Earlier)**
 - Added top Navigation bar with frosted glass effect:
-  - Fixed positioning with white semi-transparent background (70% opacity) + backdrop blur
+  - Fixed positioning with white semi-transparent background + backdrop blur
   - Left: Diloo logo and brand name
   - Right: Home and Feedback tabs with dynamic active states
   - Active tab shows teal color with 2px bottom border
@@ -20,10 +33,8 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
   - Customization options: Background Color (5 options), Coat Material (4 options), Coat Color (5 options)
 - Implemented client-side routing with Wouter:
   - Added /upload route
-  - StyleShowcase Create buttons now navigate to Upload page
   - "Back to Home" link returns to homepage
   - Tab navigation with automatic active state tracking
-- All end-to-end tests passed for navigation flow
 
 **October 22, 2025**
 - Implemented horizontal auto-scrolling testimonials carousel with infinite loop animation
