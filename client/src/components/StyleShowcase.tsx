@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 import w1Img from "@assets/W1_1761159011555.png";
 import y1Img from "@assets/Y1_1761159011566.png";
 import w2Img from "@assets/W2_1761159011568.png";
@@ -37,13 +38,15 @@ export default function StyleShowcase() {
               />
               
               <div className="absolute bottom-0 left-0 right-0 h-[100px] bg-black/60 backdrop-blur-sm translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out flex items-center justify-center">
-                <Button 
-                  variant="default"
-                  className="bg-white text-gray-900"
-                  data-testid={`button-create-${style.id}`}
-                >
-                  Create
-                </Button>
+                <Link href="/upload">
+                  <Button 
+                    variant="default"
+                    className="bg-white text-gray-900"
+                    data-testid={`button-create-${style.id}`}
+                  >
+                    Create
+                  </Button>
+                </Link>
               </div>
             </div>
           ))}

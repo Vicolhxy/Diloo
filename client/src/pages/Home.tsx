@@ -1,3 +1,4 @@
+import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import CategoryNav from "@/components/CategoryNav";
 import StyleShowcase from "@/components/StyleShowcase";
@@ -9,6 +10,7 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <div className="min-h-screen w-full bg-white">
+      <Navigation />
       <HeroSection />
       <CategoryNav />
       <StyleShowcase />
