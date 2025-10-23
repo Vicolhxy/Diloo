@@ -7,6 +7,23 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
 ## Recent Changes
 
 **October 23, 2025 (Latest)**
+- Redesigned Checkout page for Stripe payment integration (preparation):
+  - Removed complex payment form (will use Stripe hosted payment in future)
+  - Left side: Displays selected style photo with improved watermark
+    - Watermark density reduced from 20 to 12 elements for better aesthetics
+    - 25% vertical spacing, 33% horizontal spacing for complete coverage
+    - 20% opacity white text with -45deg rotation
+  - Right side: Simplified layout with parameters, email input, price, payment button
+  - Implemented state management with 4 states:
+    - **Checkout**: Initial state with photo preview, parameters, email form
+    - **Processing**: Shows payment processing message, user email, test buttons (green success / red failure)
+    - **Success**: Confirmation page with email delivery message
+    - **Failure**: Error page with "Back to Checkout" button
+  - Upload page "Create Now" button now passes style parameter to checkout
+  - Email validation using Zod schema
+  - All states include proper test IDs for testing
+
+**October 23, 2025 (Earlier)**
 - Updated StyleShowcase Create buttons to use primary teal background (was white)
 - Implemented full image upload functionality on Upload page:
   - Two upload areas (primary required, optional) support JPG and PNG files
