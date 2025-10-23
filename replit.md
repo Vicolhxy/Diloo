@@ -6,6 +6,19 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
 
 ## Recent Changes
 
+**October 23, 2025**
+- Added top Navigation bar with frosted glass effect (fixed positioning, semi-transparent black background, backdrop blur)
+- Created Upload page with two-column responsive layout:
+  - Left column: Sample photo display (professional portrait in white card)
+  - Right column: Upload and customization controls
+  - Two upload areas (required + optional) with teal dashed borders
+  - Customization options: Background Color (5 options), Coat Material (4 options), Coat Color (5 options)
+- Implemented client-side routing with Wouter:
+  - Added /upload route
+  - StyleShowcase Create buttons now navigate to Upload page
+  - "Back to Home" link returns to homepage
+- All end-to-end tests passed for navigation flow
+
 **October 22, 2025**
 - Implemented horizontal auto-scrolling testimonials carousel with infinite loop animation
 - Removed job titles from testimonial cards (now showing only avatar, name, rating, and comment)
@@ -29,7 +42,9 @@ Preferred communication style: Simple, everyday language.
 **Framework & Build System**
 - **React 18** with TypeScript for type-safe component development
 - **Vite** as the build tool and development server for fast HMR (Hot Module Replacement)
-- **Wouter** for client-side routing (lightweight alternative to React Router)
+- **Wouter** for client-side routing with two main routes:
+  - `/` - Homepage with hero, style showcase, testimonials
+  - `/upload` - Photo upload and customization page
 - **TanStack Query (React Query)** for server state management and data fetching
 
 **UI Component System**
@@ -138,12 +153,19 @@ Preferred communication style: Simple, everyday language.
 - Images referenced via Vite's asset resolution (`@assets` alias)
 
 **UI Components & Features**
+
+*Homepage Components:*
+- **Navigation**: Fixed top navigation bar with frosted glass effect
+  - Semi-transparent black background (70% opacity) + backdrop blur
+  - Left: Diloo logo (teal "D" square) + brand name
+  - Right: "Get Started" CTA button
+  - White border bottom with 10% opacity
 - **HeroSection**: Banner.png background with dark gradient overlay, white typography
 - **CategoryNav**: 4 style categories + "More Coming Soon" text, unified gray-50 background
 - **StyleShowcase**: 8-photo responsive grid (2 cols mobile, 4 cols desktop), 3:4 aspect ratio cards
   - Interactive hover effects: image zoom (110% scale)
   - Bottom overlay (100px) with semi-transparent black background
-  - "Create" button appears on hover, centered in overlay
+  - "Create" button appears on hover, navigates to /upload page
   - Smooth transitions using GPU-accelerated transforms
 - **HowItWorks**: 3-step process cards with icons and numbered badges
 - **WhyChooseUs**: Teal background section with 3 feature highlights
@@ -153,6 +175,21 @@ Preferred communication style: Simple, everyday language.
   - Shows avatar, name, 5-star rating, and comment (no job titles)
   - Duplicated array for seamless loop
 - **Footer**: Teal background with logo, brand name, slogan, and copyright
+
+*Upload Page Components:*
+- **Upload Layout**: Two-column responsive layout (single column mobile, dual column desktop)
+  - Left column: Sample Photo card showing professional portrait in 3:4 aspect ratio
+  - Right column: Upload and customization controls
+- **Upload Areas**: 
+  - Primary upload (required): Teal dashed border, user icon, solid teal button
+  - Secondary upload (optional): Teal dashed border, outline user icon, outline teal button
+  - File format support: PNG and JPG
+- **Customization Controls**:
+  - Background Color selector: 5 color swatches with teal ring selection indicator
+  - Coat Material selector: 4 material buttons with gray selected state
+  - Coat Color selector: 5 color swatches with teal ring selection indicator
+  - Bottom action button: Full-width teal button
+- **Back Navigation**: Top-left "Back to Home" link with chevron icon
 
 **Configuration Philosophy**
 - Path aliases configured in both `tsconfig.json` and `vite.config.ts` for consistency
