@@ -1,6 +1,6 @@
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { Link, useSearch } from "wouter";
-import { User } from "lucide-react";
+import { User, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import StyleTabNav from "@/components/StyleTabNav";
@@ -14,15 +14,17 @@ import b2Img from "@assets/B2_1761159011571.png";
 import w3Img from "@assets/W3_1761159011572.png";
 import i1Img from "@assets/I1_1761159011573.png";
 
-const styleImages = {
-  "1": w1Img,
-  "2": y1Img,
-  "3": w2Img,
-  "4": b1Img,
-  "5": y2Img,
-  "6": b2Img,
-  "7": w3Img,
-  "8": i1Img,
+// Sample images organized by style ID
+// Each style can have multiple sample images for carousel
+const styleImages: Record<string, string[]> = {
+  "1": [w1Img],
+  "2": [y1Img],
+  "3": [w2Img],
+  "4": [b1Img],
+  "5": [y2Img],
+  "6": [b2Img],
+  "7": [w3Img],
+  "8": [i1Img],
 };
 
 const backgroundColors = [
@@ -49,28 +51,28 @@ const materials = [
 ];
 
 const compositions = [
-  { value: "waist-up", label: "腰部以上" },
-  { value: "shoulder-up", label: "肩部以上" },
+  { value: "waist-up", label: "Waist Up" },
+  { value: "shoulder-up", label: "Shoulder Up" },
 ];
 
 const poses = [
-  { value: "hands-down", label: "双手自然垂下" },
-  { value: "hands-pocket", label: "双手插兜" },
-  { value: "arms-crossed", label: "双臂环抱于胸前" },
-  { value: "hand-chin", label: "单手摸下巴" },
-  { value: "buttoning", label: "系扣子" },
-  { value: "hand-collar", label: "摸衣领" },
+  { value: "hands-down", label: "Hands Down" },
+  { value: "hands-pocket", label: "Hands in Pockets" },
+  { value: "arms-crossed", label: "Arms Crossed" },
+  { value: "hand-chin", label: "Hand on Chin" },
+  { value: "buttoning", label: "Buttoning" },
+  { value: "hand-collar", label: "Touching Collar" },
 ];
 
 const eyeDirections = [
-  { value: "straight", label: "正视" },
-  { value: "slight-side", label: "微微侧视" },
+  { value: "straight", label: "Straight" },
+  { value: "slight-side", label: "Slight Side" },
 ];
 
 const expressions = [
-  { value: "neutral", label: "面无表情" },
-  { value: "smile", label: "微笑" },
-  { value: "laugh", label: "大笑" },
+  { value: "neutral", label: "Neutral" },
+  { value: "smile", label: "Smile" },
+  { value: "laugh", label: "Laugh" },
 ];
 
 export default function Upload() {
@@ -80,6 +82,7 @@ export default function Upload() {
   const [selectedCoatColor, setSelectedCoatColor] = useState(1);
   const [primaryImage, setPrimaryImage] = useState<string | null>(null);
   const [optionalImage, setOptionalImage] = useState<string | null>(null);
+  const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
   
   // New customization options
   const [selectedComposition, setSelectedComposition] = useState<string | null>(null);
@@ -90,14 +93,29 @@ export default function Upload() {
   const primaryInputRef = useRef<HTMLInputElement>(null);
   const optionalInputRef = useRef<HTMLInputElement>(null);
 
-  const { styleId, selectedStyleImage } = useMemo(() => {
+  const { styleId, styleSampleImages } = useMemo(() => {
     const params = new URLSearchParams(searchString);
     const styleId = params.get('style') || "3";
+    const images = styleImages[styleId] || styleImages["3"];
     return {
       styleId,
-      selectedStyleImage: styleImages[styleId as keyof typeof styleImages] || w2Img,
+      styleSampleImages: images,
     };
   }, [searchString]);
+
+  // Reset carousel index when style changes
+  useEffect(() => {
+    setCurrentCarouselIndex(0);
+  }, [styleId]);
+
+  // Auto-rotate carousel every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentCarouselIndex((prev) => (prev + 1) % styleSampleImages.length);
+    }, 2000);
+    
+    return () => clearInterval(interval);
+  }, [styleSampleImages.length]);
 
   const handleImageUpload = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -125,13 +143,32 @@ export default function Upload() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="bg-white rounded-2xl p-8" data-testid="section-sample-photo">
               <h2 className="text-xl font-semibold mb-6 text-gray-900">Sample Photo</h2>
-              <div className="aspect-[3/4] rounded-xl overflow-hidden bg-gray-100">
-                <img 
-                  src={selectedStyleImage} 
-                  alt="Selected style sample photo" 
-                  className="w-full h-full object-cover"
-                  data-testid="img-sample-photo"
-                />
+              <div className="relative">
+                <div className="aspect-[3/4] rounded-xl overflow-hidden bg-gray-100">
+                  <img 
+                    src={styleSampleImages[currentCarouselIndex]} 
+                    alt={`Sample photo ${currentCarouselIndex + 1}`}
+                    className="w-full h-full object-cover transition-opacity duration-500"
+                    data-testid="img-sample-photo"
+                  />
+                </div>
+                
+                {/* Dots indicator */}
+                <div className="flex justify-center gap-2 mt-4" data-testid="carousel-dots">
+                  {styleSampleImages.map((_: string, index: number) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentCarouselIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        index === currentCarouselIndex 
+                          ? 'bg-primary w-6' 
+                          : 'bg-gray-300 hover:bg-gray-400'
+                      }`}
+                      data-testid={`carousel-dot-${index}`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -160,14 +197,17 @@ export default function Upload() {
                           alt="Uploaded primary photo" 
                           className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                          <Button 
-                            onClick={() => primaryInputRef.current?.click()}
-                            className="bg-white text-gray-900 hover:bg-white/90"
-                            data-testid="button-change-primary"
-                          >
-                            Change
-                          </Button>
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="absolute bottom-0 left-0 right-0 bg-black/90 p-4 flex items-center justify-center">
+                            <button
+                              onClick={() => setPrimaryImage(null)}
+                              className="text-white hover:text-red-400 transition-colors"
+                              data-testid="button-delete-primary"
+                              aria-label="Delete primary photo"
+                            >
+                              <X className="w-6 h-6" />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     ) : (
@@ -210,14 +250,17 @@ export default function Upload() {
                           alt="Uploaded optional photo" 
                           className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                          <Button 
-                            onClick={() => optionalInputRef.current?.click()}
-                            className="bg-white text-gray-900 hover:bg-white/90"
-                            data-testid="button-change-optional"
-                          >
-                            Change
-                          </Button>
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="absolute bottom-0 left-0 right-0 bg-black/90 p-4 flex items-center justify-center">
+                            <button
+                              onClick={() => setOptionalImage(null)}
+                              className="text-white hover:text-red-400 transition-colors"
+                              data-testid="button-delete-optional"
+                              aria-label="Delete optional photo"
+                            >
+                              <X className="w-6 h-6" />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     ) : (
@@ -315,7 +358,7 @@ export default function Upload() {
                   {/* Composition */}
                   <div>
                     <label className="block text-sm font-medium text-gray-900 mb-3">
-                      构图 <span className="text-gray-500 text-xs">(可选)</span>
+                      Composition <span className="text-gray-500 text-xs">(Optional)</span>
                     </label>
                     <div className="flex gap-3">
                       {compositions.map((comp) => (
@@ -323,10 +366,16 @@ export default function Upload() {
                           key={comp.value}
                           variant={selectedComposition === comp.value ? "default" : "outline"}
                           onClick={() => {
-                            setSelectedComposition(comp.value);
-                            // Reset pose if shoulder-up is selected
-                            if (comp.value === "shoulder-up") {
-                              setSelectedPose(null);
+                            if (selectedComposition === comp.value) {
+                              // Deselect if already selected
+                              setSelectedComposition(null);
+                            } else {
+                              // Select new option
+                              setSelectedComposition(comp.value);
+                              // Reset pose if shoulder-up is selected
+                              if (comp.value === "shoulder-up") {
+                                setSelectedPose(null);
+                              }
                             }
                           }}
                           className={
@@ -345,9 +394,9 @@ export default function Upload() {
                   {/* Pose */}
                   <div>
                     <label className="block text-sm font-medium text-gray-900 mb-3">
-                      姿势 <span className="text-gray-500 text-xs">(可选)</span>
+                      Pose <span className="text-gray-500 text-xs">(Optional)</span>
                       {selectedComposition === "shoulder-up" && (
-                        <span className="text-gray-400 text-xs ml-2">(构图选择"肩部以上"时不可选)</span>
+                        <span className="text-gray-400 text-xs ml-2">(Disabled when Shoulder Up is selected)</span>
                       )}
                     </label>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -355,7 +404,13 @@ export default function Upload() {
                         <Button
                           key={pose.value}
                           variant={selectedPose === pose.value ? "default" : "outline"}
-                          onClick={() => setSelectedPose(pose.value)}
+                          onClick={() => {
+                            if (selectedPose === pose.value) {
+                              setSelectedPose(null);
+                            } else {
+                              setSelectedPose(pose.value);
+                            }
+                          }}
                           disabled={selectedComposition === "shoulder-up"}
                           className={
                             selectedPose === pose.value
@@ -373,14 +428,20 @@ export default function Upload() {
                   {/* Eye Direction */}
                   <div>
                     <label className="block text-sm font-medium text-gray-900 mb-3">
-                      眼睛方向 <span className="text-gray-500 text-xs">(可选)</span>
+                      Eye Direction <span className="text-gray-500 text-xs">(Optional)</span>
                     </label>
                     <div className="flex gap-3">
                       {eyeDirections.map((eye) => (
                         <Button
                           key={eye.value}
                           variant={selectedEyeDirection === eye.value ? "default" : "outline"}
-                          onClick={() => setSelectedEyeDirection(eye.value)}
+                          onClick={() => {
+                            if (selectedEyeDirection === eye.value) {
+                              setSelectedEyeDirection(null);
+                            } else {
+                              setSelectedEyeDirection(eye.value);
+                            }
+                          }}
                           className={
                             selectedEyeDirection === eye.value
                               ? "bg-primary text-black font-bold hover:bg-primary/90"
@@ -397,14 +458,20 @@ export default function Upload() {
                   {/* Expression */}
                   <div>
                     <label className="block text-sm font-medium text-gray-900 mb-3">
-                      表情 <span className="text-gray-500 text-xs">(可选)</span>
+                      Expression <span className="text-gray-500 text-xs">(Optional)</span>
                     </label>
                     <div className="flex gap-3">
                       {expressions.map((expr) => (
                         <Button
                           key={expr.value}
                           variant={selectedExpression === expr.value ? "default" : "outline"}
-                          onClick={() => setSelectedExpression(expr.value)}
+                          onClick={() => {
+                            if (selectedExpression === expr.value) {
+                              setSelectedExpression(null);
+                            } else {
+                              setSelectedExpression(expr.value);
+                            }
+                          }}
                           className={
                             selectedExpression === expr.value
                               ? "bg-primary text-black font-bold hover:bg-primary/90"
@@ -421,14 +488,24 @@ export default function Upload() {
               </div>
 
               <div className="bg-white rounded-2xl p-8" data-testid="section-cta">
-                <Link href={`/checkout?style=${styleId}&bgColor=${selectedBgColor}&material=${selectedMaterial}&coatColor=${selectedCoatColor}${selectedComposition ? `&composition=${selectedComposition}` : ''}${selectedPose ? `&pose=${selectedPose}` : ''}${selectedEyeDirection ? `&eyeDirection=${selectedEyeDirection}` : ''}${selectedExpression ? `&expression=${selectedExpression}` : ''}`}>
+                {(primaryImage || optionalImage) ? (
+                  <Link href={`/checkout?style=${styleId}&bgColor=${selectedBgColor}&material=${selectedMaterial}&coatColor=${selectedCoatColor}${selectedComposition ? `&composition=${selectedComposition}` : ''}${selectedPose ? `&pose=${selectedPose}` : ''}${selectedEyeDirection ? `&eyeDirection=${selectedEyeDirection}` : ''}${selectedExpression ? `&expression=${selectedExpression}` : ''}`}>
+                    <Button 
+                      className="w-full bg-primary text-black font-bold hover:bg-primary/90 h-12 text-base"
+                      data-testid="button-create-now"
+                    >
+                      Create Now
+                    </Button>
+                  </Link>
+                ) : (
                   <Button 
-                    className="w-full bg-primary text-black font-bold hover:bg-primary/90 h-12 text-base"
+                    disabled
+                    className="w-full bg-gray-300 text-gray-500 h-12 text-base cursor-not-allowed"
                     data-testid="button-create-now"
                   >
                     Create Now
                   </Button>
-                </Link>
+                )}
               </div>
             </div>
           </div>

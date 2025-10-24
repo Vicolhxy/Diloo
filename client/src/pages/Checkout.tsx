@@ -55,28 +55,28 @@ const coatColors = [
 
 // Labels for new customization options
 const compositionLabels: Record<string, string> = {
-  "waist-up": "腰部以上",
-  "shoulder-up": "肩部以上",
+  "waist-up": "Waist Up",
+  "shoulder-up": "Shoulder Up",
 };
 
 const poseLabels: Record<string, string> = {
-  "hands-down": "双手自然垂下",
-  "hands-pocket": "双手插兜",
-  "arms-crossed": "双臂环抱于胸前",
-  "hand-chin": "单手摸下巴",
-  "buttoning": "系扣子",
-  "hand-collar": "摸衣领",
+  "hands-down": "Hands Down",
+  "hands-pocket": "Hands in Pockets",
+  "arms-crossed": "Arms Crossed",
+  "hand-chin": "Hand on Chin",
+  "buttoning": "Buttoning",
+  "hand-collar": "Touching Collar",
 };
 
 const eyeDirectionLabels: Record<string, string> = {
-  "straight": "正视",
-  "slight-side": "微微侧视",
+  "straight": "Straight",
+  "slight-side": "Slight Side",
 };
 
 const expressionLabels: Record<string, string> = {
-  "neutral": "面无表情",
-  "smile": "微笑",
-  "laugh": "大笑",
+  "neutral": "Neutral",
+  "smile": "Smile",
+  "laugh": "Laugh",
 };
 
 const emailSchema = z.object({
@@ -288,7 +288,7 @@ export default function Checkout() {
                       {/* Selected Options Summary */}
                       {(composition || pose || eyeDirection || expression) && (
                         <div className="p-4 bg-gray-50 rounded-xl" data-testid="section-options-summary">
-                          <h3 className="text-sm font-medium text-gray-900 mb-3">已选选项</h3>
+                          <h3 className="text-sm font-medium text-gray-900 mb-3">Selected Options</h3>
                           <div className="flex flex-wrap gap-2">
                             {composition && (
                               <Badge 
@@ -296,7 +296,7 @@ export default function Checkout() {
                                 className="flex items-center gap-1"
                                 data-testid={`badge-composition-${composition}`}
                               >
-                                <span>构图: {compositionLabels[composition]}</span>
+                                <span>Composition: {compositionLabels[composition]}</span>
                                 <button
                                   type="button"
                                   onClick={() => removeOption('composition')}
@@ -314,7 +314,7 @@ export default function Checkout() {
                                 className="flex items-center gap-1"
                                 data-testid={`badge-pose-${pose}`}
                               >
-                                <span>姿势: {poseLabels[pose]}</span>
+                                <span>Pose: {poseLabels[pose]}</span>
                                 <button
                                   type="button"
                                   onClick={() => removeOption('pose')}
@@ -332,7 +332,7 @@ export default function Checkout() {
                                 className="flex items-center gap-1"
                                 data-testid={`badge-eye-direction-${eyeDirection}`}
                               >
-                                <span>眼睛方向: {eyeDirectionLabels[eyeDirection]}</span>
+                                <span>Eye Direction: {eyeDirectionLabels[eyeDirection]}</span>
                                 <button
                                   type="button"
                                   onClick={() => removeOption('eyeDirection')}
@@ -350,7 +350,7 @@ export default function Checkout() {
                                 className="flex items-center gap-1"
                                 data-testid={`badge-expression-${expression}`}
                               >
-                                <span>表情: {expressionLabels[expression]}</span>
+                                <span>Expression: {expressionLabels[expression]}</span>
                                 <button
                                   type="button"
                                   onClick={() => removeOption('expression')}
@@ -377,14 +377,14 @@ export default function Checkout() {
 
                       {/* Privacy Policy Agreement */}
                       <p className="text-xs text-gray-500 text-center" data-testid="text-privacy-notice">
-                        点击"Proceed to Payment"即表示您同意我们的{" "}
+                        By clicking 'Proceed to Payment' you agree to our{" "}
                         <a 
                           href="#" 
                           onClick={(e) => e.preventDefault()}
                           className="text-primary hover:underline"
                           data-testid="link-privacy-policy"
                         >
-                          隐私协议
+                          Privacy Policy
                         </a>
                       </p>
                     </form>
