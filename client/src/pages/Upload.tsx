@@ -15,16 +15,12 @@ import w3Img from "@assets/W3_1761159011572.png";
 import i1Img from "@assets/I1_1761159011573.png";
 
 // Sample images organized by style ID
-// Each style can have multiple sample images for carousel
+// Each style category has multiple sample images for carousel
 const styleImages: Record<string, string[]> = {
-  "1": [w1Img],
-  "2": [y1Img],
-  "3": [w2Img],
-  "4": [b1Img],
-  "5": [y2Img],
-  "6": [b2Img],
-  "7": [w3Img],
-  "8": [i1Img],
+  "1": [w1Img, y1Img], // Pro Headshot
+  "2": [w2Img, b1Img], // B&W Portrait
+  "3": [y2Img, b2Img], // ID Photos
+  "4": [w3Img, i1Img], // Social Avatar Decors
 };
 
 const backgroundColors = [
@@ -83,6 +79,7 @@ export default function Upload() {
   const [primaryImage, setPrimaryImage] = useState<string | null>(null);
   const [optionalImage, setOptionalImage] = useState<string | null>(null);
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
+  const [isCarouselHovered, setIsCarouselHovered] = useState(false);
   
   // New customization options
   const [selectedComposition, setSelectedComposition] = useState<string | null>(null);
@@ -108,14 +105,16 @@ export default function Upload() {
     setCurrentCarouselIndex(0);
   }, [styleId]);
 
-  // Auto-rotate carousel every 2 seconds
+  // Auto-rotate carousel every 2 seconds, pause on hover
   useEffect(() => {
+    if (isCarouselHovered) return;
+    
     const interval = setInterval(() => {
       setCurrentCarouselIndex((prev) => (prev + 1) % styleSampleImages.length);
     }, 2000);
     
     return () => clearInterval(interval);
-  }, [styleSampleImages.length]);
+  }, [styleSampleImages.length, isCarouselHovered]);
 
   const handleImageUpload = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -143,14 +142,26 @@ export default function Upload() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="bg-white rounded-2xl p-8" data-testid="section-sample-photo">
               <h2 className="text-xl font-semibold mb-6 text-gray-900">Sample Photo</h2>
-              <div className="relative">
+              <div 
+                className="relative"
+                onMouseEnter={() => setIsCarouselHovered(true)}
+                onMouseLeave={() => setIsCarouselHovered(false)}
+              >
                 <div className="aspect-[3/4] rounded-xl overflow-hidden bg-gray-100">
-                  <img 
-                    src={styleSampleImages[currentCarouselIndex]} 
-                    alt={`Sample photo ${currentCarouselIndex + 1}`}
-                    className="w-full h-full object-cover transition-opacity duration-500"
-                    data-testid="img-sample-photo"
-                  />
+                  <div 
+                    className="flex h-full transition-transform duration-500 ease-in-out"
+                    style={{ transform: `translateX(-${currentCarouselIndex * 100}%)` }}
+                  >
+                    {styleSampleImages.map((image, index) => (
+                      <img 
+                        key={index}
+                        src={image} 
+                        alt={`Sample photo ${index + 1}`}
+                        className="w-full h-full object-cover flex-shrink-0"
+                        data-testid={`img-sample-photo-${index}`}
+                      />
+                    ))}
+                  </div>
                 </div>
                 
                 {/* Dots indicator */}
@@ -291,7 +302,7 @@ export default function Upload() {
                 
                 <div className="space-y-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                    <label className="block text-sm font-bold text-gray-900 mb-3">
                       Background Color
                     </label>
                     <div className="flex gap-3">
@@ -312,7 +323,7 @@ export default function Upload() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                    <label className="block text-sm font-bold text-gray-900 mb-3">
                       Coat Material
                     </label>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -323,7 +334,7 @@ export default function Upload() {
                           onClick={() => setSelectedMaterial(material.id)}
                           className={
                             selectedMaterial === material.id
-                              ? "bg-gray-300 text-gray-900 hover:bg-gray-400"
+                              ? "bg-primary text-black font-bold hover:bg-primary/90"
                               : "border-gray-300 text-gray-700 hover:bg-gray-100"
                           }
                           data-testid={`material-${material.id}`}
@@ -335,7 +346,7 @@ export default function Upload() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                    <label className="block text-sm font-bold text-gray-900 mb-3">
                       Coat Color
                     </label>
                     <div className="flex gap-3">
@@ -357,14 +368,14 @@ export default function Upload() {
 
                   {/* Composition */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-3">
-                      Composition <span className="text-gray-500 text-xs">(Optional)</span>
+                    <label className="block text-sm font-bold text-gray-900 mb-3">
+                      Composition <span className="text-gray-500 text-xs font-normal">(Optional)</span>
                     </label>
                     <div className="flex gap-3">
                       {compositions.map((comp) => (
                         <Button
                           key={comp.value}
-                          variant={selectedComposition === comp.value ? "default" : "outline"}
+                          variant="outline"
                           onClick={() => {
                             if (selectedComposition === comp.value) {
                               // Deselect if already selected
@@ -380,8 +391,8 @@ export default function Upload() {
                           }}
                           className={
                             selectedComposition === comp.value
-                              ? "bg-primary text-black font-bold hover:bg-primary/90"
-                              : "border-gray-300 text-gray-700 hover:bg-gray-100"
+                              ? "bg-primary text-black font-bold hover:bg-primary/90 border-2 border-primary"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
                           }
                           data-testid={`composition-${comp.value}`}
                         >
@@ -393,17 +404,17 @@ export default function Upload() {
 
                   {/* Pose */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-3">
-                      Pose <span className="text-gray-500 text-xs">(Optional)</span>
+                    <label className="block text-sm font-bold text-gray-900 mb-3">
+                      Pose <span className="text-gray-500 text-xs font-normal">(Optional)</span>
                       {selectedComposition === "shoulder-up" && (
-                        <span className="text-gray-400 text-xs ml-2">(Disabled when Shoulder Up is selected)</span>
+                        <span className="text-gray-400 text-xs font-normal ml-2">(Disabled when Shoulder Up is selected)</span>
                       )}
                     </label>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                       {poses.map((pose) => (
                         <Button
                           key={pose.value}
-                          variant={selectedPose === pose.value ? "default" : "outline"}
+                          variant="outline"
                           onClick={() => {
                             if (selectedPose === pose.value) {
                               setSelectedPose(null);
@@ -414,8 +425,8 @@ export default function Upload() {
                           disabled={selectedComposition === "shoulder-up"}
                           className={
                             selectedPose === pose.value
-                              ? "bg-primary text-black font-bold hover:bg-primary/90"
-                              : "border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                              ? "bg-primary text-black font-bold hover:bg-primary/90 border-2 border-primary"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                           }
                           data-testid={`pose-${pose.value}`}
                         >
@@ -427,14 +438,14 @@ export default function Upload() {
 
                   {/* Eye Direction */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-3">
-                      Eye Direction <span className="text-gray-500 text-xs">(Optional)</span>
+                    <label className="block text-sm font-bold text-gray-900 mb-3">
+                      Eye Direction <span className="text-gray-500 text-xs font-normal">(Optional)</span>
                     </label>
                     <div className="flex gap-3">
                       {eyeDirections.map((eye) => (
                         <Button
                           key={eye.value}
-                          variant={selectedEyeDirection === eye.value ? "default" : "outline"}
+                          variant="outline"
                           onClick={() => {
                             if (selectedEyeDirection === eye.value) {
                               setSelectedEyeDirection(null);
@@ -444,8 +455,8 @@ export default function Upload() {
                           }}
                           className={
                             selectedEyeDirection === eye.value
-                              ? "bg-primary text-black font-bold hover:bg-primary/90"
-                              : "border-gray-300 text-gray-700 hover:bg-gray-100"
+                              ? "bg-primary text-black font-bold hover:bg-primary/90 border-2 border-primary"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
                           }
                           data-testid={`eye-direction-${eye.value}`}
                         >
@@ -457,14 +468,14 @@ export default function Upload() {
 
                   {/* Expression */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-3">
-                      Expression <span className="text-gray-500 text-xs">(Optional)</span>
+                    <label className="block text-sm font-bold text-gray-900 mb-3">
+                      Expression <span className="text-gray-500 text-xs font-normal">(Optional)</span>
                     </label>
                     <div className="flex gap-3">
                       {expressions.map((expr) => (
                         <Button
                           key={expr.value}
-                          variant={selectedExpression === expr.value ? "default" : "outline"}
+                          variant="outline"
                           onClick={() => {
                             if (selectedExpression === expr.value) {
                               setSelectedExpression(null);
@@ -474,8 +485,8 @@ export default function Upload() {
                           }}
                           className={
                             selectedExpression === expr.value
-                              ? "bg-primary text-black font-bold hover:bg-primary/90"
-                              : "border-gray-300 text-gray-700 hover:bg-gray-100"
+                              ? "bg-primary text-black font-bold hover:bg-primary/90 border-2 border-primary"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
                           }
                           data-testid={`expression-${expr.value}`}
                         >

@@ -2,14 +2,10 @@ import { useMemo } from "react";
 import { Link, useSearch } from "wouter";
 
 const styles = [
-  { id: "1", name: "Pre-Processed" },
-  { id: "2", name: "Hard Portrait" },
-  { id: "3", name: "AI Photo" },
-  { id: "4", name: "ID Photo" },
-  { id: "5", name: "Social Avatar" },
-  { id: "6", name: "Business" },
-  { id: "7", name: "Professional" },
-  { id: "8", name: "Artistic" },
+  { id: "1", name: "Pro Headshot" },
+  { id: "2", name: "B&W Portrait" },
+  { id: "3", name: "ID Photos" },
+  { id: "4", name: "Social Avatar Decors" },
 ];
 
 export default function StyleTabNav() {
