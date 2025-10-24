@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
 import w1Img from "@assets/W1_1761159011555.png";
 import y1Img from "@assets/Y1_1761159011566.png";
 import w2Img from "@assets/W2_1761159011568.png";
@@ -28,26 +26,14 @@ export default function StyleShowcase() {
           {styles.map((style) => (
             <div
               key={style.id}
-              className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow cursor-pointer"
+              className="aspect-[3/4] rounded-2xl overflow-hidden shadow-md"
               data-testid={`card-style-${style.id}`}
             >
               <img
                 src={style.image}
                 alt={style.alt}
-                className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-110"
+                className="w-full h-full object-cover"
               />
-              
-              <div className="absolute bottom-0 left-0 right-0 h-[67px] bg-black/10 backdrop-blur-md translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out flex items-center justify-center">
-                <Link href={`/upload?style=${style.id}`}>
-                  <Button 
-                    variant="default"
-                    className="bg-primary text-black font-bold hover:bg-primary/90"
-                    data-testid={`button-create-${style.id}`}
-                  >
-                    Create
-                  </Button>
-                </Link>
-              </div>
             </div>
           ))}
         </div>

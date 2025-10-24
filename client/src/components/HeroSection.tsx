@@ -1,4 +1,5 @@
-import { ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 import bannerImg from "@assets/Banner_1761159003003.png";
 
 export default function HeroSection() {
@@ -17,9 +18,16 @@ export default function HeroSection() {
             <br />
             Always on trend.
           </h1>
-          <div className="mt-8 flex items-center gap-2 text-sm text-white" data-testid="scroll-hint">
-            <span>Scroll to explore</span>
-            <ChevronDown className="w-4 h-4" />
+          <div className="mt-8">
+            <Link href="/upload?style=3">
+              <Button 
+                size="lg"
+                className="bg-primary text-black font-bold hover:bg-primary/90"
+                data-testid="button-hero-create-now"
+              >
+                Create Now
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

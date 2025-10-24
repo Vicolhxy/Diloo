@@ -1,8 +1,9 @@
 import { useState, useMemo, useRef } from "react";
 import { Link, useSearch } from "wouter";
-import { ChevronLeft, User } from "lucide-react";
+import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
+import StyleTabNav from "@/components/StyleTabNav";
 import Footer from "@/components/Footer";
 import w1Img from "@assets/W1_1761159011555.png";
 import y1Img from "@assets/Y1_1761159011566.png";
@@ -47,6 +48,31 @@ const materials = [
   { id: 4, name: "Material 4" },
 ];
 
+const compositions = [
+  { value: "waist-up", label: "腰部以上" },
+  { value: "shoulder-up", label: "肩部以上" },
+];
+
+const poses = [
+  { value: "hands-down", label: "双手自然垂下" },
+  { value: "hands-pocket", label: "双手插兜" },
+  { value: "arms-crossed", label: "双臂环抱于胸前" },
+  { value: "hand-chin", label: "单手摸下巴" },
+  { value: "buttoning", label: "系扣子" },
+  { value: "hand-collar", label: "摸衣领" },
+];
+
+const eyeDirections = [
+  { value: "straight", label: "正视" },
+  { value: "slight-side", label: "微微侧视" },
+];
+
+const expressions = [
+  { value: "neutral", label: "面无表情" },
+  { value: "smile", label: "微笑" },
+  { value: "laugh", label: "大笑" },
+];
+
 export default function Upload() {
   const searchString = useSearch();
   const [selectedBgColor, setSelectedBgColor] = useState(1);
@@ -54,6 +80,12 @@ export default function Upload() {
   const [selectedCoatColor, setSelectedCoatColor] = useState(1);
   const [primaryImage, setPrimaryImage] = useState<string | null>(null);
   const [optionalImage, setOptionalImage] = useState<string | null>(null);
+  
+  // New customization options
+  const [selectedComposition, setSelectedComposition] = useState<string | null>(null);
+  const [selectedPose, setSelectedPose] = useState<string | null>(null);
+  const [selectedEyeDirection, setSelectedEyeDirection] = useState<string | null>(null);
+  const [selectedExpression, setSelectedExpression] = useState<string | null>(null);
   
   const primaryInputRef = useRef<HTMLInputElement>(null);
   const optionalInputRef = useRef<HTMLInputElement>(null);
@@ -86,16 +118,10 @@ export default function Upload() {
   return (
     <div className="min-h-screen w-full bg-gray-50">
       <Navigation />
+      <StyleTabNav />
       
-      <div className="pt-24 pb-12 px-6 md:px-12">
+      <div className="pt-8 pb-12 px-6 md:px-12">
         <div className="container mx-auto max-w-7xl">
-          <Link href="/" data-testid="link-back-home">
-            <div className="flex items-center gap-2 text-gray-700 hover:text-gray-900 mb-8 cursor-pointer w-fit">
-              <ChevronLeft className="w-5 h-5" />
-              <span className="text-sm font-medium">Back to Home</span>
-            </div>
-          </Link>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="bg-white rounded-2xl p-8" data-testid="section-sample-photo">
               <h2 className="text-xl font-semibold mb-6 text-gray-900">Sample Photo</h2>
@@ -285,11 +311,117 @@ export default function Upload() {
                       ))}
                     </div>
                   </div>
+
+                  {/* Composition */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                      构图 <span className="text-gray-500 text-xs">(可选)</span>
+                    </label>
+                    <div className="flex gap-3">
+                      {compositions.map((comp) => (
+                        <Button
+                          key={comp.value}
+                          variant={selectedComposition === comp.value ? "default" : "outline"}
+                          onClick={() => {
+                            setSelectedComposition(comp.value);
+                            // Reset pose if shoulder-up is selected
+                            if (comp.value === "shoulder-up") {
+                              setSelectedPose(null);
+                            }
+                          }}
+                          className={
+                            selectedComposition === comp.value
+                              ? "bg-primary text-black font-bold hover:bg-primary/90"
+                              : "border-gray-300 text-gray-700 hover:bg-gray-100"
+                          }
+                          data-testid={`composition-${comp.value}`}
+                        >
+                          {comp.label}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Pose */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                      姿势 <span className="text-gray-500 text-xs">(可选)</span>
+                      {selectedComposition === "shoulder-up" && (
+                        <span className="text-gray-400 text-xs ml-2">(构图选择"肩部以上"时不可选)</span>
+                      )}
+                    </label>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {poses.map((pose) => (
+                        <Button
+                          key={pose.value}
+                          variant={selectedPose === pose.value ? "default" : "outline"}
+                          onClick={() => setSelectedPose(pose.value)}
+                          disabled={selectedComposition === "shoulder-up"}
+                          className={
+                            selectedPose === pose.value
+                              ? "bg-primary text-black font-bold hover:bg-primary/90"
+                              : "border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                          }
+                          data-testid={`pose-${pose.value}`}
+                        >
+                          {pose.label}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Eye Direction */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                      眼睛方向 <span className="text-gray-500 text-xs">(可选)</span>
+                    </label>
+                    <div className="flex gap-3">
+                      {eyeDirections.map((eye) => (
+                        <Button
+                          key={eye.value}
+                          variant={selectedEyeDirection === eye.value ? "default" : "outline"}
+                          onClick={() => setSelectedEyeDirection(eye.value)}
+                          className={
+                            selectedEyeDirection === eye.value
+                              ? "bg-primary text-black font-bold hover:bg-primary/90"
+                              : "border-gray-300 text-gray-700 hover:bg-gray-100"
+                          }
+                          data-testid={`eye-direction-${eye.value}`}
+                        >
+                          {eye.label}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Expression */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-900 mb-3">
+                      表情 <span className="text-gray-500 text-xs">(可选)</span>
+                    </label>
+                    <div className="flex gap-3">
+                      {expressions.map((expr) => (
+                        <Button
+                          key={expr.value}
+                          variant={selectedExpression === expr.value ? "default" : "outline"}
+                          onClick={() => setSelectedExpression(expr.value)}
+                          className={
+                            selectedExpression === expr.value
+                              ? "bg-primary text-black font-bold hover:bg-primary/90"
+                              : "border-gray-300 text-gray-700 hover:bg-gray-100"
+                          }
+                          data-testid={`expression-${expr.value}`}
+                        >
+                          {expr.label}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <div className="bg-white rounded-2xl p-8" data-testid="section-cta">
-                <Link href={`/checkout?style=${styleId}&bgColor=${selectedBgColor}&material=${selectedMaterial}&coatColor=${selectedCoatColor}`}>
+                <Link href={`/checkout?style=${styleId}&bgColor=${selectedBgColor}&material=${selectedMaterial}&coatColor=${selectedCoatColor}${selectedComposition ? `&composition=${selectedComposition}` : ''}${selectedPose ? `&pose=${selectedPose}` : ''}${selectedEyeDirection ? `&eyeDirection=${selectedEyeDirection}` : ''}${selectedExpression ? `&expression=${selectedExpression}` : ''}`}>
                   <Button 
                     className="w-full bg-primary text-black font-bold hover:bg-primary/90 h-12 text-base"
                     data-testid="button-create-now"

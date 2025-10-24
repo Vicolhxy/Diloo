@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Link, useSearch } from "wouter";
+import { Link, useSearch, useLocation } from "wouter";
 import { ChevronLeft, CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -53,6 +53,32 @@ const coatColors = [
   { id: 5, name: "Light Brown", color: "bg-amber-200" },
 ];
 
+// Labels for new customization options
+const compositionLabels: Record<string, string> = {
+  "waist-up": "腰部以上",
+  "shoulder-up": "肩部以上",
+};
+
+const poseLabels: Record<string, string> = {
+  "hands-down": "双手自然垂下",
+  "hands-pocket": "双手插兜",
+  "arms-crossed": "双臂环抱于胸前",
+  "hand-chin": "单手摸下巴",
+  "buttoning": "系扣子",
+  "hand-collar": "摸衣领",
+};
+
+const eyeDirectionLabels: Record<string, string> = {
+  "straight": "正视",
+  "slight-side": "微微侧视",
+};
+
+const expressionLabels: Record<string, string> = {
+  "neutral": "面无表情",
+  "smile": "微笑",
+  "laugh": "大笑",
+};
+
 const emailSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
 });
@@ -63,10 +89,12 @@ type PageState = 'checkout' | 'processing' | 'success' | 'failure';
 
 export default function Checkout() {
   const searchString = useSearch();
+  const [, setLocation] = useLocation();
   const [pageState, setPageState] = useState<PageState>('checkout');
   const [userEmail, setUserEmail] = useState<string>("");
+  const [emailInput, setEmailInput] = useState<string>("");
 
-  const { bgColor, material, coatColor, styleId, selectedStyleImage } = useMemo(() => {
+  const { bgColor, material, coatColor, styleId, selectedStyleImage, composition, pose, eyeDirection, expression } = useMemo(() => {
     const params = new URLSearchParams(searchString);
     const styleId = params.get('style') || "3";
     return {
@@ -75,6 +103,10 @@ export default function Checkout() {
       coatColor: parseInt(params.get('coatColor') || '1'),
       styleId,
       selectedStyleImage: styleImages[styleId as keyof typeof styleImages] || w2Img,
+      composition: params.get('composition') || null,
+      pose: params.get('pose') || null,
+      eyeDirection: params.get('eyeDirection') || null,
+      expression: params.get('expression') || null,
     };
   }, [searchString]);
 
@@ -85,12 +117,16 @@ export default function Checkout() {
   const form = useForm<EmailFormData>({
     resolver: zodResolver(emailSchema),
     defaultValues: {
-      email: "",
+      email: emailInput,
+    },
+    values: {
+      email: emailInput,
     },
   });
 
   const onSubmit = (data: EmailFormData) => {
     setUserEmail(data.email);
+    setEmailInput(data.email);
     setPageState('processing');
     // In real implementation, this would redirect to Stripe payment page
     console.log("Proceeding to payment with email:", data.email);
@@ -106,6 +142,12 @@ export default function Checkout() {
 
   const handleBackToCheckout = () => {
     setPageState('checkout');
+  };
+
+  const removeOption = (optionKey: string) => {
+    const params = new URLSearchParams(searchString);
+    params.delete(optionKey);
+    setLocation(`/checkout?${params.toString()}`);
   };
 
   // Checkout Initial State
@@ -214,7 +256,11 @@ export default function Checkout() {
                               <Input 
                                 type="email" 
                                 placeholder="your@email.com" 
-                                {...field} 
+                                {...field}
+                                onChange={(e) => {
+                                  field.onChange(e);
+                                  setEmailInput(e.target.value);
+                                }}
                                 data-testid="input-email" 
                               />
                             </FormControl>
@@ -239,6 +285,87 @@ export default function Checkout() {
                         </div>
                       </div>
 
+                      {/* Selected Options Summary */}
+                      {(composition || pose || eyeDirection || expression) && (
+                        <div className="p-4 bg-gray-50 rounded-xl" data-testid="section-options-summary">
+                          <h3 className="text-sm font-medium text-gray-900 mb-3">已选选项</h3>
+                          <div className="flex flex-wrap gap-2">
+                            {composition && (
+                              <Badge 
+                                variant="secondary" 
+                                className="flex items-center gap-1"
+                                data-testid={`badge-composition-${composition}`}
+                              >
+                                <span>构图: {compositionLabels[composition]}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeOption('composition')}
+                                  className="ml-1 hover:text-red-600"
+                                  aria-label="Remove composition"
+                                  data-testid="button-remove-composition"
+                                >
+                                  ×
+                                </button>
+                              </Badge>
+                            )}
+                            {pose && (
+                              <Badge 
+                                variant="secondary" 
+                                className="flex items-center gap-1"
+                                data-testid={`badge-pose-${pose}`}
+                              >
+                                <span>姿势: {poseLabels[pose]}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeOption('pose')}
+                                  className="ml-1 hover:text-red-600"
+                                  aria-label="Remove pose"
+                                  data-testid="button-remove-pose"
+                                >
+                                  ×
+                                </button>
+                              </Badge>
+                            )}
+                            {eyeDirection && (
+                              <Badge 
+                                variant="secondary" 
+                                className="flex items-center gap-1"
+                                data-testid={`badge-eye-direction-${eyeDirection}`}
+                              >
+                                <span>眼睛方向: {eyeDirectionLabels[eyeDirection]}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeOption('eyeDirection')}
+                                  className="ml-1 hover:text-red-600"
+                                  aria-label="Remove eye direction"
+                                  data-testid="button-remove-eye-direction"
+                                >
+                                  ×
+                                </button>
+                              </Badge>
+                            )}
+                            {expression && (
+                              <Badge 
+                                variant="secondary" 
+                                className="flex items-center gap-1"
+                                data-testid={`badge-expression-${expression}`}
+                              >
+                                <span>表情: {expressionLabels[expression]}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeOption('expression')}
+                                  className="ml-1 hover:text-red-600"
+                                  aria-label="Remove expression"
+                                  data-testid="button-remove-expression"
+                                >
+                                  ×
+                                </button>
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
                       {/* Submit Button */}
                       <Button 
                         type="submit"
@@ -247,6 +374,19 @@ export default function Checkout() {
                       >
                         Proceed to Payment
                       </Button>
+
+                      {/* Privacy Policy Agreement */}
+                      <p className="text-xs text-gray-500 text-center" data-testid="text-privacy-notice">
+                        点击"Proceed to Payment"即表示您同意我们的{" "}
+                        <a 
+                          href="#" 
+                          onClick={(e) => e.preventDefault()}
+                          className="text-primary hover:underline"
+                          data-testid="link-privacy-policy"
+                        >
+                          隐私协议
+                        </a>
+                      </p>
                     </form>
                   </Form>
                 </div>
