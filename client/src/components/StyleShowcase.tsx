@@ -43,7 +43,8 @@ export default function StyleShowcase() {
         <div className="flex flex-col items-center gap-3 mt-6">
           <Link href="/upload?style=3">
             <Button 
-              className="bg-primary text-black font-bold hover:bg-primary/90 px-8 py-6 text-base"
+              size="lg"
+              className="bg-primary text-black hover:bg-primary/90"
               data-testid="button-showcase-create-now"
             >
               Create Now

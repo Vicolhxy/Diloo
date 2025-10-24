@@ -17,21 +17,6 @@ export default function Home() {
       <CategoryNav />
       <StyleShowcase />
       
-      {/* CTA Section after StyleShowcase */}
-      <section className="w-full bg-gray-50 py-8" data-testid="cta-section">
-        <div className="container mx-auto px-6 md:px-12 max-w-7xl text-center">
-          <Link href="/upload?style=3">
-            <Button 
-              size="lg"
-              className="bg-primary text-black font-bold hover:bg-primary/90"
-              data-testid="button-showcase-create-now"
-            >
-              Create Now
-            </Button>
-          </Link>
-        </div>
-      </section>
-      
       <HowItWorks />
       <WhyChooseUs />
       <Testimonials />

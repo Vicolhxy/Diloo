@@ -14,14 +14,8 @@ import b2Img from "@assets/B2_1761159011571.png";
 import w3Img from "@assets/W3_1761159011572.png";
 import i1Img from "@assets/I1_1761159011573.png";
 
-// Sample images organized by style ID
-// Each style category has multiple sample images for carousel
-const styleImages: Record<string, string[]> = {
-  "1": [w1Img, y1Img], // Pro Headshot
-  "2": [w2Img, b1Img], // B&W Portrait
-  "3": [y2Img, b2Img], // ID Photos
-  "4": [w3Img, i1Img], // Social Avatar Decors
-};
+// All 8 sample images for carousel (not grouped by category)
+const allStyleImages = [w1Img, y1Img, w2Img, b1Img, y2Img, b2Img, w3Img, i1Img];
 
 const backgroundColors = [
   { id: 1, color: "bg-gray-400", hex: "#9CA3AF" },
@@ -90,15 +84,15 @@ export default function Upload() {
   const primaryInputRef = useRef<HTMLInputElement>(null);
   const optionalInputRef = useRef<HTMLInputElement>(null);
 
-  const { styleId, styleSampleImages } = useMemo(() => {
+  const { styleId } = useMemo(() => {
     const params = new URLSearchParams(searchString);
     const styleId = params.get('style') || "3";
-    const images = styleImages[styleId] || styleImages["3"];
     return {
       styleId,
-      styleSampleImages: images,
     };
   }, [searchString]);
+  
+  const styleSampleImages = allStyleImages;
 
   // Reset carousel index when style changes
   useEffect(() => {
