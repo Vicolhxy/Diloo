@@ -114,6 +114,21 @@ export default function Checkout() {
   const selectedMaterial = materials.find(m => m.id === material) || materials[0];
   const selectedCoatColor = coatColors.find(c => c.id === coatColor) || coatColors[0];
 
+  // Calculate number of customization options selected (each adds CAD $0.50)
+  const customizationCount = [
+    bgColor !== 1,           // Background Color
+    material !== 1,          // Coat Material
+    coatColor !== 1,         // Coat Color
+    composition !== null,    // Composition
+    pose !== null,           // Pose
+    eyeDirection !== null,   // Eye Direction
+    expression !== null,     // Expression
+  ].filter(Boolean).length;
+
+  const basePrice = 2.99;
+  const perOptionPrice = 0.50;
+  const totalPrice = basePrice + (customizationCount * perOptionPrice);
+
   const form = useForm<EmailFormData>({
     resolver: zodResolver(emailSchema),
     defaultValues: {
@@ -212,26 +227,67 @@ export default function Checkout() {
                   <h2 className="text-xl font-semibold mb-6 text-gray-900">Photo Details</h2>
                   
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                      <span className="text-sm text-gray-600">Background Color</span>
-                      <div className="flex items-center gap-2">
-                        <div className={`w-6 h-6 rounded ${selectedBgColor.color}`}></div>
-                        <span className="text-sm font-medium text-gray-900">{selectedBgColor.name}</span>
+                    {/* Always show background color if not default */}
+                    {bgColor !== 1 && (
+                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                        <span className="text-sm text-gray-600">Background Color</span>
+                        <div className="flex items-center gap-2">
+                          <div className={`w-6 h-6 rounded ${selectedBgColor.color}`}></div>
+                          <span className="text-sm font-medium text-gray-900">{selectedBgColor.name}</span>
+                        </div>
                       </div>
-                    </div>
+                    )}
                     
-                    <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                      <span className="text-sm text-gray-600">Coat Material</span>
-                      <span className="text-sm font-medium text-gray-900">{selectedMaterial.name}</span>
-                    </div>
-                    
-                    <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                      <span className="text-sm text-gray-600">Coat Color</span>
-                      <div className="flex items-center gap-2">
-                        <div className={`w-6 h-6 rounded ${selectedCoatColor.color}`}></div>
-                        <span className="text-sm font-medium text-gray-900">{selectedCoatColor.name}</span>
+                    {/* Only show coat material if not default */}
+                    {material !== 1 && (
+                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                        <span className="text-sm text-gray-600">Coat Material</span>
+                        <span className="text-sm font-medium text-gray-900">{selectedMaterial.name}</span>
                       </div>
-                    </div>
+                    )}
+                    
+                    {/* Only show coat color if not default */}
+                    {coatColor !== 1 && (
+                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                        <span className="text-sm text-gray-600">Coat Color</span>
+                        <div className="flex items-center gap-2">
+                          <div className={`w-6 h-6 rounded ${selectedCoatColor.color}`}></div>
+                          <span className="text-sm font-medium text-gray-900">{selectedCoatColor.name}</span>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Only show composition if selected */}
+                    {composition && (
+                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                        <span className="text-sm text-gray-600">Composition</span>
+                        <span className="text-sm font-medium text-gray-900">{compositionLabels[composition]}</span>
+                      </div>
+                    )}
+                    
+                    {/* Only show pose if selected */}
+                    {pose && (
+                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                        <span className="text-sm text-gray-600">Pose</span>
+                        <span className="text-sm font-medium text-gray-900">{poseLabels[pose]}</span>
+                      </div>
+                    )}
+                    
+                    {/* Only show eye direction if selected */}
+                    {eyeDirection && (
+                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                        <span className="text-sm text-gray-600">Eye Direction</span>
+                        <span className="text-sm font-medium text-gray-900">{eyeDirectionLabels[eyeDirection]}</span>
+                      </div>
+                    )}
+                    
+                    {/* Only show expression if selected */}
+                    {expression && (
+                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                        <span className="text-sm text-gray-600">Expression</span>
+                        <span className="text-sm font-medium text-gray-900">{expressionLabels[expression]}</span>
+                      </div>
+                    )}
                     
                     <div className="flex items-center justify-between py-2 border-b border-gray-200">
                       <span className="text-sm text-gray-600">Resolution</span>
@@ -272,15 +328,33 @@ export default function Checkout() {
                         )}
                       />
 
-                      {/* Price */}
+                      {/* Price Breakdown */}
                       <div className="p-4 bg-primary/10 rounded-xl" data-testid="section-price">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-2xl font-bold text-gray-900">CAD $2.99</span>
-                              <Badge variant="destructive" className="bg-red-500">Limited Time Offer</Badge>
+                        <h3 className="text-sm font-bold text-gray-900 mb-3">Price Breakdown</h3>
+                        
+                        <div className="space-y-2 mb-3">
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-gray-600">Base Photo</span>
+                            <span className="font-medium text-gray-900">CAD ${basePrice.toFixed(2)}</span>
+                          </div>
+                          
+                          {customizationCount > 0 && (
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-600">Customizations ({customizationCount} × $0.50)</span>
+                              <span className="font-medium text-gray-900">CAD ${(customizationCount * perOptionPrice).toFixed(2)}</span>
                             </div>
-                            <p className="text-sm text-gray-600">High-resolution AI-generated photo</p>
+                          )}
+                        </div>
+                        
+                        <div className="border-t border-gray-300 pt-3 mt-3">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-lg font-bold text-gray-900">Total: CAD ${totalPrice.toFixed(2)}</span>
+                                <Badge variant="destructive" className="bg-red-500">Limited Offer</Badge>
+                              </div>
+                              <p className="text-xs text-gray-600 mt-1">High-resolution AI-generated photo</p>
+                            </div>
                           </div>
                         </div>
                       </div>
