@@ -1,3 +1,5 @@
+import { Link } from "wouter";
+import { Button } from "@/components/ui/button";
 import w1Img from "@assets/W1_1761159011555.png";
 import y1Img from "@assets/Y1_1761159011566.png";
 import w2Img from "@assets/W2_1761159011568.png";
@@ -22,7 +24,7 @@ export default function StyleShowcase() {
   return (
     <section className="w-full bg-gray-50 pt-3 pb-12 md:pt-4 md:pb-16" data-testid="style-showcase">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
           {styles.map((style) => (
             <div
               key={style.id}
@@ -36,6 +38,20 @@ export default function StyleShowcase() {
               />
             </div>
           ))}
+        </div>
+
+        <div className="flex flex-col items-center gap-3 mt-6">
+          <Link href="/upload?style=3">
+            <Button 
+              className="bg-primary text-black font-bold hover:bg-primary/90 px-8 py-6 text-base"
+              data-testid="button-showcase-create-now"
+            >
+              Create Now
+            </Button>
+          </Link>
+          <p className="text-sm text-gray-600 text-center max-w-md" data-testid="text-payment-notice">
+            You'll see the generated results first, then decide whether to download with payment. Feel free to try it out!
+          </p>
         </div>
       </div>
     </section>

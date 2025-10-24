@@ -4,7 +4,8 @@
 Diloo is an AI-powered photo style transfer platform that enables users to transform their photos into artistic renditions using professional AI-generated styles. The platform offers a curated collection of style presets (e.g., Pre-Processed, Hard Portrait, AI Photo, Social Avatar Deluxe) designed for natural, professional results. It is built as a full-stack web application with a modern React frontend and Express backend, focusing on a visual-first, conversion-oriented user experience.
 
 ## User Preferences
-Preferred communication style: Simple, everyday language.
+- Preferred communication style: Simple, everyday language.
+- Testing preference: Do not proactively run tests. Always ask for user approval before running tests.
 
 ## System Architecture
 
