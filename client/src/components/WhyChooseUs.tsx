@@ -26,10 +26,10 @@ export default function WhyChooseUs() {
     <section className="w-full bg-primary py-16 md:py-24" data-testid="why-choose-us">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4" data-testid="text-why-choose-us-title">
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 text-[#093536]" data-testid="text-why-choose-us-title">
             Why Choose Us
           </h2>
-          <p className="text-white/80 max-w-2xl mx-auto" data-testid="text-why-choose-us-subtitle">
+          <p className="max-w-2xl mx-auto text-[#093536]" data-testid="text-why-choose-us-subtitle">
             Fast delivery to the inbox
           </p>
         </div>
