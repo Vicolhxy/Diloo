@@ -226,7 +226,7 @@ export default function Upload() {
                         <p className="text-gray-900 font-medium mb-1">Upload your photo</p>
                         <p className="text-gray-500 text-sm mb-4">PNG and JPG only</p>
                         <Button 
-                          className="bg-primary text-black font-bold hover:bg-primary/90"
+                          className="bg-primary text-black hover:bg-primary/90"
                           data-testid="button-upload-primary"
                         >
                           Select from my device
@@ -328,7 +328,7 @@ export default function Upload() {
                           onClick={() => setSelectedMaterial(material.id)}
                           className={
                             selectedMaterial === material.id
-                              ? "bg-primary text-black font-bold hover:bg-primary/90"
+                              ? "bg-primary text-black hover:bg-primary/90"
                               : "border-gray-300 text-gray-700 hover:bg-gray-100"
                           }
                           data-testid={`material-${material.id}`}
@@ -385,7 +385,7 @@ export default function Upload() {
                           }}
                           className={
                             selectedComposition === comp.value
-                              ? "bg-primary text-black font-bold hover:bg-primary/90 border-2 border-primary"
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary"
                               : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
                           }
                           data-testid={`composition-${comp.value}`}
@@ -419,7 +419,7 @@ export default function Upload() {
                           disabled={selectedComposition === "shoulder-up"}
                           className={
                             selectedPose === pose.value
-                              ? "bg-primary text-black font-bold hover:bg-primary/90 border-2 border-primary"
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary"
                               : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                           }
                           data-testid={`pose-${pose.value}`}
@@ -449,7 +449,7 @@ export default function Upload() {
                           }}
                           className={
                             selectedEyeDirection === eye.value
-                              ? "bg-primary text-black font-bold hover:bg-primary/90 border-2 border-primary"
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary"
                               : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
                           }
                           data-testid={`eye-direction-${eye.value}`}
@@ -479,7 +479,7 @@ export default function Upload() {
                           }}
                           className={
                             selectedExpression === expr.value
-                              ? "bg-primary text-black font-bold hover:bg-primary/90 border-2 border-primary"
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary"
                               : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
                           }
                           data-testid={`expression-${expr.value}`}
@@ -496,7 +496,7 @@ export default function Upload() {
                 {(primaryImage || optionalImage) ? (
                   <Link href={`/checkout?style=${styleId}&bgColor=${selectedBgColor}&material=${selectedMaterial}&coatColor=${selectedCoatColor}${selectedComposition ? `&composition=${selectedComposition}` : ''}${selectedPose ? `&pose=${selectedPose}` : ''}${selectedEyeDirection ? `&eyeDirection=${selectedEyeDirection}` : ''}${selectedExpression ? `&expression=${selectedExpression}` : ''}`}>
                     <Button 
-                      className="w-full bg-primary text-black font-bold hover:bg-primary/90 h-12 text-base"
+                      className="w-full bg-primary text-black hover:bg-primary/90 h-12 text-base"
                       data-testid="button-create-now"
                     >
                       Create Now

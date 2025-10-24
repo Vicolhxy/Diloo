@@ -338,10 +338,130 @@ export default function Checkout() {
                             <span className="font-medium text-gray-900">CAD ${basePrice.toFixed(2)}</span>
                           </div>
                           
-                          {customizationCount > 0 && (
+                          {/* Individual customization items with delete buttons */}
+                          {bgColor !== 1 && (
                             <div className="flex items-center justify-between text-sm">
-                              <span className="text-gray-600">Customizations ({customizationCount} × $0.50)</span>
-                              <span className="font-medium text-gray-900">CAD ${(customizationCount * perOptionPrice).toFixed(2)}</span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Background Color: {selectedBgColor.name}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeOption('bgColor')}
+                                  className="text-gray-400 hover:text-red-600 text-lg"
+                                  aria-label="Remove background color"
+                                  data-testid="button-remove-bgColor"
+                                >
+                                  ×
+                                </button>
+                              </div>
+                              <span className="font-medium text-gray-900">CAD $0.50</span>
+                            </div>
+                          )}
+                          
+                          {material !== 1 && (
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Coat Material: {selectedMaterial.name}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeOption('material')}
+                                  className="text-gray-400 hover:text-red-600 text-lg"
+                                  aria-label="Remove coat material"
+                                  data-testid="button-remove-material"
+                                >
+                                  ×
+                                </button>
+                              </div>
+                              <span className="font-medium text-gray-900">CAD $0.50</span>
+                            </div>
+                          )}
+                          
+                          {coatColor !== 1 && (
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Coat Color: {selectedCoatColor.name}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeOption('coatColor')}
+                                  className="text-gray-400 hover:text-red-600 text-lg"
+                                  aria-label="Remove coat color"
+                                  data-testid="button-remove-coatColor"
+                                >
+                                  ×
+                                </button>
+                              </div>
+                              <span className="font-medium text-gray-900">CAD $0.50</span>
+                            </div>
+                          )}
+                          
+                          {composition && (
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Composition: {compositionLabels[composition]}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeOption('composition')}
+                                  className="text-gray-400 hover:text-red-600 text-lg"
+                                  aria-label="Remove composition"
+                                  data-testid="button-remove-composition"
+                                >
+                                  ×
+                                </button>
+                              </div>
+                              <span className="font-medium text-gray-900">CAD $0.50</span>
+                            </div>
+                          )}
+                          
+                          {pose && (
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Pose: {poseLabels[pose]}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeOption('pose')}
+                                  className="text-gray-400 hover:text-red-600 text-lg"
+                                  aria-label="Remove pose"
+                                  data-testid="button-remove-pose"
+                                >
+                                  ×
+                                </button>
+                              </div>
+                              <span className="font-medium text-gray-900">CAD $0.50</span>
+                            </div>
+                          )}
+                          
+                          {eyeDirection && (
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Eye Direction: {eyeDirectionLabels[eyeDirection]}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeOption('eyeDirection')}
+                                  className="text-gray-400 hover:text-red-600 text-lg"
+                                  aria-label="Remove eye direction"
+                                  data-testid="button-remove-eyeDirection"
+                                >
+                                  ×
+                                </button>
+                              </div>
+                              <span className="font-medium text-gray-900">CAD $0.50</span>
+                            </div>
+                          )}
+                          
+                          {expression && (
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Expression: {expressionLabels[expression]}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeOption('expression')}
+                                  className="text-gray-400 hover:text-red-600 text-lg"
+                                  aria-label="Remove expression"
+                                  data-testid="button-remove-expression"
+                                >
+                                  ×
+                                </button>
+                              </div>
+                              <span className="font-medium text-gray-900">CAD $0.50</span>
                             </div>
                           )}
                         </div>
@@ -359,91 +479,10 @@ export default function Checkout() {
                         </div>
                       </div>
 
-                      {/* Selected Options Summary */}
-                      {(composition || pose || eyeDirection || expression) && (
-                        <div className="p-4 bg-gray-50 rounded-xl" data-testid="section-options-summary">
-                          <h3 className="text-sm font-medium text-gray-900 mb-3">Selected Options</h3>
-                          <div className="flex flex-wrap gap-2">
-                            {composition && (
-                              <Badge 
-                                variant="secondary" 
-                                className="flex items-center gap-1"
-                                data-testid={`badge-composition-${composition}`}
-                              >
-                                <span>Composition: {compositionLabels[composition]}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => removeOption('composition')}
-                                  className="ml-1 hover:text-red-600"
-                                  aria-label="Remove composition"
-                                  data-testid="button-remove-composition"
-                                >
-                                  ×
-                                </button>
-                              </Badge>
-                            )}
-                            {pose && (
-                              <Badge 
-                                variant="secondary" 
-                                className="flex items-center gap-1"
-                                data-testid={`badge-pose-${pose}`}
-                              >
-                                <span>Pose: {poseLabels[pose]}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => removeOption('pose')}
-                                  className="ml-1 hover:text-red-600"
-                                  aria-label="Remove pose"
-                                  data-testid="button-remove-pose"
-                                >
-                                  ×
-                                </button>
-                              </Badge>
-                            )}
-                            {eyeDirection && (
-                              <Badge 
-                                variant="secondary" 
-                                className="flex items-center gap-1"
-                                data-testid={`badge-eye-direction-${eyeDirection}`}
-                              >
-                                <span>Eye Direction: {eyeDirectionLabels[eyeDirection]}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => removeOption('eyeDirection')}
-                                  className="ml-1 hover:text-red-600"
-                                  aria-label="Remove eye direction"
-                                  data-testid="button-remove-eye-direction"
-                                >
-                                  ×
-                                </button>
-                              </Badge>
-                            )}
-                            {expression && (
-                              <Badge 
-                                variant="secondary" 
-                                className="flex items-center gap-1"
-                                data-testid={`badge-expression-${expression}`}
-                              >
-                                <span>Expression: {expressionLabels[expression]}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => removeOption('expression')}
-                                  className="ml-1 hover:text-red-600"
-                                  aria-label="Remove expression"
-                                  data-testid="button-remove-expression"
-                                >
-                                  ×
-                                </button>
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                      )}
-
                       {/* Submit Button */}
                       <Button 
                         type="submit"
-                        className="w-full bg-primary text-black font-bold hover:bg-primary/90 h-12 text-base"
+                        className="w-full bg-primary text-black hover:bg-primary/90 h-12 text-base"
                         data-testid="button-pay-now"
                       >
                         Proceed to Payment
@@ -597,7 +636,7 @@ export default function Checkout() {
 
               <Button
                 onClick={handleBackToCheckout}
-                className="bg-primary text-black font-bold hover:bg-primary/90"
+                className="bg-primary text-black hover:bg-primary/90"
                 data-testid="button-back-to-checkout"
               >
                 <ChevronLeft className="w-5 h-5 mr-2" />
