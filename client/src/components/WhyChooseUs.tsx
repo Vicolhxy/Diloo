@@ -40,16 +40,16 @@ export default function WhyChooseUs() {
             return (
               <div
                 key={feature.id}
-                className="flex flex-col items-center text-center text-white"
+                className="flex flex-col items-center text-center text-[#093536]"
                 data-testid={`card-feature-${feature.id}`}
               >
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/20 flex items-center justify-center mb-6">
-                  <IconComponent className="w-8 h-8 md:w-10 md:h-10" />
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#093536]/10 flex items-center justify-center mb-6">
+                  <IconComponent className="w-8 h-8 md:w-10 md:h-10 text-[#093536]" />
                 </div>
                 <h3 className="text-xl md:text-2xl font-semibold mb-3" data-testid={`text-feature-${feature.id}-title`}>
                   {feature.title}
                 </h3>
-                <p className="text-white/80" data-testid={`text-feature-${feature.id}-description`}>
+                <p className="text-[#093536]/80" data-testid={`text-feature-${feature.id}-description`}>
                   {feature.description}
                 </p>
               </div>
