@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Pro Headshot - Parameters Only",
+  "type": "object",
+  "properties": {
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "suit_fabric": {
+          "type": "string",
+          "title": "Suit Fabric",
+          "description": "Fabric of the jacket/suit",
+          "enum": ["Wool", "Wool Blend", "Worsted Wool"]
+        },
+        "suit_color": {
+          "type": "string",
+          "title": "Suit Color",
+          "description": "Primary color/pattern of the suit",
+          "enum": [
+            "Charcoal",
+            "Navy",
+            "Black",
+            "Light Gray",
+            "Midnight Blue",
+            "Charcoal Blue",
+            "Pinstripe Charcoal"
+          ]
+        },
+        "shirt_color": {
+          "type": "string",
+          "title": "Shirt Color",
+          "description": "Color of the shirt under the suit",
+          "enum": ["White", "Light Blue", "Pale Gray"]
+        },
+        "eye_direction": {
+          "type": "string",
+          "title": "Eye Direction",
+          "description": "Where the subject is looking",
+          "enum": ["Facing the camera", "Slightly away from camera"]
+        },
+        "expression": {
+          "type": "string",
+          "title": "Facial Expression",
+          "description": "Facial expression of the subject",
+          "enum": ["Serious and professional", "Natural smile", "Laughing (slight motion)"]
+        },
+        "composition": {
+          "type": "string",
+          "title": "Photo Composition",
+          "description": "Framing of the photo",
+          "enum": ["Above shoulders", "Above waist"]
+        },
+        "hand_pose": {
+          "type": "string",
+          "title": "Hand Pose",
+          "description": "Hand pose (only required/applicable when composition = 'Above waist')",
+          "enum": [
+            "Hands naturally down",
+            "Hands in pockets",
+            "Arms crossed",
+            "Buttoning jacket",
+            "One hand touching chin",
+            "Adjusting lapel"
+          ]
+        },
+        "background": {
+          "type": "string",
+          "title": "Background",
+          "description": "Background style or color",
+          "enum": [
+            "Silver gray gradient",
+            "Light blue gradient",
+            "Light gray gradient",
+            "Light beige gradient",
+            "Light blue-gray gradient",
+            "Light silver gradient",
+            "Custom upload (Gaussian blur applied)"
+          ]
+        }
+      },
+      "required": [
+        "suit_fabric",
+        "suit_color",
+        "shirt_color",
+        "eye_direction",
+        "expression",
+        "composition",
+        "background"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": { "composition": { "const": "Above waist" } }
+          },
+          "then": { "required": ["hand_pose"] },
+          "else": {
+            "not": { "required": ["hand_pose"] }
+          }
+        }
+      ]
+    }
+  },
+  "required": ["parameters"]
+}
