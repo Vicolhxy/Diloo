@@ -129,15 +129,17 @@ export default function Checkout() {
   const selectedBackground = backgrounds.find(b => b.id === background) || backgrounds[0];
 
   // Calculate number of customization options selected (each adds CAD $0.50)
+  // Required options (always count): Suit Fabric, Suit Color, Shirt Color, Background
+  // Optional options (count if selected): Composition, Hand Pose, Eye Direction, Expression
   const customizationCount = [
-    suitFabric !== 1,        // Suit Fabric
-    suitColor !== 1,         // Suit Color
-    shirtColor !== 1,        // Shirt Color
-    background !== 1,        // Background
-    composition !== null,    // Composition
-    handPose !== null,       // Hand Pose
-    eyeDirection !== null,   // Eye Direction
-    expression !== null,     // Expression
+    true,                    // Suit Fabric (required)
+    true,                    // Suit Color (required)
+    true,                    // Shirt Color (required)
+    true,                    // Background (required)
+    composition !== null,    // Composition (optional)
+    handPose !== null,       // Hand Pose (optional)
+    eyeDirection !== null,   // Eye Direction (optional)
+    expression !== null,     // Expression (optional)
   ].filter(Boolean).length;
 
   const basePrice = 2.99;
@@ -242,37 +244,26 @@ export default function Checkout() {
                   <h2 className="text-xl font-semibold mb-6 text-gray-900">Photo Details</h2>
                   
                   <div className="space-y-3">
-                    {/* Only show suit fabric if not default */}
-                    {suitFabric !== 1 && (
-                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                        <span className="text-sm text-gray-600">Suit Fabric</span>
-                        <span className="text-sm font-medium text-gray-900">{selectedSuitFabric.name}</span>
-                      </div>
-                    )}
+                    {/* Always show required options */}
+                    <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                      <span className="text-sm text-gray-600">Suit Fabric</span>
+                      <span className="text-sm font-medium text-gray-900">{selectedSuitFabric.name}</span>
+                    </div>
                     
-                    {/* Only show suit color if not default */}
-                    {suitColor !== 1 && (
-                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                        <span className="text-sm text-gray-600">Suit Color</span>
-                        <span className="text-sm font-medium text-gray-900">{selectedSuitColor.name}</span>
-                      </div>
-                    )}
+                    <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                      <span className="text-sm text-gray-600">Suit Color</span>
+                      <span className="text-sm font-medium text-gray-900">{selectedSuitColor.name}</span>
+                    </div>
                     
-                    {/* Only show shirt color if not default */}
-                    {shirtColor !== 1 && (
-                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                        <span className="text-sm text-gray-600">Shirt Color</span>
-                        <span className="text-sm font-medium text-gray-900">{selectedShirtColor.name}</span>
-                      </div>
-                    )}
+                    <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                      <span className="text-sm text-gray-600">Shirt Color</span>
+                      <span className="text-sm font-medium text-gray-900">{selectedShirtColor.name}</span>
+                    </div>
                     
-                    {/* Only show background if not default */}
-                    {background !== 1 && (
-                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                        <span className="text-sm text-gray-600">Background</span>
-                        <span className="text-sm font-medium text-gray-900">{selectedBackground.name}</span>
-                      </div>
-                    )}
+                    <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                      <span className="text-sm text-gray-600">Background</span>
+                      <span className="text-sm font-medium text-gray-900">{selectedBackground.name}</span>
+                    </div>
                     
                     {/* Only show composition if selected */}
                     {composition && (
@@ -355,78 +346,28 @@ export default function Checkout() {
                             <span className="font-medium text-gray-900">CAD ${basePrice.toFixed(2)}</span>
                           </div>
                           
-                          {/* Individual customization items with delete buttons */}
-                          {suitFabric !== 1 && (
-                            <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Suit Fabric: {selectedSuitFabric.name}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => removeOption('suitFabric')}
-                                  className="text-gray-400 hover:text-red-600 text-lg"
-                                  aria-label="Remove suit fabric"
-                                  data-testid="button-remove-suitFabric"
-                                >
-                                  ×
-                                </button>
-                              </div>
-                              <span className="font-medium text-gray-900">CAD $0.50</span>
-                            </div>
-                          )}
+                          {/* Required customization items (always shown, no delete buttons) */}
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-gray-600">Suit Fabric: {selectedSuitFabric.name}</span>
+                            <span className="font-medium text-gray-900">CAD $0.50</span>
+                          </div>
                           
-                          {suitColor !== 1 && (
-                            <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Suit Color: {selectedSuitColor.name}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => removeOption('suitColor')}
-                                  className="text-gray-400 hover:text-red-600 text-lg"
-                                  aria-label="Remove suit color"
-                                  data-testid="button-remove-suitColor"
-                                >
-                                  ×
-                                </button>
-                              </div>
-                              <span className="font-medium text-gray-900">CAD $0.50</span>
-                            </div>
-                          )}
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-gray-600">Suit Color: {selectedSuitColor.name}</span>
+                            <span className="font-medium text-gray-900">CAD $0.50</span>
+                          </div>
                           
-                          {shirtColor !== 1 && (
-                            <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Shirt Color: {selectedShirtColor.name}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => removeOption('shirtColor')}
-                                  className="text-gray-400 hover:text-red-600 text-lg"
-                                  aria-label="Remove shirt color"
-                                  data-testid="button-remove-shirtColor"
-                                >
-                                  ×
-                                </button>
-                              </div>
-                              <span className="font-medium text-gray-900">CAD $0.50</span>
-                            </div>
-                          )}
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-gray-600">Shirt Color: {selectedShirtColor.name}</span>
+                            <span className="font-medium text-gray-900">CAD $0.50</span>
+                          </div>
                           
-                          {background !== 1 && (
-                            <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Background: {selectedBackground.name}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => removeOption('background')}
-                                  className="text-gray-400 hover:text-red-600 text-lg"
-                                  aria-label="Remove background"
-                                  data-testid="button-remove-background"
-                                >
-                                  ×
-                                </button>
-                              </div>
-                              <span className="font-medium text-gray-900">CAD $0.50</span>
-                            </div>
-                          )}
+                          <div className="flex items-center justify-between text-sm">
+                            <span className="text-gray-600">Background: {selectedBackground.name}</span>
+                            <span className="font-medium text-gray-900">CAD $0.50</span>
+                          </div>
+                          
+                          {/* Optional customization items (only shown if selected, with delete buttons) */}
                           
                           {composition && (
                             <div className="flex items-center justify-between text-sm">

@@ -21,7 +21,7 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
 - **Key Features:**
     - Dynamic style selection flow with 4 main categories matching between homepage and upload page.
     - Image upload functionality with preview and re-selection options.
-    - Customization options: Background Color, Coat Material, Coat Color, Composition, Pose, Eye Direction, Expression (7 total options).
+    - Customization options: Suit Fabric, Suit Color (with swatches), Shirt Color (with swatches), Background, Composition, Hand Pose (conditional), Eye Direction, Expression (8 total options).
     - Carousel with left-sliding animation (2s interval), hover-pause functionality, and automatic reset on style change.
     - Multi-state checkout process (Checkout, Processing, Success, Failure) with dynamic Photo Details display and itemized pricing.
     - Testimonials carousel with infinite loop and pause-on-hover.
@@ -71,30 +71,43 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
 - **Logo files**: `Diloo-logo-original.png`, `Diloo-logo-white.png`.
 - **Images**: Banner.png (hero background), 8 professional portrait photos organized into 4 style categories (2 images per category).
 
-## Recent Changes (October 24, 2025)
+## Recent Changes (October 26, 2025)
 
-### Navigation & Style Selection
+### Professional Headshot Customization Schema (Latest)
+- **Complete refactor** of customization options to focus on professional headshot generation:
+  - **Suit Fabric**: Wool, Wool Blend, Worsted Wool (text-based selection)
+  - **Suit Color**: 7 options with color swatches (Charcoal, Navy, Black, Light Gray, Midnight Blue, Charcoal Blue, Pinstripe Charcoal)
+  - **Shirt Color**: 3 options with color swatches (White, Light Blue, Pale Gray)
+  - **Background**: 10 options text-based (6 gradients + 4 blurred environments like modern office, conference room, tree-lined street, outdoor terrace)
+  - **Composition**: Above shoulders / Above waist (optional)
+  - **Hand Pose**: 6 options (Hands naturally down, Hands in pockets, Arms crossed, Buttoning jacket, One hand touching chin, Adjusting lapel) - only visible when "Above waist" composition is selected
+  - **Eye Direction**: Facing the camera / Slightly away from camera (optional)
+  - **Expression**: Serious and professional / Natural smile / Laughing (slight motion) (optional)
+
+### Technical Implementation
+- **Upload Page**: Color swatches for Suit Color and Shirt Color (8×8 color boxes with names), text-based UI for Suit Fabric and Background options
+- **Conditional Logic**: Hand Pose field only appears when "Above waist" composition is selected; selecting "Above shoulders" hides and clears Hand Pose
+- **URL Parameters**: Updated from old schema (bgColor, material, coatColor, pose) to new schema (suitFabric, suitColor, shirtColor, background, composition, handPose, eyeDirection, expression)
+- **Checkout Page**: Updated Photo Details and pricing breakdown to use new parameter names and labels
+- **Pricing**: Total of 8 customization options (4 required + 4 optional), each adds CAD $0.50 to base price of CAD $2.99
+- **UI Consistency**: All buttons use font-normal (removed font-bold throughout application)
+
+### Navigation & Style Selection (October 24)
 - Updated StyleTabNav to use 4 category names matching homepage tabs: "Pro Headshot", "B&W Portrait", "ID Photos", "Social Avatar Decors"
 - Reorganized sample images: 2 images per category instead of 8 individual styles
 - Category selection persists from homepage to upload page via URL parameters
 
-### Upload Page Enhancements
+### Upload Page Enhancements (October 24)
 - **Carousel Animation**: Implemented left-sliding animation using translateX with 500ms transition
   - Auto-advances every 2 seconds
   - Pauses on mouse hover (controlled by `isCarouselHovered` state)
   - Resets to first image when style changes
-- **Customize Section Styling**:
-  - Made all 7 option labels bold (Background Color, Coat Material, Coat Color, Composition, Pose, Eye Direction, Expression)
-  - Changed Coat Material selected state from gray to primary color (#25ced1)
-  - Added border-2 styling to Composition, Pose, Eye Direction, and Expression option buttons
 
-### Checkout Page Improvements
+### Checkout Page Improvements (October 24)
 - **Dynamic Photo Details**: Only displays customization options user actually selected
-  - Shows Background Color, Coat Material, Coat Color only if non-default
-  - Shows Composition, Pose, Eye Direction, Expression only if selected
   - Always displays Resolution (2048 × 2732 pixels)
 - **Itemized Pricing**:
   - Base Photo: CAD $2.99
-  - Customizations: Count × $0.50 (counts all 7 possible options)
+  - Customizations: Individual line items with delete buttons
   - Displays breakdown with total calculation
   - Shows "Limited Offer" badge
