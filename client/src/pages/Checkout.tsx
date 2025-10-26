@@ -30,53 +30,65 @@ const styleImages = {
   "8": i1Img,
 };
 
-const backgroundColors = [
-  { id: 1, name: "Gray", color: "bg-gray-400" },
-  { id: 2, name: "Teal", color: "bg-primary" },
-  { id: 3, name: "Brown", color: "bg-amber-700" },
-  { id: 4, name: "Dark Gray", color: "bg-gray-500" },
-  { id: 5, name: "Light Brown", color: "bg-amber-200" },
+const suitFabrics = [
+  { id: 1, name: "Wool" },
+  { id: 2, name: "Wool Blend" },
+  { id: 3, name: "Worsted Wool" },
 ];
 
-const materials = [
-  { id: 1, name: "Material 1" },
-  { id: 2, name: "Material 2" },
-  { id: 3, name: "Material 3" },
-  { id: 4, name: "Material 4" },
+const suitColors = [
+  { id: 1, name: "Charcoal" },
+  { id: 2, name: "Navy" },
+  { id: 3, name: "Black" },
+  { id: 4, name: "Light Gray" },
+  { id: 5, name: "Midnight Blue" },
+  { id: 6, name: "Charcoal Blue" },
+  { id: 7, name: "Pinstripe Charcoal" },
 ];
 
-const coatColors = [
-  { id: 1, name: "Gray", color: "bg-gray-400" },
-  { id: 2, name: "Teal", color: "bg-primary" },
-  { id: 3, name: "Brown", color: "bg-amber-700" },
-  { id: 4, name: "Dark Gray", color: "bg-gray-500" },
-  { id: 5, name: "Light Brown", color: "bg-amber-200" },
+const shirtColors = [
+  { id: 1, name: "White" },
+  { id: 2, name: "Light Blue" },
+  { id: 3, name: "Pale Gray" },
 ];
 
-// Labels for new customization options
+const backgrounds = [
+  { id: 1, name: "Silver gray gradient" },
+  { id: 2, name: "Light blue gradient" },
+  { id: 3, name: "Light gray gradient" },
+  { id: 4, name: "Light beige gradient" },
+  { id: 5, name: "Light blue-gray gradient" },
+  { id: 6, name: "Light silver gradient" },
+  { id: 7, name: "Modern office interior (glass, white walls, plants, blurred)" },
+  { id: 8, name: "Conference room background (blurred)" },
+  { id: 9, name: "Tree-lined street (blurred)" },
+  { id: 10, name: "Outdoor terrace or balcony (blurred)" },
+];
+
+// Labels for customization options
 const compositionLabels: Record<string, string> = {
-  "waist-up": "Waist Up",
-  "shoulder-up": "Shoulder Up",
+  "above-shoulders": "Above shoulders",
+  "above-waist": "Above waist",
 };
 
-const poseLabels: Record<string, string> = {
-  "hands-down": "Hands Down",
-  "hands-pocket": "Hands in Pockets",
-  "arms-crossed": "Arms Crossed",
-  "hand-chin": "Hand on Chin",
-  "buttoning": "Buttoning",
-  "hand-collar": "Touching Collar",
+const handPoseLabels: Record<string, string> = {
+  "hands-down": "Hands naturally down",
+  "hands-pockets": "Hands in pockets",
+  "arms-crossed": "Arms crossed",
+  "buttoning": "Buttoning jacket",
+  "hand-chin": "One hand touching chin",
+  "adjusting-lapel": "Adjusting lapel",
 };
 
 const eyeDirectionLabels: Record<string, string> = {
-  "straight": "Straight",
-  "slight-side": "Slight Side",
+  "facing-camera": "Facing the camera",
+  "slightly-away": "Slightly away from camera",
 };
 
 const expressionLabels: Record<string, string> = {
-  "neutral": "Neutral",
-  "smile": "Smile",
-  "laugh": "Laugh",
+  "serious": "Serious and professional",
+  "natural-smile": "Natural smile",
+  "laughing": "Laughing (slight motion)",
 };
 
 const emailSchema = z.object({
@@ -94,33 +106,36 @@ export default function Checkout() {
   const [userEmail, setUserEmail] = useState<string>("");
   const [emailInput, setEmailInput] = useState<string>("");
 
-  const { bgColor, material, coatColor, styleId, selectedStyleImage, composition, pose, eyeDirection, expression } = useMemo(() => {
+  const { suitFabric, suitColor, shirtColor, background, styleId, selectedStyleImage, composition, handPose, eyeDirection, expression } = useMemo(() => {
     const params = new URLSearchParams(searchString);
     const styleId = params.get('style') || "3";
     return {
-      bgColor: parseInt(params.get('bgColor') || '1'),
-      material: parseInt(params.get('material') || '1'),
-      coatColor: parseInt(params.get('coatColor') || '1'),
+      suitFabric: parseInt(params.get('suitFabric') || '1'),
+      suitColor: parseInt(params.get('suitColor') || '1'),
+      shirtColor: parseInt(params.get('shirtColor') || '1'),
+      background: parseInt(params.get('background') || '1'),
       styleId,
       selectedStyleImage: styleImages[styleId as keyof typeof styleImages] || w2Img,
       composition: params.get('composition') || null,
-      pose: params.get('pose') || null,
+      handPose: params.get('handPose') || null,
       eyeDirection: params.get('eyeDirection') || null,
       expression: params.get('expression') || null,
     };
   }, [searchString]);
 
-  const selectedBgColor = backgroundColors.find(c => c.id === bgColor) || backgroundColors[0];
-  const selectedMaterial = materials.find(m => m.id === material) || materials[0];
-  const selectedCoatColor = coatColors.find(c => c.id === coatColor) || coatColors[0];
+  const selectedSuitFabric = suitFabrics.find(f => f.id === suitFabric) || suitFabrics[0];
+  const selectedSuitColor = suitColors.find(c => c.id === suitColor) || suitColors[0];
+  const selectedShirtColor = shirtColors.find(c => c.id === shirtColor) || shirtColors[0];
+  const selectedBackground = backgrounds.find(b => b.id === background) || backgrounds[0];
 
   // Calculate number of customization options selected (each adds CAD $0.50)
   const customizationCount = [
-    bgColor !== 1,           // Background Color
-    material !== 1,          // Coat Material
-    coatColor !== 1,         // Coat Color
+    suitFabric !== 1,        // Suit Fabric
+    suitColor !== 1,         // Suit Color
+    shirtColor !== 1,        // Shirt Color
+    background !== 1,        // Background
     composition !== null,    // Composition
-    pose !== null,           // Pose
+    handPose !== null,       // Hand Pose
     eyeDirection !== null,   // Eye Direction
     expression !== null,     // Expression
   ].filter(Boolean).length;
@@ -227,33 +242,35 @@ export default function Checkout() {
                   <h2 className="text-xl font-semibold mb-6 text-gray-900">Photo Details</h2>
                   
                   <div className="space-y-3">
-                    {/* Always show background color if not default */}
-                    {bgColor !== 1 && (
+                    {/* Only show suit fabric if not default */}
+                    {suitFabric !== 1 && (
                       <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                        <span className="text-sm text-gray-600">Background Color</span>
-                        <div className="flex items-center gap-2">
-                          <div className={`w-6 h-6 rounded ${selectedBgColor.color}`}></div>
-                          <span className="text-sm font-medium text-gray-900">{selectedBgColor.name}</span>
-                        </div>
+                        <span className="text-sm text-gray-600">Suit Fabric</span>
+                        <span className="text-sm font-medium text-gray-900">{selectedSuitFabric.name}</span>
                       </div>
                     )}
                     
-                    {/* Only show coat material if not default */}
-                    {material !== 1 && (
+                    {/* Only show suit color if not default */}
+                    {suitColor !== 1 && (
                       <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                        <span className="text-sm text-gray-600">Coat Material</span>
-                        <span className="text-sm font-medium text-gray-900">{selectedMaterial.name}</span>
+                        <span className="text-sm text-gray-600">Suit Color</span>
+                        <span className="text-sm font-medium text-gray-900">{selectedSuitColor.name}</span>
                       </div>
                     )}
                     
-                    {/* Only show coat color if not default */}
-                    {coatColor !== 1 && (
+                    {/* Only show shirt color if not default */}
+                    {shirtColor !== 1 && (
                       <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                        <span className="text-sm text-gray-600">Coat Color</span>
-                        <div className="flex items-center gap-2">
-                          <div className={`w-6 h-6 rounded ${selectedCoatColor.color}`}></div>
-                          <span className="text-sm font-medium text-gray-900">{selectedCoatColor.name}</span>
-                        </div>
+                        <span className="text-sm text-gray-600">Shirt Color</span>
+                        <span className="text-sm font-medium text-gray-900">{selectedShirtColor.name}</span>
+                      </div>
+                    )}
+                    
+                    {/* Only show background if not default */}
+                    {background !== 1 && (
+                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                        <span className="text-sm text-gray-600">Background</span>
+                        <span className="text-sm font-medium text-gray-900">{selectedBackground.name}</span>
                       </div>
                     )}
                     
@@ -265,11 +282,11 @@ export default function Checkout() {
                       </div>
                     )}
                     
-                    {/* Only show pose if selected */}
-                    {pose && (
+                    {/* Only show hand pose if selected */}
+                    {handPose && (
                       <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                        <span className="text-sm text-gray-600">Pose</span>
-                        <span className="text-sm font-medium text-gray-900">{poseLabels[pose]}</span>
+                        <span className="text-sm text-gray-600">Hand Pose</span>
+                        <span className="text-sm font-medium text-gray-900">{handPoseLabels[handPose]}</span>
                       </div>
                     )}
                     
@@ -339,16 +356,16 @@ export default function Checkout() {
                           </div>
                           
                           {/* Individual customization items with delete buttons */}
-                          {bgColor !== 1 && (
+                          {suitFabric !== 1 && (
                             <div className="flex items-center justify-between text-sm">
                               <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Background Color: {selectedBgColor.name}</span>
+                                <span className="text-gray-600">Suit Fabric: {selectedSuitFabric.name}</span>
                                 <button
                                   type="button"
-                                  onClick={() => removeOption('bgColor')}
+                                  onClick={() => removeOption('suitFabric')}
                                   className="text-gray-400 hover:text-red-600 text-lg"
-                                  aria-label="Remove background color"
-                                  data-testid="button-remove-bgColor"
+                                  aria-label="Remove suit fabric"
+                                  data-testid="button-remove-suitFabric"
                                 >
                                   ×
                                 </button>
@@ -357,16 +374,16 @@ export default function Checkout() {
                             </div>
                           )}
                           
-                          {material !== 1 && (
+                          {suitColor !== 1 && (
                             <div className="flex items-center justify-between text-sm">
                               <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Coat Material: {selectedMaterial.name}</span>
+                                <span className="text-gray-600">Suit Color: {selectedSuitColor.name}</span>
                                 <button
                                   type="button"
-                                  onClick={() => removeOption('material')}
+                                  onClick={() => removeOption('suitColor')}
                                   className="text-gray-400 hover:text-red-600 text-lg"
-                                  aria-label="Remove coat material"
-                                  data-testid="button-remove-material"
+                                  aria-label="Remove suit color"
+                                  data-testid="button-remove-suitColor"
                                 >
                                   ×
                                 </button>
@@ -375,16 +392,34 @@ export default function Checkout() {
                             </div>
                           )}
                           
-                          {coatColor !== 1 && (
+                          {shirtColor !== 1 && (
                             <div className="flex items-center justify-between text-sm">
                               <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Coat Color: {selectedCoatColor.name}</span>
+                                <span className="text-gray-600">Shirt Color: {selectedShirtColor.name}</span>
                                 <button
                                   type="button"
-                                  onClick={() => removeOption('coatColor')}
+                                  onClick={() => removeOption('shirtColor')}
                                   className="text-gray-400 hover:text-red-600 text-lg"
-                                  aria-label="Remove coat color"
-                                  data-testid="button-remove-coatColor"
+                                  aria-label="Remove shirt color"
+                                  data-testid="button-remove-shirtColor"
+                                >
+                                  ×
+                                </button>
+                              </div>
+                              <span className="font-medium text-gray-900">CAD $0.50</span>
+                            </div>
+                          )}
+                          
+                          {background !== 1 && (
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Background: {selectedBackground.name}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeOption('background')}
+                                  className="text-gray-400 hover:text-red-600 text-lg"
+                                  aria-label="Remove background"
+                                  data-testid="button-remove-background"
                                 >
                                   ×
                                 </button>
@@ -411,16 +446,16 @@ export default function Checkout() {
                             </div>
                           )}
                           
-                          {pose && (
+                          {handPose && (
                             <div className="flex items-center justify-between text-sm">
                               <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Pose: {poseLabels[pose]}</span>
+                                <span className="text-gray-600">Hand Pose: {handPoseLabels[handPose]}</span>
                                 <button
                                   type="button"
-                                  onClick={() => removeOption('pose')}
+                                  onClick={() => removeOption('handPose')}
                                   className="text-gray-400 hover:text-red-600 text-lg"
-                                  aria-label="Remove pose"
-                                  data-testid="button-remove-pose"
+                                  aria-label="Remove hand pose"
+                                  data-testid="button-remove-handPose"
                                 >
                                   ×
                                 </button>

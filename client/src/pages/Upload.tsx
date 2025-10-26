@@ -17,67 +17,80 @@ import i1Img from "@assets/I1_1761159011573.png";
 // All 8 sample images for carousel (not grouped by category)
 const allStyleImages = [w1Img, y1Img, w2Img, b1Img, y2Img, b2Img, w3Img, i1Img];
 
-const backgroundColors = [
-  { id: 1, color: "bg-gray-400", hex: "#9CA3AF" },
-  { id: 2, color: "bg-primary", hex: "#25CED1" },
-  { id: 3, color: "bg-amber-700", hex: "#B45309" },
-  { id: 4, color: "bg-gray-500", hex: "#6B7280" },
-  { id: 5, color: "bg-amber-200", hex: "#FDE68A" },
+const suitFabrics = [
+  { id: 1, name: "Wool" },
+  { id: 2, name: "Wool Blend" },
+  { id: 3, name: "Worsted Wool" },
 ];
 
-const coatColors = [
-  { id: 1, color: "bg-gray-400", hex: "#9CA3AF" },
-  { id: 2, color: "bg-primary", hex: "#25CED1" },
-  { id: 3, color: "bg-amber-700", hex: "#B45309" },
-  { id: 4, color: "bg-gray-500", hex: "#6B7280" },
-  { id: 5, color: "bg-amber-200", hex: "#FDE68A" },
+const suitColors = [
+  { id: 1, name: "Charcoal", hex: "#36454F" },
+  { id: 2, name: "Navy", hex: "#000080" },
+  { id: 3, name: "Black", hex: "#000000" },
+  { id: 4, name: "Light Gray", hex: "#D3D3D3" },
+  { id: 5, name: "Midnight Blue", hex: "#191970" },
+  { id: 6, name: "Charcoal Blue", hex: "#3C4C5C" },
+  { id: 7, name: "Pinstripe Charcoal", hex: "#36454F", pattern: "pinstripe" },
 ];
 
-const materials = [
-  { id: 1, name: "Material 1" },
-  { id: 2, name: "Material 2" },
-  { id: 3, name: "Material 3" },
-  { id: 4, name: "Material 4" },
+const shirtColors = [
+  { id: 1, name: "White", hex: "#FFFFFF" },
+  { id: 2, name: "Light Blue", hex: "#ADD8E6" },
+  { id: 3, name: "Pale Gray", hex: "#E8E8E8" },
+];
+
+const backgrounds = [
+  { id: 1, name: "Silver gray gradient" },
+  { id: 2, name: "Light blue gradient" },
+  { id: 3, name: "Light gray gradient" },
+  { id: 4, name: "Light beige gradient" },
+  { id: 5, name: "Light blue-gray gradient" },
+  { id: 6, name: "Light silver gradient" },
+  { id: 7, name: "Modern office interior (glass, white walls, plants, blurred)" },
+  { id: 8, name: "Conference room background (blurred)" },
+  { id: 9, name: "Tree-lined street (blurred)" },
+  { id: 10, name: "Outdoor terrace or balcony (blurred)" },
 ];
 
 const compositions = [
-  { value: "waist-up", label: "Waist Up" },
-  { value: "shoulder-up", label: "Shoulder Up" },
+  { value: "above-shoulders", label: "Above shoulders" },
+  { value: "above-waist", label: "Above waist" },
 ];
 
-const poses = [
-  { value: "hands-down", label: "Hands Down" },
-  { value: "hands-pocket", label: "Hands in Pockets" },
-  { value: "arms-crossed", label: "Arms Crossed" },
-  { value: "hand-chin", label: "Hand on Chin" },
-  { value: "buttoning", label: "Buttoning" },
-  { value: "hand-collar", label: "Touching Collar" },
+const handPoses = [
+  { value: "hands-down", label: "Hands naturally down" },
+  { value: "hands-pockets", label: "Hands in pockets" },
+  { value: "arms-crossed", label: "Arms crossed" },
+  { value: "buttoning", label: "Buttoning jacket" },
+  { value: "hand-chin", label: "One hand touching chin" },
+  { value: "adjusting-lapel", label: "Adjusting lapel" },
 ];
 
 const eyeDirections = [
-  { value: "straight", label: "Straight" },
-  { value: "slight-side", label: "Slight Side" },
+  { value: "facing-camera", label: "Facing the camera" },
+  { value: "slightly-away", label: "Slightly away from camera" },
 ];
 
 const expressions = [
-  { value: "neutral", label: "Neutral" },
-  { value: "smile", label: "Smile" },
-  { value: "laugh", label: "Laugh" },
+  { value: "serious", label: "Serious and professional" },
+  { value: "natural-smile", label: "Natural smile" },
+  { value: "laughing", label: "Laughing (slight motion)" },
 ];
 
 export default function Upload() {
   const searchString = useSearch();
-  const [selectedBgColor, setSelectedBgColor] = useState(1);
-  const [selectedMaterial, setSelectedMaterial] = useState(1);
-  const [selectedCoatColor, setSelectedCoatColor] = useState(1);
+  const [selectedSuitFabric, setSelectedSuitFabric] = useState(1);
+  const [selectedSuitColor, setSelectedSuitColor] = useState(1);
+  const [selectedShirtColor, setSelectedShirtColor] = useState(1);
+  const [selectedBackground, setSelectedBackground] = useState(1);
   const [primaryImage, setPrimaryImage] = useState<string | null>(null);
   const [optionalImage, setOptionalImage] = useState<string | null>(null);
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
   const [isCarouselHovered, setIsCarouselHovered] = useState(false);
   
-  // New customization options
+  // Customization options
   const [selectedComposition, setSelectedComposition] = useState<string | null>(null);
-  const [selectedPose, setSelectedPose] = useState<string | null>(null);
+  const [selectedHandPose, setSelectedHandPose] = useState<string | null>(null);
   const [selectedEyeDirection, setSelectedEyeDirection] = useState<string | null>(null);
   const [selectedExpression, setSelectedExpression] = useState<string | null>(null);
   
@@ -295,67 +308,109 @@ export default function Upload() {
                 <h2 className="text-xl font-semibold mb-6 text-gray-900">Customize Your Photo</h2>
                 
                 <div className="space-y-6">
+                  {/* Suit Fabric */}
                   <div>
                     <label className="block text-sm font-bold text-gray-900 mb-3">
-                      Background Color
+                      Suit Fabric
                     </label>
-                    <div className="flex gap-3">
-                      {backgroundColors.map((item) => (
-                        <button
-                          key={item.id}
-                          onClick={() => setSelectedBgColor(item.id)}
-                          className={`w-12 h-12 rounded-lg ${item.color} ${
-                            selectedBgColor === item.id
-                              ? "ring-2 ring-primary ring-offset-2"
-                              : "hover:ring-2 hover:ring-gray-300"
-                          } transition-all`}
-                          data-testid={`color-bg-${item.id}`}
-                          aria-label={`Background color ${item.id}`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-bold text-gray-900 mb-3">
-                      Coat Material
-                    </label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                      {materials.map((material) => (
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {suitFabrics.map((fabric) => (
                         <Button
-                          key={material.id}
-                          variant={selectedMaterial === material.id ? "default" : "outline"}
-                          onClick={() => setSelectedMaterial(material.id)}
+                          key={fabric.id}
+                          variant={selectedSuitFabric === fabric.id ? "default" : "outline"}
+                          onClick={() => setSelectedSuitFabric(fabric.id)}
                           className={
-                            selectedMaterial === material.id
+                            selectedSuitFabric === fabric.id
                               ? "bg-primary text-black hover:bg-primary/90"
                               : "border-gray-300 text-gray-700 hover:bg-gray-100"
                           }
-                          data-testid={`material-${material.id}`}
+                          data-testid={`suit-fabric-${fabric.id}`}
                         >
-                          {material.name}
+                          {fabric.name}
                         </Button>
                       ))}
                     </div>
                   </div>
 
+                  {/* Suit Color with color swatches */}
                   <div>
                     <label className="block text-sm font-bold text-gray-900 mb-3">
-                      Coat Color
+                      Suit Color
                     </label>
-                    <div className="flex gap-3">
-                      {coatColors.map((item) => (
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {suitColors.map((color) => (
                         <button
-                          key={item.id}
-                          onClick={() => setSelectedCoatColor(item.id)}
-                          className={`w-12 h-12 rounded-lg ${item.color} ${
-                            selectedCoatColor === item.id
-                              ? "ring-2 ring-primary ring-offset-2"
-                              : "hover:ring-2 hover:ring-gray-300"
-                          } transition-all`}
-                          data-testid={`color-coat-${item.id}`}
-                          aria-label={`Coat color ${item.id}`}
-                        />
+                          key={color.id}
+                          onClick={() => setSelectedSuitColor(color.id)}
+                          className={`flex items-center gap-2 p-3 rounded-lg border-2 transition-all ${
+                            selectedSuitColor === color.id
+                              ? "border-primary bg-primary/5"
+                              : "border-gray-300 hover:border-gray-400"
+                          }`}
+                          data-testid={`suit-color-${color.id}`}
+                        >
+                          <div 
+                            className="w-8 h-8 rounded border border-gray-300 flex-shrink-0"
+                            style={{ 
+                              backgroundColor: color.hex,
+                              backgroundImage: color.pattern === "pinstripe" 
+                                ? `repeating-linear-gradient(90deg, ${color.hex}, ${color.hex} 3px, rgba(255,255,255,0.1) 3px, rgba(255,255,255,0.1) 4px)`
+                                : undefined
+                            }}
+                          />
+                          <span className="text-sm text-gray-900">{color.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Shirt Color with color swatches */}
+                  <div>
+                    <label className="block text-sm font-bold text-gray-900 mb-3">
+                      Shirt Color
+                    </label>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {shirtColors.map((color) => (
+                        <button
+                          key={color.id}
+                          onClick={() => setSelectedShirtColor(color.id)}
+                          className={`flex items-center gap-2 p-3 rounded-lg border-2 transition-all ${
+                            selectedShirtColor === color.id
+                              ? "border-primary bg-primary/5"
+                              : "border-gray-300 hover:border-gray-400"
+                          }`}
+                          data-testid={`shirt-color-${color.id}`}
+                        >
+                          <div 
+                            className="w-8 h-8 rounded border border-gray-300 flex-shrink-0"
+                            style={{ backgroundColor: color.hex }}
+                          />
+                          <span className="text-sm text-gray-900">{color.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Background */}
+                  <div>
+                    <label className="block text-sm font-bold text-gray-900 mb-3">
+                      Background
+                    </label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {backgrounds.map((bg) => (
+                        <Button
+                          key={bg.id}
+                          variant={selectedBackground === bg.id ? "default" : "outline"}
+                          onClick={() => setSelectedBackground(bg.id)}
+                          className={
+                            selectedBackground === bg.id
+                              ? "bg-primary text-black hover:bg-primary/90 text-left justify-start"
+                              : "border-gray-300 text-gray-700 hover:bg-gray-100 text-left justify-start"
+                          }
+                          data-testid={`background-${bg.id}`}
+                        >
+                          {bg.name}
+                        </Button>
                       ))}
                     </div>
                   </div>
@@ -372,14 +427,12 @@ export default function Upload() {
                           variant="outline"
                           onClick={() => {
                             if (selectedComposition === comp.value) {
-                              // Deselect if already selected
                               setSelectedComposition(null);
+                              setSelectedHandPose(null);
                             } else {
-                              // Select new option
                               setSelectedComposition(comp.value);
-                              // Reset pose if shoulder-up is selected
-                              if (comp.value === "shoulder-up") {
-                                setSelectedPose(null);
+                              if (comp.value === "above-shoulders") {
+                                setSelectedHandPose(null);
                               }
                             }
                           }}
@@ -396,39 +449,37 @@ export default function Upload() {
                     </div>
                   </div>
 
-                  {/* Pose */}
-                  <div>
-                    <label className="block text-sm font-bold text-gray-900 mb-3">
-                      Pose <span className="text-gray-500 text-xs font-normal">(Optional)</span>
-                      {selectedComposition === "shoulder-up" && (
-                        <span className="text-gray-400 text-xs font-normal ml-2">(Disabled when Shoulder Up is selected)</span>
-                      )}
-                    </label>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                      {poses.map((pose) => (
-                        <Button
-                          key={pose.value}
-                          variant="outline"
-                          onClick={() => {
-                            if (selectedPose === pose.value) {
-                              setSelectedPose(null);
-                            } else {
-                              setSelectedPose(pose.value);
+                  {/* Hand Pose - Only show when "Above waist" is selected */}
+                  {selectedComposition === "above-waist" && (
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-3">
+                        Hand Pose <span className="text-gray-500 text-xs font-normal">(Optional)</span>
+                      </label>
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        {handPoses.map((pose) => (
+                          <Button
+                            key={pose.value}
+                            variant="outline"
+                            onClick={() => {
+                              if (selectedHandPose === pose.value) {
+                                setSelectedHandPose(null);
+                              } else {
+                                setSelectedHandPose(pose.value);
+                              }
+                            }}
+                            className={
+                              selectedHandPose === pose.value
+                                ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary"
+                                : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
                             }
-                          }}
-                          disabled={selectedComposition === "shoulder-up"}
-                          className={
-                            selectedPose === pose.value
-                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary"
-                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-                          }
-                          data-testid={`pose-${pose.value}`}
-                        >
-                          {pose.label}
-                        </Button>
-                      ))}
+                            data-testid={`hand-pose-${pose.value}`}
+                          >
+                            {pose.label}
+                          </Button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Eye Direction */}
                   <div>
@@ -465,7 +516,7 @@ export default function Upload() {
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Expression <span className="text-gray-500 text-xs font-normal">(Optional)</span>
                     </label>
-                    <div className="flex gap-3">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       {expressions.map((expr) => (
                         <Button
                           key={expr.value}
@@ -494,7 +545,7 @@ export default function Upload() {
 
               <div className="bg-white rounded-2xl p-8" data-testid="section-cta">
                 {(primaryImage || optionalImage) ? (
-                  <Link href={`/checkout?style=${styleId}&bgColor=${selectedBgColor}&material=${selectedMaterial}&coatColor=${selectedCoatColor}${selectedComposition ? `&composition=${selectedComposition}` : ''}${selectedPose ? `&pose=${selectedPose}` : ''}${selectedEyeDirection ? `&eyeDirection=${selectedEyeDirection}` : ''}${selectedExpression ? `&expression=${selectedExpression}` : ''}`}>
+                  <Link href={`/checkout?style=${styleId}&suitFabric=${selectedSuitFabric}&suitColor=${selectedSuitColor}&shirtColor=${selectedShirtColor}&background=${selectedBackground}${selectedComposition ? `&composition=${selectedComposition}` : ''}${selectedHandPose ? `&handPose=${selectedHandPose}` : ''}${selectedEyeDirection ? `&eyeDirection=${selectedEyeDirection}` : ''}${selectedExpression ? `&expression=${selectedExpression}` : ''}`}>
                     <Button 
                       className="w-full bg-primary text-black hover:bg-primary/90 h-12 text-base"
                       data-testid="button-create-now"
