@@ -77,24 +77,26 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
 - **Complete redesign** of homepage Pro Headshot showcase with intelligent photo rotation:
   - **Photo Pool**: 16 professional headshots (8 female: female-01.png to female-08.png, 8 male: male-01.png to male-08.png)
   - **Initial Display**: Randomly selects 8 photos from pool of 16 using Fisher-Yates shuffle algorithm
-  - **3D Flip Animation**: CSS-based rotateY transform with 500ms duration and perspective depth effect
+  - **Slide-Up Animation**: CSS-based translateY slide from bottom with ease-out timing, 500ms duration for "fast in, slow out" effect
   - **Smart Rotation Logic**:
     - Timer triggers every 3.5 seconds
-    - Randomly selects 1-2 photos to flip and replace
-    - Staggered timing (100ms delay) when flipping 2 photos simultaneously
-  - **Concurrency Control**: Maximum 2 photos flip simultaneously using Set-based tracking
-  - **Duplicate Prevention**: `pendingReplacementsRef` Map tracks photos selected for replacement to prevent duplicate selection during concurrent flips
+    - Randomly selects 1-2 photos to slide and replace
+    - Staggered timing (100ms delay) when sliding 2 photos simultaneously
+  - **Concurrency Control**: Maximum 2 photos animate simultaneously using Set-based tracking
+  - **Duplicate Prevention**: `pendingReplacementsRef` Map tracks photos selected for replacement to prevent duplicate selection during concurrent animations
   - **Fair Distribution**: `displayCountRef` Map tracks display count for each photo, prioritizes least-shown photos in selection algorithm
-  - **Complete Flip Flow**: Flip to 90deg → Replace image at midpoint (250ms) → Flip back to 0deg (500ms total)
+  - **Complete Animation Flow**: New photo slides from bottom (translateY(100%)) to top (translateY(0)) over 500ms → State updated with new photo
 
 ### Technical Implementation Details (Photo Rotation)
 - **State Management**:
   - `displayedPhotos`: Current 8 photos being shown
-  - `flippingIndices`: Set of indices currently animating
+  - `nextPhotos`: Sparse array tracking photos currently sliding in during animation
+  - `animatingIndices`: Set of indices currently animating
   - `displayCountRef`: Ref-based Map tracking how many times each photo has been displayed
-  - `pendingReplacementsRef`: Ref-based Map preventing duplicate selection during concurrent flips
+  - `pendingReplacementsRef`: Ref-based Map preventing duplicate selection during concurrent animations
 - **Selection Algorithm**: Filters available photos by excluding currently displayed AND pending photos, then selects from photos with minimum display count
-- **Animation**: Inline CSS keyframe animation for smooth 3D flip effect without layout shift
+- **Animation**: CSS keyframe animation with translateY from 100% to 0%, ease-out timing for smooth slide-up effect
+- **DOM Structure**: Absolute positioning with overflow-hidden prevents layout shifts during animation
 - **Performance**: Uses refs for tracking to avoid unnecessary re-renders, cleanup timers prevent memory leaks
 
 ### Professional Headshot Customization Schema (October 26, 2025)
