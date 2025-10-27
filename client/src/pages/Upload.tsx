@@ -135,6 +135,16 @@ export default function Upload() {
     }
   }, [selectedCountry, styleId, availableDocTypes]);
   
+  // Auto-fill specification fields when document spec changes
+  useEffect(() => {
+    if (styleId === "2" && currentDocSpec) {
+      if (currentDocSpec.size) setCustomSize(currentDocSpec.size);
+      if (currentDocSpec.dpi) setCustomDPI(currentDocSpec.dpi.toString());
+      if (currentDocSpec.backgroundColor) setCustomBgColor(currentDocSpec.backgroundColor);
+      if (currentDocSpec.fileFormat) setCustomFileFormat(currentDocSpec.fileFormat);
+    }
+  }, [styleId, currentDocSpec]);
+  
   const styleSampleImages = allStyleImages;
 
   // Reset carousel index when style changes
@@ -379,76 +389,60 @@ export default function Upload() {
                       </Select>
                     </div>
 
-                    {/* Specifications Display */}
+                    {/* Specifications - All Editable */}
                     <div className="bg-gray-50 rounded-lg p-4 space-y-3">
                       <h3 className="font-semibold text-gray-900 text-sm">Specifications</h3>
                       
-                      {/* Size */}
+                      {/* Size - Always Editable */}
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-gray-700">Photo Size:</span>
-                        {currentDocSpec && currentDocSpec.size ? (
-                          <span className="text-sm font-medium text-gray-900">{currentDocSpec.size}</span>
-                        ) : (
-                          <Input
-                            type="text"
-                            value={customSize}
-                            onChange={(e) => setCustomSize(e.target.value)}
-                            placeholder="e.g., 35x45 mm"
-                            className="w-40 h-8 text-sm"
-                            data-testid="input-custom-size"
-                          />
-                        )}
+                        <Input
+                          type="text"
+                          value={customSize}
+                          onChange={(e) => setCustomSize(e.target.value)}
+                          placeholder="e.g., 35x45 mm"
+                          className="w-40 h-8 text-sm"
+                          data-testid="input-size"
+                        />
                       </div>
 
-                      {/* DPI */}
+                      {/* DPI - Always Editable */}
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-gray-700">DPI:</span>
-                        {currentDocSpec && currentDocSpec.dpi ? (
-                          <span className="text-sm font-medium text-gray-900">{currentDocSpec.dpi}</span>
-                        ) : (
-                          <Input
-                            type="text"
-                            value={customDPI}
-                            onChange={(e) => setCustomDPI(e.target.value)}
-                            placeholder="e.g., 300"
-                            className="w-40 h-8 text-sm"
-                            data-testid="input-custom-dpi"
-                          />
-                        )}
+                        <Input
+                          type="text"
+                          value={customDPI}
+                          onChange={(e) => setCustomDPI(e.target.value)}
+                          placeholder="e.g., 300"
+                          className="w-40 h-8 text-sm"
+                          data-testid="input-dpi"
+                        />
                       </div>
 
-                      {/* Background Color */}
+                      {/* Background Color - Always Editable */}
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-gray-700">Background:</span>
-                        {currentDocSpec && currentDocSpec.backgroundColor ? (
-                          <span className="text-sm font-medium text-gray-900">{currentDocSpec.backgroundColor}</span>
-                        ) : (
-                          <Input
-                            type="text"
-                            value={customBgColor}
-                            onChange={(e) => setCustomBgColor(e.target.value)}
-                            placeholder="e.g., White"
-                            className="w-40 h-8 text-sm"
-                            data-testid="input-custom-bgcolor"
-                          />
-                        )}
+                        <Input
+                          type="text"
+                          value={customBgColor}
+                          onChange={(e) => setCustomBgColor(e.target.value)}
+                          placeholder="e.g., White"
+                          className="w-40 h-8 text-sm"
+                          data-testid="input-bgcolor"
+                        />
                       </div>
 
-                      {/* File Format */}
+                      {/* File Format - Always Editable */}
                       <div className="flex justify-between items-center">
                         <span className="text-sm text-gray-700">File Format:</span>
-                        {currentDocSpec && currentDocSpec.fileFormat ? (
-                          <span className="text-sm font-medium text-gray-900">{currentDocSpec.fileFormat}</span>
-                        ) : (
-                          <Input
-                            type="text"
-                            value={customFileFormat}
-                            onChange={(e) => setCustomFileFormat(e.target.value)}
-                            placeholder="e.g., JPG"
-                            className="w-40 h-8 text-sm"
-                            data-testid="input-custom-format"
-                          />
-                        )}
+                        <Input
+                          type="text"
+                          value={customFileFormat}
+                          onChange={(e) => setCustomFileFormat(e.target.value)}
+                          placeholder="e.g., JPG"
+                          className="w-40 h-8 text-sm"
+                          data-testid="input-format"
+                        />
                       </div>
                     </div>
                   </div>
