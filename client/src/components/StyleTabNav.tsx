@@ -3,9 +3,8 @@ import { Link, useSearch } from "wouter";
 
 const styles = [
   { id: "1", name: "Pro Headshot" },
-  { id: "2", name: "B&W Portrait" },
-  { id: "3", name: "ID Photos" },
-  { id: "4", name: "Social Avatar Decors" },
+  { id: "2", name: "ID Photo" },
+  { id: "3", name: "Social Avatar Decors" },
 ];
 
 export default function StyleTabNav() {
@@ -13,7 +12,7 @@ export default function StyleTabNav() {
   
   const activeStyleId = useMemo(() => {
     const params = new URLSearchParams(searchString);
-    return params.get('style') || "3";
+    return params.get('style') || "1";
   }, [searchString]);
 
   return (

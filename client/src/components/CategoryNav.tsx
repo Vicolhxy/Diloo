@@ -2,8 +2,7 @@ import { useState } from "react";
 
 const categories = [
   { id: "pro-headshot", label: "Pro Headshot" },
-  { id: "bw-portrait", label: "B&W Portrait" },
-  { id: "id-photos", label: "ID Photos" },
+  { id: "id-photo", label: "ID Photo" },
   { id: "social-avatar", label: "Social Avatar Decors" },
 ];
 

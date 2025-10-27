@@ -110,7 +110,7 @@ export default function Upload() {
 
   const { styleId } = useMemo(() => {
     const params = new URLSearchParams(searchString);
-    const styleId = params.get('style') || "3";
+    const styleId = params.get('style') || "1";
     return {
       styleId,
     };
