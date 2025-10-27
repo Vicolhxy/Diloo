@@ -2,9 +2,12 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { Link, useSearch } from "wouter";
 import { User, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import Navigation from "@/components/Navigation";
 import StyleTabNav from "@/components/StyleTabNav";
 import Footer from "@/components/Footer";
+import { idPhotoSpecs, getDocumentTypes, getDocumentSpec, formatDocumentType } from "../../../shared/idPhotoSpecs";
 import w1Img from "@assets/W1_1761159011555.png";
 import y1Img from "@assets/Y1_1761159011566.png";
 import w2Img from "@assets/W2_1761159011568.png";
@@ -88,11 +91,19 @@ export default function Upload() {
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
   const [isCarouselHovered, setIsCarouselHovered] = useState(false);
   
-  // Customization options
+  // Customization options for Pro Headshot
   const [selectedComposition, setSelectedComposition] = useState<string | null>(null);
   const [selectedHandPose, setSelectedHandPose] = useState<string | null>(null);
   const [selectedEyeDirection, setSelectedEyeDirection] = useState<string | null>(null);
   const [selectedExpression, setSelectedExpression] = useState<string | null>(null);
+  
+  // ID Photos customization options
+  const [selectedCountry, setSelectedCountry] = useState<string>("Canada");
+  const [selectedDocumentType, setSelectedDocumentType] = useState<string>("Passport");
+  const [customSize, setCustomSize] = useState<string>("");
+  const [customDPI, setCustomDPI] = useState<string>("");
+  const [customBgColor, setCustomBgColor] = useState<string>("");
+  const [customFileFormat, setCustomFileFormat] = useState<string>("");
   
   const primaryInputRef = useRef<HTMLInputElement>(null);
   const optionalInputRef = useRef<HTMLInputElement>(null);
@@ -104,6 +115,25 @@ export default function Upload() {
       styleId,
     };
   }, [searchString]);
+  
+  // Get current document spec for ID Photos
+  const currentDocSpec = useMemo(() => {
+    if (styleId !== "2") return null;
+    return getDocumentSpec(selectedCountry, selectedDocumentType);
+  }, [styleId, selectedCountry, selectedDocumentType]);
+  
+  // Get available document types for selected country
+  const availableDocTypes = useMemo(() => {
+    if (styleId !== "2") return [];
+    return getDocumentTypes(selectedCountry);
+  }, [styleId, selectedCountry]);
+  
+  // Reset document type when country changes
+  useEffect(() => {
+    if (styleId === "2" && availableDocTypes.length > 0) {
+      setSelectedDocumentType(availableDocTypes[0]);
+    }
+  }, [selectedCountry, styleId, availableDocTypes]);
   
   const styleSampleImages = allStyleImages;
 
@@ -307,7 +337,124 @@ export default function Upload() {
               <div className="bg-white rounded-2xl p-8" data-testid="section-customize">
                 <h2 className="text-xl font-semibold mb-6 text-gray-900">Customize Your Photo</h2>
                 
-                <div className="space-y-6">
+                {/* Conditional rendering based on style */}
+                {styleId === "2" ? (
+                  /* ID Photos Form */
+                  <div className="space-y-6">
+                    {/* Country Selection */}
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-3">
+                        Country/Region
+                      </label>
+                      <Select value={selectedCountry} onValueChange={setSelectedCountry}>
+                        <SelectTrigger className="w-full" data-testid="select-country">
+                          <SelectValue placeholder="Select country" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Object.keys(idPhotoSpecs.countries).map((countryKey) => (
+                            <SelectItem key={countryKey} value={countryKey}>
+                              {idPhotoSpecs.countries[countryKey].name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Document Type Selection */}
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-3">
+                        Document Type
+                      </label>
+                      <Select value={selectedDocumentType} onValueChange={setSelectedDocumentType}>
+                        <SelectTrigger className="w-full" data-testid="select-document-type">
+                          <SelectValue placeholder="Select document type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {availableDocTypes.map((docType: string) => (
+                            <SelectItem key={docType} value={docType}>
+                              {formatDocumentType(docType)}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Specifications Display */}
+                    <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                      <h3 className="font-semibold text-gray-900 text-sm">Specifications</h3>
+                      
+                      {/* Size */}
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-700">Photo Size:</span>
+                        {currentDocSpec && currentDocSpec.size ? (
+                          <span className="text-sm font-medium text-gray-900">{currentDocSpec.size}</span>
+                        ) : (
+                          <Input
+                            type="text"
+                            value={customSize}
+                            onChange={(e) => setCustomSize(e.target.value)}
+                            placeholder="e.g., 35x45 mm"
+                            className="w-40 h-8 text-sm"
+                            data-testid="input-custom-size"
+                          />
+                        )}
+                      </div>
+
+                      {/* DPI */}
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-700">DPI:</span>
+                        {currentDocSpec && currentDocSpec.dpi ? (
+                          <span className="text-sm font-medium text-gray-900">{currentDocSpec.dpi}</span>
+                        ) : (
+                          <Input
+                            type="text"
+                            value={customDPI}
+                            onChange={(e) => setCustomDPI(e.target.value)}
+                            placeholder="e.g., 300"
+                            className="w-40 h-8 text-sm"
+                            data-testid="input-custom-dpi"
+                          />
+                        )}
+                      </div>
+
+                      {/* Background Color */}
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-700">Background:</span>
+                        {currentDocSpec && currentDocSpec.backgroundColor ? (
+                          <span className="text-sm font-medium text-gray-900">{currentDocSpec.backgroundColor}</span>
+                        ) : (
+                          <Input
+                            type="text"
+                            value={customBgColor}
+                            onChange={(e) => setCustomBgColor(e.target.value)}
+                            placeholder="e.g., White"
+                            className="w-40 h-8 text-sm"
+                            data-testid="input-custom-bgcolor"
+                          />
+                        )}
+                      </div>
+
+                      {/* File Format */}
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-700">File Format:</span>
+                        {currentDocSpec && currentDocSpec.fileFormat ? (
+                          <span className="text-sm font-medium text-gray-900">{currentDocSpec.fileFormat}</span>
+                        ) : (
+                          <Input
+                            type="text"
+                            value={customFileFormat}
+                            onChange={(e) => setCustomFileFormat(e.target.value)}
+                            placeholder="e.g., JPG"
+                            className="w-40 h-8 text-sm"
+                            data-testid="input-custom-format"
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* Pro Headshot Form (existing) */
+                  <div className="space-y-6">
                   {/* Suit Fabric */}
                   <div>
                     <label className="block text-sm font-bold text-gray-900 mb-3">
@@ -541,13 +688,18 @@ export default function Upload() {
                     </div>
                   </div>
                 </div>
+                )}
               </div>
 
               <div className="bg-white rounded-2xl p-8" data-testid="section-cta">
                 {(primaryImage || optionalImage) ? (
-                  <Link href={`/checkout?style=${styleId}&suitFabric=${selectedSuitFabric}&suitColor=${selectedSuitColor}&shirtColor=${selectedShirtColor}&background=${selectedBackground}${selectedComposition ? `&composition=${selectedComposition}` : ''}${selectedHandPose ? `&handPose=${selectedHandPose}` : ''}${selectedEyeDirection ? `&eyeDirection=${selectedEyeDirection}` : ''}${selectedExpression ? `&expression=${selectedExpression}` : ''}`}>
+                  <Link href={
+                    styleId === "2" 
+                      ? `/checkout?style=${styleId}&country=${selectedCountry}&documentType=${selectedDocumentType}&size=${encodeURIComponent(currentDocSpec?.size || customSize)}&dpi=${currentDocSpec?.dpi || customDPI}&backgroundColor=${encodeURIComponent(currentDocSpec?.backgroundColor || customBgColor)}&fileFormat=${currentDocSpec?.fileFormat || customFileFormat}`
+                      : `/checkout?style=${styleId}&suitFabric=${selectedSuitFabric}&suitColor=${selectedSuitColor}&shirtColor=${selectedShirtColor}&background=${selectedBackground}${selectedComposition ? `&composition=${selectedComposition}` : ''}${selectedHandPose ? `&handPose=${selectedHandPose}` : ''}${selectedEyeDirection ? `&eyeDirection=${selectedEyeDirection}` : ''}${selectedExpression ? `&expression=${selectedExpression}` : ''}`
+                  }>
                     <Button 
-                      className="w-full bg-primary text-black hover:bg-primary/90 h-12 text-base"
+                      className="w-full bg-primary text-black hover:bg-primary/90 h-12 text-base font-normal"
                       data-testid="button-create-now"
                     >
                       Create Now
@@ -556,7 +708,7 @@ export default function Upload() {
                 ) : (
                   <Button 
                     disabled
-                    className="w-full bg-gray-300 text-gray-500 h-12 text-base cursor-not-allowed"
+                    className="w-full bg-gray-300 text-gray-500 h-12 text-base cursor-not-allowed font-normal"
                     data-testid="button-create-now"
                   >
                     Create Now

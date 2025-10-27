@@ -73,6 +73,25 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
 
 ## Recent Changes
 
+### ID Photos Category Implementation (October 27, 2025)
+- **Complete ID Photos workflow** added with country/document-specific specifications:
+  - **Configuration System**: Created `shared/idPhotoSpecs.ts` with comprehensive JSON database
+    - 6 countries/regions: Canada, USA, China, EU, Japan, Other
+    - Multiple document types per country: Passport, Driver License, Visa, PR Card, ID Card, Custom
+    - Each document type has predefined specs: size, DPI, background color, file format
+    - "Other" option allows full custom specification entry
+  - **Upload Page (styleId = "2")**:
+    - Two-level selection: Country/Region → Document Type (cascading dropdown)
+    - Auto-populated specifications display: Photo Size, Resolution (DPI), Background Color, File Format
+    - Editable fields when "Other" document type selected (custom size, DPI, background, format)
+    - Conditional rendering: ID Photos form replaces Pro Headshot customization options
+  - **Checkout Page**:
+    - Photo Details section displays ID photo specifications instead of Pro Headshot options
+    - Fixed pricing model: CAD $4.99 (no itemization, no customization add-ons)
+    - Price Breakdown shows single line: "ID Photo Service: CAD $4.99"
+  - **URL Parameters**: country, documentType, size, dpi, backgroundColor, fileFormat
+  - **Data Structure**: TypeScript interfaces (DocumentSpec, Country, IDPhotoConfig) ensure type safety
+
 ### Pro Headshot Photo Rotation System (October 27, 2025)
 - **Complete redesign** of homepage Pro Headshot showcase with intelligent photo rotation:
   - **Photo Pool**: 16 professional headshots (8 female: female-01.png to female-08.png, 8 male: male-01.png to male-08.png)

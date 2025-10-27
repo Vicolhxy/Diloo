@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import idPhotoSpecs from "@shared/idPhotoSpecs";
 import w1Img from "@assets/W1_1761159011555.png";
 import y1Img from "@assets/Y1_1761159011566.png";
 import w2Img from "@assets/W2_1761159011568.png";
@@ -106,10 +107,29 @@ export default function Checkout() {
   const [userEmail, setUserEmail] = useState<string>("");
   const [emailInput, setEmailInput] = useState<string>("");
 
-  const { suitFabric, suitColor, shirtColor, background, styleId, selectedStyleImage, composition, handPose, eyeDirection, expression } = useMemo(() => {
+  const {
+    suitFabric,
+    suitColor,
+    shirtColor,
+    background,
+    styleId,
+    selectedStyleImage,
+    composition,
+    handPose,
+    eyeDirection,
+    expression,
+    // ID Photos params
+    country,
+    documentType,
+    size,
+    dpi,
+    backgroundColor,
+    fileFormat
+  } = useMemo(() => {
     const params = new URLSearchParams(searchString);
     const styleId = params.get('style') || "3";
     return {
+      // Pro Headshot params
       suitFabric: parseInt(params.get('suitFabric') || '1'),
       suitColor: parseInt(params.get('suitColor') || '1'),
       shirtColor: parseInt(params.get('shirtColor') || '1'),
@@ -120,6 +140,13 @@ export default function Checkout() {
       handPose: params.get('handPose') || null,
       eyeDirection: params.get('eyeDirection') || null,
       expression: params.get('expression') || null,
+      // ID Photos params
+      country: params.get('country') || '',
+      documentType: params.get('documentType') || '',
+      size: params.get('size') || '',
+      dpi: params.get('dpi') || '',
+      backgroundColor: params.get('backgroundColor') || '',
+      fileFormat: params.get('fileFormat') || '',
     };
   }, [searchString]);
 
@@ -128,23 +155,33 @@ export default function Checkout() {
   const selectedShirtColor = shirtColors.find(c => c.id === shirtColor) || shirtColors[0];
   const selectedBackground = backgrounds.find(b => b.id === background) || backgrounds[0];
 
-  // Calculate number of customization options selected (each adds CAD $0.50)
-  // Required options (always count): Suit Fabric, Suit Color, Shirt Color, Background
-  // Optional options (count if selected): Composition, Hand Pose, Eye Direction, Expression
-  const customizationCount = [
-    true,                    // Suit Fabric (required)
-    true,                    // Suit Color (required)
-    true,                    // Shirt Color (required)
-    true,                    // Background (required)
-    composition !== null,    // Composition (optional)
-    handPose !== null,       // Hand Pose (optional)
-    eyeDirection !== null,   // Eye Direction (optional)
-    expression !== null,     // Expression (optional)
-  ].filter(Boolean).length;
+  // Calculate price based on style type
+  let totalPrice: number;
+  let customizationCount = 0;
+  
+  if (styleId === "2") {
+    // ID Photos: Fixed price CAD $4.99
+    totalPrice = 4.99;
+  } else {
+    // Pro Headshot: Dynamic pricing
+    // Calculate number of customization options selected (each adds CAD $0.50)
+    // Required options (always count): Suit Fabric, Suit Color, Shirt Color, Background
+    // Optional options (count if selected): Composition, Hand Pose, Eye Direction, Expression
+    customizationCount = [
+      true,                    // Suit Fabric (required)
+      true,                    // Suit Color (required)
+      true,                    // Shirt Color (required)
+      true,                    // Background (required)
+      composition !== null,    // Composition (optional)
+      handPose !== null,       // Hand Pose (optional)
+      eyeDirection !== null,   // Eye Direction (optional)
+      expression !== null,     // Expression (optional)
+    ].filter(Boolean).length;
 
-  const basePrice = 2.99;
-  const perOptionPrice = 0.50;
-  const totalPrice = basePrice + (customizationCount * perOptionPrice);
+    const basePrice = 2.99;
+    const perOptionPrice = 0.50;
+    totalPrice = basePrice + (customizationCount * perOptionPrice);
+  }
 
   const form = useForm<EmailFormData>({
     resolver: zodResolver(emailSchema),
@@ -244,63 +281,105 @@ export default function Checkout() {
                   <h2 className="text-xl font-semibold mb-6 text-gray-900">Photo Details</h2>
                   
                   <div className="space-y-3">
-                    {/* Always show required options */}
-                    <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                      <span className="text-sm text-gray-600">Suit Fabric</span>
-                      <span className="text-sm font-medium text-gray-900">{selectedSuitFabric.name}</span>
-                    </div>
-                    
-                    <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                      <span className="text-sm text-gray-600">Suit Color</span>
-                      <span className="text-sm font-medium text-gray-900">{selectedSuitColor.name}</span>
-                    </div>
-                    
-                    <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                      <span className="text-sm text-gray-600">Shirt Color</span>
-                      <span className="text-sm font-medium text-gray-900">{selectedShirtColor.name}</span>
-                    </div>
-                    
-                    <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                      <span className="text-sm text-gray-600">Background</span>
-                      <span className="text-sm font-medium text-gray-900">{selectedBackground.name}</span>
-                    </div>
-                    
-                    {/* Only show composition if selected */}
-                    {composition && (
-                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                        <span className="text-sm text-gray-600">Composition</span>
-                        <span className="text-sm font-medium text-gray-900">{compositionLabels[composition]}</span>
-                      </div>
+                    {styleId === "2" ? (
+                      /* ID Photos Details */
+                      <>
+                        <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                          <span className="text-sm text-gray-600">Country/Region</span>
+                          <span className="text-sm font-medium text-gray-900">
+                            {country && idPhotoSpecs.countries[country] ? idPhotoSpecs.countries[country].name : country}
+                          </span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                          <span className="text-sm text-gray-600">Document Type</span>
+                          <span className="text-sm font-medium text-gray-900">
+                            {documentType.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                          </span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                          <span className="text-sm text-gray-600">Photo Size</span>
+                          <span className="text-sm font-medium text-gray-900">{size}</span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                          <span className="text-sm text-gray-600">Resolution (DPI)</span>
+                          <span className="text-sm font-medium text-gray-900">{dpi} DPI</span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                          <span className="text-sm text-gray-600">Background Color</span>
+                          <span className="text-sm font-medium text-gray-900">{backgroundColor}</span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                          <span className="text-sm text-gray-600">File Format</span>
+                          <span className="text-sm font-medium text-gray-900">{fileFormat.toUpperCase()}</span>
+                        </div>
+                      </>
+                    ) : (
+                      /* Pro Headshot Details */
+                      <>
+                        {/* Always show required options */}
+                        <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                          <span className="text-sm text-gray-600">Suit Fabric</span>
+                          <span className="text-sm font-medium text-gray-900">{selectedSuitFabric.name}</span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                          <span className="text-sm text-gray-600">Suit Color</span>
+                          <span className="text-sm font-medium text-gray-900">{selectedSuitColor.name}</span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                          <span className="text-sm text-gray-600">Shirt Color</span>
+                          <span className="text-sm font-medium text-gray-900">{selectedShirtColor.name}</span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                          <span className="text-sm text-gray-600">Background</span>
+                          <span className="text-sm font-medium text-gray-900">{selectedBackground.name}</span>
+                        </div>
+                        
+                        {/* Only show composition if selected */}
+                        {composition && (
+                          <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                            <span className="text-sm text-gray-600">Composition</span>
+                            <span className="text-sm font-medium text-gray-900">{compositionLabels[composition]}</span>
+                          </div>
+                        )}
+                        
+                        {/* Only show hand pose if selected */}
+                        {handPose && (
+                          <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                            <span className="text-sm text-gray-600">Hand Pose</span>
+                            <span className="text-sm font-medium text-gray-900">{handPoseLabels[handPose]}</span>
+                          </div>
+                        )}
+                        
+                        {/* Only show eye direction if selected */}
+                        {eyeDirection && (
+                          <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                            <span className="text-sm text-gray-600">Eye Direction</span>
+                            <span className="text-sm font-medium text-gray-900">{eyeDirectionLabels[eyeDirection]}</span>
+                          </div>
+                        )}
+                        
+                        {/* Only show expression if selected */}
+                        {expression && (
+                          <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                            <span className="text-sm text-gray-600">Expression</span>
+                            <span className="text-sm font-medium text-gray-900">{expressionLabels[expression]}</span>
+                          </div>
+                        )}
+                        
+                        <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                          <span className="text-sm text-gray-600">Resolution</span>
+                          <span className="text-sm font-medium text-gray-900">2048 × 2732 pixels</span>
+                        </div>
+                      </>
                     )}
-                    
-                    {/* Only show hand pose if selected */}
-                    {handPose && (
-                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                        <span className="text-sm text-gray-600">Hand Pose</span>
-                        <span className="text-sm font-medium text-gray-900">{handPoseLabels[handPose]}</span>
-                      </div>
-                    )}
-                    
-                    {/* Only show eye direction if selected */}
-                    {eyeDirection && (
-                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                        <span className="text-sm text-gray-600">Eye Direction</span>
-                        <span className="text-sm font-medium text-gray-900">{eyeDirectionLabels[eyeDirection]}</span>
-                      </div>
-                    )}
-                    
-                    {/* Only show expression if selected */}
-                    {expression && (
-                      <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                        <span className="text-sm text-gray-600">Expression</span>
-                        <span className="text-sm font-medium text-gray-900">{expressionLabels[expression]}</span>
-                      </div>
-                    )}
-                    
-                    <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                      <span className="text-sm text-gray-600">Resolution</span>
-                      <span className="text-sm font-medium text-gray-900">2048 × 2732 pixels</span>
-                    </div>
                   </div>
                 </div>
 
@@ -340,114 +419,125 @@ export default function Checkout() {
                       <div className="p-4 bg-primary/10 rounded-xl" data-testid="section-price">
                         <h3 className="text-sm font-bold text-gray-900 mb-3">Price Breakdown</h3>
                         
-                        <div className="space-y-2 mb-3">
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-600">Base Photo</span>
-                            <span className="font-medium text-gray-900">CAD ${basePrice.toFixed(2)}</span>
-                          </div>
-                          
-                          {/* Required customization items (always shown, no delete buttons) */}
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-600">Suit Fabric: {selectedSuitFabric.name}</span>
-                            <span className="font-medium text-gray-900">CAD $0.50</span>
-                          </div>
-                          
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-600">Suit Color: {selectedSuitColor.name}</span>
-                            <span className="font-medium text-gray-900">CAD $0.50</span>
-                          </div>
-                          
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-600">Shirt Color: {selectedShirtColor.name}</span>
-                            <span className="font-medium text-gray-900">CAD $0.50</span>
-                          </div>
-                          
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-gray-600">Background: {selectedBackground.name}</span>
-                            <span className="font-medium text-gray-900">CAD $0.50</span>
-                          </div>
-                          
-                          {/* Optional customization items (only shown if selected, with delete buttons) */}
-                          
-                          {composition && (
+                        {styleId === "2" ? (
+                          /* ID Photos: Fixed Price */
+                          <div className="space-y-2 mb-3">
                             <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Composition: {compositionLabels[composition]}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => removeOption('composition')}
-                                  className="text-gray-400 hover:text-red-600 text-lg"
-                                  aria-label="Remove composition"
-                                  data-testid="button-remove-composition"
-                                >
-                                  ×
-                                </button>
-                              </div>
+                              <span className="text-gray-600">ID Photo Service</span>
+                              <span className="font-medium text-gray-900">CAD ${totalPrice.toFixed(2)}</span>
+                            </div>
+                          </div>
+                        ) : (
+                          /* Pro Headshot: Itemized Pricing */
+                          <div className="space-y-2 mb-3">
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-600">Base Photo</span>
+                              <span className="font-medium text-gray-900">CAD $2.99</span>
+                            </div>
+                            
+                            {/* Required customization items (always shown, no delete buttons) */}
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="text-gray-600">Suit Fabric: {selectedSuitFabric.name}</span>
                               <span className="font-medium text-gray-900">CAD $0.50</span>
                             </div>
-                          )}
-                          
-                          {handPose && (
+                            
                             <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Hand Pose: {handPoseLabels[handPose]}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => removeOption('handPose')}
-                                  className="text-gray-400 hover:text-red-600 text-lg"
-                                  aria-label="Remove hand pose"
-                                  data-testid="button-remove-handPose"
-                                >
-                                  ×
-                                </button>
-                              </div>
+                              <span className="text-gray-600">Suit Color: {selectedSuitColor.name}</span>
                               <span className="font-medium text-gray-900">CAD $0.50</span>
                             </div>
-                          )}
-                          
-                          {eyeDirection && (
+                            
                             <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Eye Direction: {eyeDirectionLabels[eyeDirection]}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => removeOption('eyeDirection')}
-                                  className="text-gray-400 hover:text-red-600 text-lg"
-                                  aria-label="Remove eye direction"
-                                  data-testid="button-remove-eyeDirection"
-                                >
-                                  ×
-                                </button>
-                              </div>
+                              <span className="text-gray-600">Shirt Color: {selectedShirtColor.name}</span>
                               <span className="font-medium text-gray-900">CAD $0.50</span>
                             </div>
-                          )}
-                          
-                          {expression && (
+                            
                             <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Expression: {expressionLabels[expression]}</span>
-                                <button
-                                  type="button"
-                                  onClick={() => removeOption('expression')}
-                                  className="text-gray-400 hover:text-red-600 text-lg"
-                                  aria-label="Remove expression"
-                                  data-testid="button-remove-expression"
-                                >
-                                  ×
-                                </button>
-                              </div>
+                              <span className="text-gray-600">Background: {selectedBackground.name}</span>
                               <span className="font-medium text-gray-900">CAD $0.50</span>
                             </div>
-                          )}
-                        </div>
+                            
+                            {/* Optional customization items (only shown if selected, with delete buttons) */}
+                            
+                            {composition && (
+                              <div className="flex items-center justify-between text-sm">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-gray-600">Composition: {compositionLabels[composition]}</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => removeOption('composition')}
+                                    className="text-gray-400 hover:text-red-600 text-lg"
+                                    aria-label="Remove composition"
+                                    data-testid="button-remove-composition"
+                                  >
+                                    ×
+                                  </button>
+                                </div>
+                                <span className="font-medium text-gray-900">CAD $0.50</span>
+                              </div>
+                            )}
+                            
+                            {handPose && (
+                              <div className="flex items-center justify-between text-sm">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-gray-600">Hand Pose: {handPoseLabels[handPose]}</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => removeOption('handPose')}
+                                    className="text-gray-400 hover:text-red-600 text-lg"
+                                    aria-label="Remove hand pose"
+                                    data-testid="button-remove-handPose"
+                                  >
+                                    ×
+                                  </button>
+                                </div>
+                                <span className="font-medium text-gray-900">CAD $0.50</span>
+                              </div>
+                            )}
+                            
+                            {eyeDirection && (
+                              <div className="flex items-center justify-between text-sm">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-gray-600">Eye Direction: {eyeDirectionLabels[eyeDirection]}</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => removeOption('eyeDirection')}
+                                    className="text-gray-400 hover:text-red-600 text-lg"
+                                    aria-label="Remove eye direction"
+                                    data-testid="button-remove-eyeDirection"
+                                  >
+                                    ×
+                                  </button>
+                                </div>
+                                <span className="font-medium text-gray-900">CAD $0.50</span>
+                              </div>
+                            )}
+                            
+                            {expression && (
+                              <div className="flex items-center justify-between text-sm">
+                                <div className="flex items-center gap-2">
+                                  <span className="text-gray-600">Expression: {expressionLabels[expression]}</span>
+                                  <button
+                                    type="button"
+                                    onClick={() => removeOption('expression')}
+                                    className="text-gray-400 hover:text-red-600 text-lg"
+                                    aria-label="Remove expression"
+                                    data-testid="button-remove-expression"
+                                  >
+                                    ×
+                                  </button>
+                                </div>
+                                <span className="font-medium text-gray-900">CAD $0.50</span>
+                              </div>
+                            )}
+                          </div>
+                        )}
                         
                         <div className="border-t border-gray-300 pt-3 mt-3">
                           <div className="flex items-center justify-between">
                             <div>
                               <div className="flex items-center gap-2">
                                 <span className="text-lg font-bold text-gray-900">Total: CAD ${totalPrice.toFixed(2)}</span>
-                                <Badge variant="destructive" className="bg-red-500">Limited Offer</Badge>
+                                <Badge variant="destructive" className="bg-red-500 font-normal">Limited Offer</Badge>
                               </div>
                               <p className="text-xs text-gray-600 mt-1">High-resolution AI-generated photo</p>
                             </div>
