@@ -40,6 +40,8 @@ const photoPool = [
   { id: 16, image: male08, alt: "Professional male headshot 8", gender: "male" },
 ];
 
+type Photo = typeof photoPool[0];
+
 // Helper function to shuffle array using Fisher-Yates algorithm
 function shuffleArray<T>(array: T[]): T[] {
   const shuffled = [...array];
@@ -63,13 +65,16 @@ export default function StyleShowcase() {
     return shuffled.slice(0, 8);
   });
 
-  // Track which photos are currently flipping (max 2 at a time)
-  const [flippingIndices, setFlippingIndices] = useState<Set<number>>(new Set());
+  // Track next photos for each position during animation (sparse array)
+  const [nextPhotos, setNextPhotos] = useState<(Photo | null)[]>(Array(8).fill(null));
+
+  // Track which photos are currently animating (max 2 at a time)
+  const [animatingIndices, setAnimatingIndices] = useState<Set<number>>(new Set());
   
   // Track display count for each photo to ensure all 16 get shown
   const displayCountRef = useRef<Map<number, number>>(new Map());
   
-  // Track pending replacements to prevent duplicates during concurrent flips
+  // Track pending replacements to prevent duplicates during concurrent animations
   const pendingReplacementsRef = useRef<Map<number, number>>(new Map()); // index -> photoId
   
   // Initialize display counts
@@ -108,10 +113,10 @@ export default function StyleShowcase() {
     return getRandomElement(leastShownPhotos);
   }, []);
 
-  // Function to flip and replace a photo at a specific index
-  const flipAndReplace = useCallback((index: number) => {
-    // Don't flip if already flipping or if we've reached max concurrent flips (2)
-    if (flippingIndices.has(index) || flippingIndices.size >= 2) {
+  // Function to slide and replace a photo at a specific index
+  const slideAndReplace = useCallback((index: number) => {
+    // Don't animate if already animating or if we've reached max concurrent animations (2)
+    if (animatingIndices.has(index) || animatingIndices.size >= 2) {
       return;
     }
 
@@ -122,10 +127,17 @@ export default function StyleShowcase() {
     // Mark this photo as pending to prevent duplicate selection
     pendingReplacementsRef.current.set(index, nextPhoto.id);
 
-    // Mark this index as flipping
-    setFlippingIndices(prev => new Set(prev).add(index));
+    // Set the next photo for this position (triggers slide-up animation)
+    setNextPhotos(prev => {
+      const updated = [...prev];
+      updated[index] = nextPhoto;
+      return updated;
+    });
 
-    // After 250ms (half of 500ms flip duration), replace the photo
+    // Mark this index as animating
+    setAnimatingIndices(prev => new Set(prev).add(index));
+
+    // After 500ms (full animation duration), replace the current photo and cleanup
     setTimeout(() => {
       setDisplayedPhotos(prev => {
         const newPhotos = [...prev];
@@ -138,47 +150,51 @@ export default function StyleShowcase() {
         return newPhotos;
       });
       
-      // Remove from pending after replacement
-      pendingReplacementsRef.current.delete(index);
-    }, 250);
-
-    // After 500ms (full flip duration), mark as not flipping
-    setTimeout(() => {
-      setFlippingIndices(prev => {
+      // Clear the next photo
+      setNextPhotos(prev => {
+        const updated = [...prev];
+        updated[index] = null;
+        return updated;
+      });
+      
+      // Remove from animating and pending
+      setAnimatingIndices(prev => {
         const newSet = new Set(prev);
         newSet.delete(index);
         return newSet;
       });
+      
+      pendingReplacementsRef.current.delete(index);
     }, 500);
-  }, [displayedPhotos, flippingIndices, selectNextPhotoSafe]);
+  }, [displayedPhotos, animatingIndices, selectNextPhotoSafe]);
 
-  // Rotation logic: every 3.5 seconds, flip 1-2 random photos
+  // Rotation logic: every 3.5 seconds, slide 1-2 random photos
   useEffect(() => {
     const interval = setInterval(() => {
-      // Determine how many photos to flip (1 or 2)
-      const numToFlip = Math.random() < 0.5 ? 1 : 2;
+      // Determine how many photos to slide (1 or 2)
+      const numToSlide = Math.random() < 0.5 ? 1 : 2;
       
-      // Get indices that are not currently flipping
+      // Get indices that are not currently animating
       const availableIndices = [0, 1, 2, 3, 4, 5, 6, 7].filter(
-        i => !flippingIndices.has(i)
+        i => !animatingIndices.has(i)
       );
 
       if (availableIndices.length === 0) return;
 
-      // Select random indices to flip
+      // Select random indices to slide
       const shuffledIndices = shuffleArray(availableIndices);
-      const indicesToFlip = shuffledIndices.slice(0, Math.min(numToFlip, availableIndices.length));
+      const indicesToSlide = shuffledIndices.slice(0, Math.min(numToSlide, availableIndices.length));
 
-      // Flip selected photos with slight delay between them for staggered effect
-      indicesToFlip.forEach((index, i) => {
+      // Slide selected photos with slight delay between them for staggered effect
+      indicesToSlide.forEach((index, i) => {
         setTimeout(() => {
-          flipAndReplace(index);
-        }, i * 100); // 100ms delay between flips
+          slideAndReplace(index);
+        }, i * 100); // 100ms delay between slides
       });
     }, 3500); // Run every 3.5 seconds
 
     return () => clearInterval(interval);
-  }, [flippingIndices, flipAndReplace]);
+  }, [animatingIndices, slideAndReplace]);
 
   return (
     <section className="w-full bg-gray-50 pt-3 pb-12 md:pt-4 md:pb-16" data-testid="style-showcase">
@@ -187,25 +203,24 @@ export default function StyleShowcase() {
           {displayedPhotos.map((photo, index) => (
             <div
               key={`${photo.id}-${index}`}
-              className="aspect-[3/4] rounded-2xl overflow-hidden shadow-md"
+              className="aspect-[3/4] rounded-2xl overflow-hidden shadow-md relative"
               data-testid={`card-style-${index + 1}`}
-              style={{ perspective: '1000px' }}
             >
-              <div
-                className={`w-full h-full transition-transform duration-500 ${
-                  flippingIndices.has(index) ? 'flip-animation' : ''
-                }`}
-                style={{
-                  transformStyle: 'preserve-3d',
-                }}
-              >
+              {/* Current photo */}
+              <img
+                src={photo.image}
+                alt={photo.alt}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              
+              {/* Next photo (slides up from bottom) */}
+              {nextPhotos[index] && (
                 <img
-                  src={photo.image}
-                  alt={photo.alt}
-                  className="w-full h-full object-cover"
-                  style={{ backfaceVisibility: 'hidden' }}
+                  src={nextPhotos[index]!.image}
+                  alt={nextPhotos[index]!.alt}
+                  className="absolute inset-0 w-full h-full object-cover slide-up-animation"
                 />
-              </div>
+              )}
             </div>
           ))}
         </div>
@@ -227,19 +242,16 @@ export default function StyleShowcase() {
       </div>
 
       <style>{`
-        .flip-animation {
-          animation: flipCard 500ms ease-in-out;
+        .slide-up-animation {
+          animation: slideUp 500ms ease-out forwards;
         }
 
-        @keyframes flipCard {
+        @keyframes slideUp {
           0% {
-            transform: rotateY(0deg);
-          }
-          50% {
-            transform: rotateY(90deg);
+            transform: translateY(100%);
           }
           100% {
-            transform: rotateY(0deg);
+            transform: translateY(0);
           }
         }
       `}</style>
