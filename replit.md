@@ -69,9 +69,35 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
 
 ### Assets
 - **Logo files**: `Diloo-logo-original.png`, `Diloo-logo-white.png`.
-- **Images**: Banner.png (hero background), 8 professional portrait photos organized into 4 style categories (2 images per category).
+- **Images**: Banner.png (hero background), 16 professional headshot photos (8 female, 8 male) for Pro Headshot showcase rotation system.
 
-## Recent Changes (October 26, 2025)
+## Recent Changes
+
+### Pro Headshot Photo Rotation System (October 27, 2025)
+- **Complete redesign** of homepage Pro Headshot showcase with intelligent photo rotation:
+  - **Photo Pool**: 16 professional headshots (8 female: female-01.png to female-08.png, 8 male: male-01.png to male-08.png)
+  - **Initial Display**: Randomly selects 8 photos from pool of 16 using Fisher-Yates shuffle algorithm
+  - **3D Flip Animation**: CSS-based rotateY transform with 500ms duration and perspective depth effect
+  - **Smart Rotation Logic**:
+    - Timer triggers every 3.5 seconds
+    - Randomly selects 1-2 photos to flip and replace
+    - Staggered timing (100ms delay) when flipping 2 photos simultaneously
+  - **Concurrency Control**: Maximum 2 photos flip simultaneously using Set-based tracking
+  - **Duplicate Prevention**: `pendingReplacementsRef` Map tracks photos selected for replacement to prevent duplicate selection during concurrent flips
+  - **Fair Distribution**: `displayCountRef` Map tracks display count for each photo, prioritizes least-shown photos in selection algorithm
+  - **Complete Flip Flow**: Flip to 90deg → Replace image at midpoint (250ms) → Flip back to 0deg (500ms total)
+
+### Technical Implementation Details (Photo Rotation)
+- **State Management**:
+  - `displayedPhotos`: Current 8 photos being shown
+  - `flippingIndices`: Set of indices currently animating
+  - `displayCountRef`: Ref-based Map tracking how many times each photo has been displayed
+  - `pendingReplacementsRef`: Ref-based Map preventing duplicate selection during concurrent flips
+- **Selection Algorithm**: Filters available photos by excluding currently displayed AND pending photos, then selects from photos with minimum display count
+- **Animation**: Inline CSS keyframe animation for smooth 3D flip effect without layout shift
+- **Performance**: Uses refs for tracking to avoid unnecessary re-renders, cleanup timers prevent memory leaks
+
+### Professional Headshot Customization Schema (October 26, 2025)
 
 ### Professional Headshot Customization Schema (Latest)
 - **Complete refactor** of customization options to focus on professional headshot generation:
