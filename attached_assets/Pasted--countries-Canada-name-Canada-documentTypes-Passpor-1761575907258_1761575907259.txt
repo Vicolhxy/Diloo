@@ -1,0 +1,180 @@
+{
+  "countries": {
+    "Canada": {
+      "name": "Canada",
+      "documentTypes": {
+        "Passport": {
+          "size": "50x70 mm",
+          "dpi": 300,
+          "backgroundColor": "White",
+          "fileFormat": "JPG"
+        },
+        "DriverLicense": {
+          "size": "50x70 mm",
+          "dpi": 300,
+          "backgroundColor": "White",
+          "fileFormat": "JPG"
+        },
+        "PRCard": {
+          "size": "35x45 mm",
+          "dpi": 300,
+          "backgroundColor": "White",
+          "fileFormat": "JPG"
+        },
+        "Visa": {
+          "size": "35x45 mm",
+          "dpi": 300,
+          "backgroundColor": "Light gray",
+          "fileFormat": "JPG"
+        },
+        "Other": {
+          "size": "",
+          "dpi": "",
+          "backgroundColor": "",
+          "fileFormat": ""
+        }
+      }
+    },
+
+    "USA": {
+      "name": "USA",
+      "documentTypes": {
+        "Passport": {
+          "size": "2x2 inch",
+          "dpi": 300,
+          "backgroundColor": "White",
+          "fileFormat": "JPG"
+        },
+        "Visa": {
+          "size": "2x2 inch",
+          "dpi": 300,
+          "backgroundColor": "White",
+          "fileFormat": "JPG"
+        },
+        "DriverLicense": {
+          "size": "2x2 inch",
+          "dpi": 300,
+          "backgroundColor": "White",
+          "fileFormat": "JPG"
+        },
+        "Other": {
+          "size": "",
+          "dpi": "",
+          "backgroundColor": "",
+          "fileFormat": ""
+        }
+      }
+    },
+
+    "China": {
+      "name": "China",
+      "documentTypes": {
+        "IDCard": {
+          "size": "33x48 mm",
+          "dpi": 300,
+          "backgroundColor": "Blue",
+          "fileFormat": "JPG"
+        },
+        "Passport": {
+          "size": "33x48 mm",
+          "dpi": 300,
+          "backgroundColor": "White",
+          "fileFormat": "JPG"
+        },
+        "Visa": {
+          "size": "33x48 mm",
+          "dpi": 300,
+          "backgroundColor": "Light gray",
+          "fileFormat": "JPG"
+        },
+        "Other": {
+          "size": "",
+          "dpi": "",
+          "backgroundColor": "",
+          "fileFormat": ""
+        }
+      }
+    },
+
+    "EU": {
+      "name": "EU",
+      "documentTypes": {
+        "Passport": {
+          "size": "35x45 mm",
+          "dpi": 600,
+          "backgroundColor": "Light gray",
+          "fileFormat": "JPG"
+        },
+        "Visa": {
+          "size": "35x45 mm",
+          "dpi": 600,
+          "backgroundColor": "White",
+          "fileFormat": "JPG"
+        },
+        "IDCard": {
+          "size": "35x45 mm",
+          "dpi": 600,
+          "backgroundColor": "White",
+          "fileFormat": "JPG"
+        },
+        "Other": {
+          "size": "",
+          "dpi": "",
+          "backgroundColor": "",
+          "fileFormat": ""
+        }
+      }
+    },
+
+    "Japan": {
+      "name": "Japan",
+      "documentTypes": {
+        "Passport": {
+          "size": "35x45 mm",
+          "dpi": 300,
+          "backgroundColor": "White",
+          "fileFormat": "JPG"
+        },
+        "DriverLicense": {
+          "size": "30x24 mm",
+          "dpi": 300,
+          "backgroundColor": "White",
+          "fileFormat": "JPG"
+        },
+        "Visa": {
+          "size": "35x45 mm",
+          "dpi": 300,
+          "backgroundColor": "Light gray",
+          "fileFormat": "JPG"
+        },
+        "Other": {
+          "size": "",
+          "dpi": "",
+          "backgroundColor": "",
+          "fileFormat": ""
+        }
+      }
+    },
+
+    "Other": {
+      "name": "Other",
+      "documentTypes": {
+        "Custom": {
+          "size": "",
+          "dpi": "",
+          "backgroundColor": "",
+          "fileFormat": ""
+        }
+      }
+    }
+  },
+
+  "common": {
+    "backgroundColorOptions": ["White", "Blue", "Light gray", "Red", "Custom"],
+    "fileFormatOptions": ["JPG", "PNG", "PDF"],
+    "unitOptions": ["mm", "inch"],
+    "dpiOptions": [300, 600],
+    "allowCustomSize": true,
+    "allowCustomDPI": true
+  }
+}
