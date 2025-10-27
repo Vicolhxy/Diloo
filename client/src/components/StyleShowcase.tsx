@@ -69,6 +69,9 @@ export default function StyleShowcase() {
   // Track display count for each photo to ensure all 16 get shown
   const displayCountRef = useRef<Map<number, number>>(new Map());
   
+  // Track pending replacements to prevent duplicates during concurrent flips
+  const pendingReplacementsRef = useRef<Map<number, number>>(new Map()); // index -> photoId
+  
   // Initialize display counts
   useEffect(() => {
     displayedPhotos.forEach(photo => {
@@ -77,9 +80,17 @@ export default function StyleShowcase() {
     });
   }, []);
 
-  // Function to select next photo to display (prefer least-shown photos)
-  const selectNextPhoto = useCallback((excludeIds: number[]) => {
-    const availablePhotos = photoPool.filter(photo => !excludeIds.includes(photo.id));
+  // Function to select next photo ensuring no duplicates
+  const selectNextPhotoSafe = useCallback((currentDisplayed: typeof photoPool) => {
+    // Get IDs of currently displayed photos
+    const displayedIds = new Set(currentDisplayed.map(p => p.id));
+    
+    // Get IDs of photos that are pending replacement
+    const pendingIds = new Set(Array.from(pendingReplacementsRef.current.values()));
+    
+    // Exclude both displayed and pending photos
+    const excludedIds = new Set([...Array.from(displayedIds), ...Array.from(pendingIds)]);
+    const availablePhotos = photoPool.filter(photo => !excludedIds.has(photo.id));
     
     if (availablePhotos.length === 0) return null;
 
@@ -104,12 +115,12 @@ export default function StyleShowcase() {
       return;
     }
 
-    // Get IDs of currently displayed photos
-    const currentPhotoIds = displayedPhotos.map(p => p.id);
-
-    // Select next photo (excluding currently displayed ones)
-    const nextPhoto = selectNextPhoto(currentPhotoIds);
+    // Select next photo using current displayed photos
+    const nextPhoto = selectNextPhotoSafe(displayedPhotos);
     if (!nextPhoto) return;
+
+    // Mark this photo as pending to prevent duplicate selection
+    pendingReplacementsRef.current.set(index, nextPhoto.id);
 
     // Mark this index as flipping
     setFlippingIndices(prev => new Set(prev).add(index));
@@ -126,6 +137,9 @@ export default function StyleShowcase() {
         
         return newPhotos;
       });
+      
+      // Remove from pending after replacement
+      pendingReplacementsRef.current.delete(index);
     }, 250);
 
     // After 500ms (full flip duration), mark as not flipping
@@ -136,7 +150,7 @@ export default function StyleShowcase() {
         return newSet;
       });
     }, 500);
-  }, [displayedPhotos, flippingIndices, selectNextPhoto]);
+  }, [displayedPhotos, flippingIndices, selectNextPhotoSafe]);
 
   // Rotation logic: every 3.5 seconds, flip 1-2 random photos
   useEffect(() => {
@@ -200,7 +214,7 @@ export default function StyleShowcase() {
           <Link href="/upload?style=3">
             <Button 
               size="lg"
-              className="bg-primary text-black hover:bg-primary/90"
+              className="bg-primary text-black hover:bg-primary/90 font-normal"
               data-testid="button-showcase-create-now"
             >
               Create Now
