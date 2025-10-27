@@ -31,6 +31,58 @@ const styleImages = {
   "8": i1Img,
 };
 
+// Helper function to calculate pixel dimensions from size and DPI
+function calculatePixelDimensions(size: string, dpi: string): string {
+  if (!size || !dpi) {
+    return "Please select Photo Size and DPI first";
+  }
+
+  // Parse DPI
+  const dpiNumber = parseInt(dpi);
+  if (isNaN(dpiNumber) || dpiNumber <= 0) {
+    return "Please select Photo Size and DPI first";
+  }
+
+  // Try to parse size string (e.g., "35x45 mm", "2x2 inch", "51x51 mm")
+  const sizePattern = /(\d+\.?\d*)\s*x\s*(\d+\.?\d*)\s*(mm|inch|cm)/i;
+  const match = size.match(sizePattern);
+
+  if (!match) {
+    return "Please select Photo Size and DPI first";
+  }
+
+  const width = parseFloat(match[1]);
+  const height = parseFloat(match[2]);
+  const unit = match[3].toLowerCase();
+
+  if (isNaN(width) || isNaN(height) || width <= 0 || height <= 0) {
+    return "Please select Photo Size and DPI first";
+  }
+
+  // Convert to inches based on unit
+  let widthInches: number;
+  let heightInches: number;
+
+  if (unit === "mm") {
+    widthInches = width / 25.4;
+    heightInches = height / 25.4;
+  } else if (unit === "cm") {
+    widthInches = width / 2.54;
+    heightInches = height / 2.54;
+  } else if (unit === "inch") {
+    widthInches = width;
+    heightInches = height;
+  } else {
+    return "Please select Photo Size and DPI first";
+  }
+
+  // Calculate pixels
+  const widthPixels = Math.round(widthInches * dpiNumber);
+  const heightPixels = Math.round(heightInches * dpiNumber);
+
+  return `${widthPixels} × ${heightPixels} pixels`;
+}
+
 const suitFabrics = [
   { id: 1, name: "Wool" },
   { id: 2, name: "Wool Blend" },
@@ -316,6 +368,13 @@ export default function Checkout() {
                         <div className="flex items-center justify-between py-2 border-b border-gray-200">
                           <span className="text-sm text-gray-600">File Format</span>
                           <span className="text-sm font-medium text-gray-900">{fileFormat.toUpperCase()}</span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between py-2 bg-primary/5 rounded-lg px-3 mt-3">
+                          <span className="text-sm font-semibold text-gray-900">Pixel Dimensions</span>
+                          <span className="text-sm font-medium text-primary" data-testid="text-pixel-dimensions">
+                            {calculatePixelDimensions(size, dpi)}
+                          </span>
                         </div>
                       </>
                     ) : (
