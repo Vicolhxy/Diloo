@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import idPhotoSpecs from "@shared/idPhotoSpecs";
+import idPhotoSpecs, { photoSizeToString, findPhotoSizeByLabel } from "@shared/idPhotoSpecs";
 import w1Img from "@assets/W1_1761159011555.png";
 import y1Img from "@assets/Y1_1761159011566.png";
 import w2Img from "@assets/W2_1761159011568.png";
@@ -373,7 +373,12 @@ export default function Checkout() {
                         <div className="flex items-center justify-between py-2 bg-primary/5 rounded-lg px-3 mt-3">
                           <span className="text-sm font-semibold text-gray-900">Pixel Dimensions</span>
                           <span className="text-sm font-medium text-primary" data-testid="text-pixel-dimensions">
-                            {calculatePixelDimensions(size, dpi)}
+                            {(() => {
+                              // Convert label to size string for calculation
+                              const photoSize = findPhotoSizeByLabel(size);
+                              const sizeString = photoSize ? photoSizeToString(photoSize) : size;
+                              return calculatePixelDimensions(sizeString, dpi);
+                            })()}
                           </span>
                         </div>
                       </>

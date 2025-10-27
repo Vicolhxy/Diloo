@@ -3,11 +3,13 @@ import { Link, useSearch } from "wouter";
 import { User, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Navigation from "@/components/Navigation";
 import StyleTabNav from "@/components/StyleTabNav";
 import Footer from "@/components/Footer";
-import { idPhotoSpecs, getDocumentTypes, getDocumentSpec, formatDocumentType } from "../../../shared/idPhotoSpecs";
+import { idPhotoSpecs, getDocumentTypes, getDocumentSpec, formatDocumentType, photoSizeToString, findPhotoSizeByLabel, findPhotoSizeBySpec } from "../../../shared/idPhotoSpecs";
 import w1Img from "@assets/W1_1761159011555.png";
 import y1Img from "@assets/Y1_1761159011566.png";
 import w2Img from "@assets/W2_1761159011568.png";
@@ -189,13 +191,29 @@ export default function Upload() {
   
   // Auto-fill specification fields when document spec changes
   useEffect(() => {
-    if (styleId === "2" && currentDocSpec) {
-      if (currentDocSpec.size) setCustomSize(currentDocSpec.size);
-      if (currentDocSpec.dpi) setCustomDPI(currentDocSpec.dpi.toString());
-      if (currentDocSpec.backgroundColor) setCustomBgColor(currentDocSpec.backgroundColor);
-      if (currentDocSpec.fileFormat) setCustomFileFormat(currentDocSpec.fileFormat);
+    if (styleId === "2") {
+      // Check if "Other" country or document type is selected
+      const isOther = selectedCountry === "Other" || selectedDocumentType === "Other" || selectedDocumentType === "Custom";
+      
+      if (isOther) {
+        // Set defaults for "Other" selection
+        setCustomSize("");  // Empty, will show "Please select" in dropdown
+        setCustomDPI("300");
+        setCustomBgColor("White");
+        setCustomFileFormat("JPG");
+      } else if (currentDocSpec) {
+        // Auto-fill from document spec
+        if (currentDocSpec.size) {
+          // Try to find matching photo size label from common sizes (handles both mm and inch)
+          const matchingSize = findPhotoSizeBySpec(currentDocSpec.size);
+          setCustomSize(matchingSize ? matchingSize.label : currentDocSpec.size);
+        }
+        if (currentDocSpec.dpi) setCustomDPI(currentDocSpec.dpi.toString());
+        if (currentDocSpec.backgroundColor) setCustomBgColor(currentDocSpec.backgroundColor);
+        if (currentDocSpec.fileFormat) setCustomFileFormat(currentDocSpec.fileFormat);
+      }
     }
-  }, [styleId, currentDocSpec]);
+  }, [styleId, currentDocSpec, selectedCountry, selectedDocumentType]);
   
   const styleSampleImages = allStyleImages;
 
@@ -441,67 +459,109 @@ export default function Upload() {
                       </Select>
                     </div>
 
-                    {/* Specifications - All Editable */}
-                    <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                    {/* Specifications */}
+                    <div className="bg-gray-50 rounded-lg p-4 space-y-4">
                       <h3 className="font-semibold text-gray-900 text-sm">Specifications</h3>
                       
-                      {/* Size - Always Editable */}
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-700">Photo Size:</span>
-                        <Input
-                          type="text"
-                          value={customSize}
-                          onChange={(e) => setCustomSize(e.target.value)}
-                          placeholder="e.g., 35x45 mm"
-                          className="w-40 h-8 text-sm"
-                          data-testid="input-size"
-                        />
+                      {/* Photo Size - Dropdown */}
+                      <div>
+                        <label className="block text-sm font-bold text-gray-900 mb-2">
+                          Photo Size
+                        </label>
+                        <Select value={customSize} onValueChange={setCustomSize}>
+                          <SelectTrigger className="w-full" data-testid="select-photo-size">
+                            <SelectValue placeholder="Please select" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {idPhotoSpecs.common.commonPhotoSizes.map((size) => (
+                              <SelectItem key={size.label} value={size.label}>
+                                {size.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
 
-                      {/* DPI - Always Editable */}
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-700">DPI:</span>
-                        <Input
-                          type="text"
-                          value={customDPI}
-                          onChange={(e) => setCustomDPI(e.target.value)}
-                          placeholder="e.g., 300"
-                          className="w-40 h-8 text-sm"
-                          data-testid="input-dpi"
-                        />
+                      {/* DPI - Radio Group */}
+                      <div>
+                        <label className="block text-sm font-bold text-gray-900 mb-2">
+                          DPI
+                        </label>
+                        <RadioGroup value={customDPI} onValueChange={setCustomDPI} data-testid="radio-group-dpi">
+                          <div className="flex gap-4">
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="300" id="dpi-300" data-testid="radio-dpi-300" />
+                              <Label htmlFor="dpi-300" className="cursor-pointer">300</Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="600" id="dpi-600" data-testid="radio-dpi-600" />
+                              <Label htmlFor="dpi-600" className="cursor-pointer">600</Label>
+                            </div>
+                          </div>
+                        </RadioGroup>
                       </div>
 
-                      {/* Background Color - Always Editable */}
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-700">Background:</span>
-                        <Input
-                          type="text"
-                          value={customBgColor}
-                          onChange={(e) => setCustomBgColor(e.target.value)}
-                          placeholder="e.g., White"
-                          className="w-40 h-8 text-sm"
-                          data-testid="input-bgcolor"
-                        />
+                      {/* Background - Radio Group with Color Preview */}
+                      <div>
+                        <label className="block text-sm font-bold text-gray-900 mb-2">
+                          Background
+                        </label>
+                        <RadioGroup value={customBgColor} onValueChange={setCustomBgColor} data-testid="radio-group-background">
+                          <div className="flex gap-4">
+                            {idPhotoSpecs.common.backgroundColors.map((bgColor) => (
+                              <div key={bgColor.name} className="flex items-center space-x-2">
+                                <RadioGroupItem 
+                                  value={bgColor.name} 
+                                  id={`bg-${bgColor.name.toLowerCase()}`} 
+                                  data-testid={`radio-bg-${bgColor.name.toLowerCase()}`}
+                                />
+                                <Label 
+                                  htmlFor={`bg-${bgColor.name.toLowerCase()}`} 
+                                  className="cursor-pointer flex items-center gap-2"
+                                >
+                                  <span 
+                                    className="w-4 h-4 rounded border border-gray-300" 
+                                    style={{ backgroundColor: bgColor.hex }}
+                                  />
+                                  {bgColor.name}
+                                </Label>
+                              </div>
+                            ))}
+                          </div>
+                        </RadioGroup>
                       </div>
 
-                      {/* File Format - Always Editable */}
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-700">File Format:</span>
-                        <Input
-                          type="text"
-                          value={customFileFormat}
-                          onChange={(e) => setCustomFileFormat(e.target.value)}
-                          placeholder="e.g., JPG"
-                          className="w-40 h-8 text-sm"
-                          data-testid="input-format"
-                        />
+                      {/* File Format - Radio Group */}
+                      <div>
+                        <label className="block text-sm font-bold text-gray-900 mb-2">
+                          File Format
+                        </label>
+                        <RadioGroup value={customFileFormat} onValueChange={setCustomFileFormat} data-testid="radio-group-format">
+                          <div className="flex gap-4">
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="JPG" id="format-jpg" data-testid="radio-format-jpg" />
+                              <Label htmlFor="format-jpg" className="cursor-pointer">JPG</Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <RadioGroupItem value="PNG" id="format-png" data-testid="radio-format-png" />
+                              <Label htmlFor="format-png" className="cursor-pointer">PNG</Label>
+                            </div>
+                          </div>
+                        </RadioGroup>
                       </div>
 
                       {/* Calculated Pixel Dimensions - Read-only */}
-                      <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                        <span className="text-sm font-semibold text-gray-900">Pixel Dimensions:</span>
+                      <div className="pt-2 border-t border-gray-200">
+                        <label className="block text-sm font-bold text-gray-900 mb-2">
+                          Pixel Dimensions
+                        </label>
                         <span className="text-sm font-medium text-primary" data-testid="text-pixel-dimensions">
-                          {calculatePixelDimensions(customSize, customDPI)}
+                          {(() => {
+                            // Convert label to size string for calculation
+                            const photoSize = findPhotoSizeByLabel(customSize);
+                            const sizeString = photoSize ? photoSizeToString(photoSize) : customSize;
+                            return calculatePixelDimensions(sizeString, customDPI);
+                          })()}
                         </span>
                       </div>
                     </div>
