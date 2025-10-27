@@ -1,7 +1,7 @@
 # Diloo AI Photo Style Transfer Platform
 
 ## Overview
-Diloo is an AI-powered photo style transfer platform that enables users to transform their photos into artistic renditions using professional AI-generated styles. The platform offers 4 main style categories (Pro Headshot, B&W Portrait, ID Photos, Social Avatar Decors), each with 2 sample images. It is built as a full-stack web application with a modern React frontend and Express backend, focusing on a visual-first, conversion-oriented user experience.
+Diloo is an AI-powered photo style transfer platform that enables users to transform their photos into artistic renditions using professional AI-generated styles. The platform offers 3 main style categories (Pro Headshot, ID Photo, Social Avatar Decors), each with 2 sample images. It is built as a full-stack web application with a modern React frontend and Express backend, focusing on a visual-first, conversion-oriented user experience.
 
 ## User Preferences
 - Preferred communication style: Simple, everyday language.
@@ -19,13 +19,14 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
     - Interactive elements with hover effects, such as image zoom and overlay reveals in the style showcase.
     - Responsive design for mobile and desktop.
 - **Key Features:**
-    - Dynamic style selection flow with 4 main categories matching between homepage and upload page.
+    - Dynamic style selection flow with 3 main categories matching between homepage and upload page: Pro Headshot (styleId=1), ID Photo (styleId=2), Social Avatar Decors (styleId=3).
     - Image upload functionality with preview and re-selection options.
-    - Customization options: Suit Fabric, Suit Color (with swatches), Shirt Color (with swatches), Background, Composition, Hand Pose (conditional), Eye Direction, Expression (8 total options).
+    - **Pro Headshot Customization**: Suit Fabric, Suit Color (with swatches), Shirt Color (with swatches), Background, Composition, Hand Pose (conditional), Eye Direction, Expression (8 total options).
+    - **ID Photo Customization**: Country/Region, Document Type, Photo Size, DPI, Background Color, File Format (all editable with auto-fill defaults), Pixel Dimensions (calculated).
     - Carousel with left-sliding animation (2s interval), hover-pause functionality, and automatic reset on style change.
     - Multi-state checkout process (Checkout, Processing, Success, Failure) with dynamic Photo Details display and itemized pricing.
     - Testimonials carousel with infinite loop and pause-on-hover.
-    - Dynamic pricing: Base CAD $2.99 + $0.50 per customization option selected.
+    - **Pricing Models**: Pro Headshot uses dynamic pricing (Base CAD $2.99 + $0.50 per customization option); ID Photo uses fixed CAD $4.99.
 - **State Management:** TanStack Query for server state, component-level React state for UI.
 
 ### Backend
@@ -73,8 +74,8 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
 
 ## Recent Changes
 
-### ID Photos Category Implementation (October 27, 2025)
-- **Complete ID Photos workflow** added with country/document-specific specifications:
+### ID Photo Category Implementation (October 27, 2025)
+- **Complete ID Photo workflow** (styleId = "2", formerly "B&W Portrait") with country/document-specific specifications:
   - **Configuration System**: Created `shared/idPhotoSpecs.ts` with comprehensive JSON database
     - 6 countries/regions: Canada, USA, China, EU, Japan, Other
     - Multiple document types per country: Passport, Driver License, Visa, PR Card, ID Card, Custom
@@ -82,15 +83,18 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
     - "Other" option allows full custom specification entry
   - **Upload Page (styleId = "2")**:
     - Two-level selection: Country/Region → Document Type (cascading dropdown)
-    - Auto-populated specifications display: Photo Size, Resolution (DPI), Background Color, File Format
-    - Editable fields when "Other" document type selected (custom size, DPI, background, format)
-    - Conditional rendering: ID Photos form replaces Pro Headshot customization options
+    - **All specification fields are fully editable**: Photo Size, DPI, Background Color, File Format
+    - Auto-fill mechanism: Selecting country/document type automatically populates default values, but users can modify any field
+    - **Pixel Dimensions Calculation**: Real-time calculation based on Size and DPI, displays "Please select Photo Size and DPI first" when incomplete
+    - Conditional rendering: ID Photo form replaces Pro Headshot customization options
   - **Checkout Page**:
-    - Photo Details section displays ID photo specifications instead of Pro Headshot options
+    - Photo Details section displays all user-selected ID photo specifications
+    - Shows calculated Pixel Dimensions (read-only, computed from size and DPI)
     - Fixed pricing model: CAD $4.99 (no itemization, no customization add-ons)
     - Price Breakdown shows single line: "ID Photo Service: CAD $4.99"
-  - **URL Parameters**: country, documentType, size, dpi, backgroundColor, fileFormat
+  - **URL Parameters**: country, documentType, size, dpi, backgroundColor, fileFormat (all user-customizable values)
   - **Data Structure**: TypeScript interfaces (DocumentSpec, Country, IDPhotoConfig) ensure type safety
+  - **Category Structure**: Platform now has 3 categories instead of 4 (Pro Headshot, ID Photo, Social Avatar Decors)
 
 ### Pro Headshot Photo Rotation System (October 27, 2025)
 - **Complete redesign** of homepage Pro Headshot showcase with intelligent photo rotation:
