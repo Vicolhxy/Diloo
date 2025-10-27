@@ -74,6 +74,27 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
 
 ## Recent Changes
 
+### ID Photo UI Improvements (October 27, 2025 - Latest)
+- **Enhanced form controls** for better UX with proper UI components:
+  - **Photo Size**: Select dropdown with 6 common sizes
+    - Format: "50x70 mm / 1.97x2.76 in" (both mm and inch units displayed)
+    - Options: 35x45mm, 50x70mm, 33x48mm, 51x51mm, 2x2in, 30x24mm
+    - Shows "Please select" placeholder when empty (e.g., for "Other" country/document)
+  - **DPI**: Radio buttons with 300 and 600 options
+  - **Background**: Radio buttons with color preview blocks
+    - Options: White (#FFFFFF), Red (#FF0000), Blue (#0000FF)
+    - Each option shows color swatch + name
+  - **File Format**: Radio buttons with JPG and PNG options
+  - **Smart Auto-fill System**:
+    - Uses `findPhotoSizeBySpec()` helper to match specs regardless of unit (mm or inch)
+    - Converts all sizes to mm with 0.1mm tolerance for accurate matching
+    - Handles USA's "2x2 inch" matching to "2x2 in / 50.8x50.8 mm" dropdown option
+  - **"Other" Country/Document Defaults**:
+    - Photo Size: empty (shows "Please select")
+    - DPI: 300
+    - Background: White
+    - File Format: JPG
+
 ### ID Photo Category Implementation (October 27, 2025)
 - **Complete ID Photo workflow** (styleId = "2", formerly "B&W Portrait") with country/document-specific specifications:
   - **Configuration System**: Created `shared/idPhotoSpecs.ts` with comprehensive JSON database
@@ -81,10 +102,12 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
     - Multiple document types per country: Passport, Driver License, Visa, PR Card, ID Card, Custom
     - Each document type has predefined specs: size, DPI, background color, file format
     - "Other" option allows full custom specification entry
+    - Common photo sizes with PhotoSize interface (widthMm, heightMm, label)
+    - Background colors with hex values for color preview display
   - **Upload Page (styleId = "2")**:
     - Two-level selection: Country/Region → Document Type (cascading dropdown)
-    - **All specification fields are fully editable**: Photo Size, DPI, Background Color, File Format
-    - Auto-fill mechanism: Selecting country/document type automatically populates default values, but users can modify any field
+    - Form fields use proper UI components (Select, RadioGroup with Labels)
+    - Auto-fill mechanism with unit-aware matching (handles both mm and inch)
     - **Pixel Dimensions Calculation**: Real-time calculation based on Size and DPI, displays "Please select Photo Size and DPI first" when incomplete
     - Conditional rendering: ID Photo form replaces Pro Headshot customization options
   - **Checkout Page**:
@@ -92,8 +115,8 @@ Diloo is an AI-powered photo style transfer platform that enables users to trans
     - Shows calculated Pixel Dimensions (read-only, computed from size and DPI)
     - Fixed pricing model: CAD $4.99 (no itemization, no customization add-ons)
     - Price Breakdown shows single line: "ID Photo Service: CAD $4.99"
-  - **URL Parameters**: country, documentType, size, dpi, backgroundColor, fileFormat (all user-customizable values)
-  - **Data Structure**: TypeScript interfaces (DocumentSpec, Country, IDPhotoConfig) ensure type safety
+  - **URL Parameters**: country, documentType, size (as label), dpi, backgroundColor, fileFormat
+  - **Helper Functions**: photoSizeToString(), findPhotoSizeByLabel(), findPhotoSizeBySpec() for robust size handling
   - **Category Structure**: Platform now has 3 categories instead of 4 (Pro Headshot, ID Photo, Social Avatar Decors)
 
 ### Pro Headshot Photo Rotation System (October 27, 2025)
