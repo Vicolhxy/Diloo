@@ -10,6 +10,8 @@ import Navigation from "@/components/Navigation";
 import StyleTabNav from "@/components/StyleTabNav";
 import Footer from "@/components/Footer";
 import { idPhotoSpecs, getDocumentTypes, getDocumentSpec, formatDocumentType, photoSizeToString, findPhotoSizeByLabel, findPhotoSizeBySpec } from "../../../shared/idPhotoSpecs";
+
+// Import original sample images for other styles
 import w1Img from "@assets/W1_1761159011555.png";
 import y1Img from "@assets/Y1_1761159011566.png";
 import w2Img from "@assets/W2_1761159011568.png";
@@ -19,8 +21,59 @@ import b2Img from "@assets/B2_1761159011571.png";
 import w3Img from "@assets/W3_1761159011572.png";
 import i1Img from "@assets/I1_1761159011573.png";
 
-// All 8 sample images for carousel (not grouped by category)
-const allStyleImages = [w1Img, y1Img, w2Img, b1Img, y2Img, b2Img, w3Img, i1Img];
+// Import 16 professional headshot photos for Pro Headshot carousel
+import female01 from "@assets/female-01.png";
+import female02 from "@assets/female-02.png";
+import female03 from "@assets/female-03.png";
+import female04 from "@assets/female-04.png";
+import female05 from "@assets/female-05.png";
+import female06 from "@assets/female-06.png";
+import female07 from "@assets/female-07.png";
+import female08 from "@assets/female-08.png";
+import male01 from "@assets/male-01.png";
+import male02 from "@assets/male-02.png";
+import male03 from "@assets/male-03.png";
+import male04 from "@assets/male-04.png";
+import male05 from "@assets/male-05.png";
+import male06 from "@assets/male-06.png";
+import male07 from "@assets/male-07.png";
+import male08 from "@assets/male-08.png";
+
+// Import suit color thumbnails
+import suitCharcoal from "@assets/Headshot-Customized-SuitColorThumbnail-Charcoal_1761856108986.png";
+import suitNavy from "@assets/Headshot-Customized-SuitColorThumbnail-Navy_1761856108976.png";
+import suitBlack from "@assets/Headshot-Customized-SuitColorThumbnail-Black_1761856108986.png";
+import suitLightGrey from "@assets/Headshot-Customized-SuitColorThumbnail-LightGrey_1761856108988.png";
+import suitMidnightBlue from "@assets/Headshot-Customized-SuitColorThumbnail-MidnightBlue_1761856108990.png";
+import suitCharcoalBlue from "@assets/Headshot-Customized-SuitColorThumbnail-CharcoalBlue_1761856108987.png";
+import suitPinstripeCharcoal from "@assets/Headshot-Customized-SuitColorThumbnail-PinstripeCharcoal_1761856108989.png";
+import suitCream from "@assets/Headshot-Customized-SuitColorThumbnail-Cream_1761856108988.png";
+import suitSoftBlue from "@assets/Headshot-Customized-SuitColorThumbnail-SoftBlue_1761856108983.png";
+import suitLightPink from "@assets/Headshot-Customized-SuitColorThumbnail-LightPink_1761856108989.png";
+import suitTaupe from "@assets/Headshot-Customized-SuitColorThumbnail-Taupe_1761856108983.png";
+import suitWhite from "@assets/Headshot-Customized-SuitColorThumbnail-White_1761856108990.png";
+
+// Import shirt color thumbnails
+import shirtWhite from "@assets/Headshot-Customized-ShirtColorThumbnail-White_1761856108986.png";
+import shirtLightBlue from "@assets/Headshot-Customized-ShirtColorThumbnail-LightBlue_1761856108984.png";
+import shirtPaleGrey from "@assets/Headshot-Customized-ShirtColorThumbnail-PaleGrey_1761856108985.png";
+import shirtLightPink from "@assets/Headshot-Customized-ShirtColorThumbnail-LightPink_1761856108984.png";
+import shirtIvory from "@assets/Headshot-Customized-ShirtColorThumbnail-Ivory_1761856108984.png";
+import shirtSoftBeige from "@assets/Headshot-Customized-ShirtColorThumbnail-SoftBeige_1761856108985.png";
+
+// Import tie color thumbnails
+import tieNavy from "@assets/Headshot-Customized-TieColorThumbnail-Navy_1761856179158.png";
+import tieBurgundy from "@assets/Headshot-Customized-TieColorThumbnail-Burgundy_1761856179160.png";
+import tieCharcoal from "@assets/Headshot-Customized-TieColorThumbnail-Charcoal_1761856179159.png";
+import tieBlack from "@assets/Headshot-Customized-TieColorThumbnail-Black_1761856179152.png";
+import tieSilver from "@assets/Headshot-Customized-TieColorThumbnail-Silver_1761856179159.png";
+import tieStriped from "@assets/Headshot-Customized-TieColorThumbnail-Striped_1761856179158.png";
+
+// All 16 professional headshot photos for Pro Headshot carousel
+const proHeadshotImages = [
+  female01, female02, female03, female04, female05, female06, female07, female08,
+  male01, male02, male03, male04, male05, male06, male07, male08
+];
 
 // Helper function to calculate pixel dimensions from size and DPI
 function calculatePixelDimensions(size: string, dpi: string): string {
@@ -75,25 +128,45 @@ function calculatePixelDimensions(size: string, dpi: string): string {
 }
 
 const suitFabrics = [
-  { id: 1, name: "Wool" },
-  { id: 2, name: "Wool Blend" },
-  { id: 3, name: "Worsted Wool" },
+  { id: "wool", name: "Wool" },
+  { id: "wool-blend", name: "Wool Blend" },
+  { id: "worsted-wool", name: "Worsted Wool" },
+  { id: "silk-blend", name: "Silk Blend" },
+  { id: "tweed", name: "Tweed" },
 ];
 
 const suitColors = [
-  { id: 1, name: "Charcoal", hex: "#36454F" },
-  { id: 2, name: "Navy", hex: "#000080" },
-  { id: 3, name: "Black", hex: "#000000" },
-  { id: 4, name: "Light Gray", hex: "#D3D3D3" },
-  { id: 5, name: "Midnight Blue", hex: "#191970" },
-  { id: 6, name: "Charcoal Blue", hex: "#3C4C5C" },
-  { id: 7, name: "Pinstripe Charcoal", hex: "#36454F", pattern: "pinstripe" },
+  { id: "charcoal", name: "Charcoal", image: suitCharcoal },
+  { id: "navy", name: "Navy", image: suitNavy },
+  { id: "black", name: "Black", image: suitBlack },
+  { id: "light-grey", name: "Light Grey", image: suitLightGrey },
+  { id: "midnight-blue", name: "Midnight Blue", image: suitMidnightBlue },
+  { id: "charcoal-blue", name: "Charcoal Blue", image: suitCharcoalBlue },
+  { id: "pinstripe-charcoal", name: "Pinstripe Charcoal", image: suitPinstripeCharcoal },
+  { id: "cream", name: "Cream", image: suitCream },
+  { id: "soft-blue", name: "Soft Blue", image: suitSoftBlue },
+  { id: "light-pink", name: "Light Pink", image: suitLightPink },
+  { id: "taupe", name: "Taupe", image: suitTaupe },
+  { id: "white", name: "White", image: suitWhite },
 ];
 
 const shirtColors = [
-  { id: 1, name: "White", hex: "#FFFFFF" },
-  { id: 2, name: "Light Blue", hex: "#ADD8E6" },
-  { id: 3, name: "Pale Gray", hex: "#E8E8E8" },
+  { id: "white", name: "White", image: shirtWhite },
+  { id: "light-blue", name: "Light Blue", image: shirtLightBlue },
+  { id: "pale-grey", name: "Pale Grey", image: shirtPaleGrey },
+  { id: "light-pink", name: "Light Pink", image: shirtLightPink },
+  { id: "ivory", name: "Ivory", image: shirtIvory },
+  { id: "soft-beige", name: "Soft Beige", image: shirtSoftBeige },
+];
+
+const neckTies = [
+  { id: "none", name: "None", image: null },
+  { id: "navy", name: "Navy", image: tieNavy },
+  { id: "burgundy", name: "Burgundy", image: tieBurgundy },
+  { id: "charcoal", name: "Charcoal", image: tieCharcoal },
+  { id: "black", name: "Black", image: tieBlack },
+  { id: "silver", name: "Silver", image: tieSilver },
+  { id: "striped", name: "Striped", image: tieStriped },
 ];
 
 const backgrounds = [
@@ -121,6 +194,9 @@ const handPoses = [
   { value: "buttoning", label: "Buttoning jacket" },
   { value: "hand-chin", label: "One hand touching chin" },
   { value: "adjusting-lapel", label: "Adjusting lapel" },
+  { value: "hands-crossed-front", label: "Hands lightly crossed in front" },
+  { value: "hand-on-waist", label: "One hand on waist" },
+  { value: "holding-blazer", label: "Holding blazer edge" },
 ];
 
 const eyeDirections = [
@@ -136,10 +212,11 @@ const expressions = [
 
 export default function Upload() {
   const searchString = useSearch();
-  const [selectedSuitFabric, setSelectedSuitFabric] = useState(1);
-  const [selectedSuitColor, setSelectedSuitColor] = useState(1);
-  const [selectedShirtColor, setSelectedShirtColor] = useState(1);
-  const [selectedBackground, setSelectedBackground] = useState(1);
+  const [selectedSuitFabric, setSelectedSuitFabric] = useState<string | null>(null);
+  const [selectedSuitColor, setSelectedSuitColor] = useState<string | null>(null);
+  const [selectedShirtColor, setSelectedShirtColor] = useState<string | null>(null);
+  const [selectedNeckTie, setSelectedNeckTie] = useState<string | null>(null);
+  const [selectedBackground, setSelectedBackground] = useState<number | null>(null);
   const [primaryImage, setPrimaryImage] = useState<string | null>(null);
   const [optionalImage, setOptionalImage] = useState<string | null>(null);
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
@@ -215,7 +292,9 @@ export default function Upload() {
     }
   }, [styleId, currentDocSpec, selectedCountry, selectedDocumentType]);
   
-  const styleSampleImages = allStyleImages;
+  // Use professional headshot images for Pro Headshot carousel, original images for other styles
+  const otherStyleImages = [w1Img, y1Img, w2Img, b1Img, y2Img, b2Img, w3Img, i1Img];
+  const styleSampleImages = styleId === "1" ? proHeadshotImages : otherStyleImages;
 
   // Reset carousel index when style changes
   useEffect(() => {
@@ -256,8 +335,8 @@ export default function Upload() {
       
       <div className="pt-8 pb-12 px-6 md:px-12">
         <div className="container mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="bg-white rounded-2xl p-8" data-testid="section-sample-photo">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+            <div className="lg:col-span-2 bg-white rounded-2xl p-8" data-testid="section-sample-photo">
               <h2 className="text-xl font-semibold mb-6 text-gray-900">Sample Photo</h2>
               <div 
                 className="relative"
@@ -300,7 +379,7 @@ export default function Upload() {
               </div>
             </div>
 
-            <div className="space-y-6">
+            <div className="lg:col-span-3 space-y-6">
               <div className="bg-white rounded-2xl p-8" data-testid="section-upload">
                 <h2 className="text-xl font-semibold mb-6 text-gray-900">Upload Your Photo</h2>
                 
@@ -567,7 +646,7 @@ export default function Upload() {
                     </div>
                   </div>
                 ) : (
-                  /* Pro Headshot Form (existing) */
+                  /* Pro Headshot Form */
                   <div className="space-y-6">
                   {/* Suit Fabric */}
                   <div>
@@ -579,7 +658,13 @@ export default function Upload() {
                         <Button
                           key={fabric.id}
                           variant={selectedSuitFabric === fabric.id ? "default" : "outline"}
-                          onClick={() => setSelectedSuitFabric(fabric.id)}
+                          onClick={() => {
+                            if (selectedSuitFabric === fabric.id) {
+                              setSelectedSuitFabric(null);
+                            } else {
+                              setSelectedSuitFabric(fabric.id);
+                            }
+                          }}
                           className={
                             selectedSuitFabric === fabric.id
                               ? "bg-primary text-black hover:bg-primary/90"
@@ -593,60 +678,109 @@ export default function Upload() {
                     </div>
                   </div>
 
-                  {/* Suit Color with color swatches */}
+                  {/* Suit Color - Image thumbnails only, 12 in one row */}
                   <div>
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Suit Color
                     </label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    <div className="flex flex-nowrap gap-2 overflow-x-auto pb-2">
                       {suitColors.map((color) => (
                         <button
                           key={color.id}
-                          onClick={() => setSelectedSuitColor(color.id)}
-                          className={`flex items-center gap-2 p-3 rounded-lg border-2 transition-all ${
+                          onClick={() => {
+                            if (selectedSuitColor === color.id) {
+                              setSelectedSuitColor(null);
+                            } else {
+                              setSelectedSuitColor(color.id);
+                            }
+                          }}
+                          className={`flex-shrink-0 rounded-full border-2 transition-all ${
                             selectedSuitColor === color.id
-                              ? "border-primary bg-primary/5"
+                              ? "border-primary ring-2 ring-primary/20"
                               : "border-gray-300 hover:border-gray-400"
                           }`}
                           data-testid={`suit-color-${color.id}`}
+                          title={color.name}
                         >
-                          <div 
-                            className="w-8 h-8 rounded border border-gray-300 flex-shrink-0"
-                            style={{ 
-                              backgroundColor: color.hex,
-                              backgroundImage: color.pattern === "pinstripe" 
-                                ? `repeating-linear-gradient(90deg, ${color.hex}, ${color.hex} 3px, rgba(255,255,255,0.1) 3px, rgba(255,255,255,0.1) 4px)`
-                                : undefined
-                            }}
+                          <img 
+                            src={color.image} 
+                            alt={color.name}
+                            className="w-12 h-12 rounded-full"
                           />
-                          <span className="text-sm text-gray-900">{color.name}</span>
                         </button>
                       ))}
                     </div>
                   </div>
 
-                  {/* Shirt Color with color swatches */}
+                  {/* Shirt Color - Image thumbnails only */}
                   <div>
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Shirt Color
                     </label>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <div className="flex gap-2">
                       {shirtColors.map((color) => (
                         <button
                           key={color.id}
-                          onClick={() => setSelectedShirtColor(color.id)}
-                          className={`flex items-center gap-2 p-3 rounded-lg border-2 transition-all ${
+                          onClick={() => {
+                            if (selectedShirtColor === color.id) {
+                              setSelectedShirtColor(null);
+                            } else {
+                              setSelectedShirtColor(color.id);
+                            }
+                          }}
+                          className={`flex-shrink-0 rounded-full border-2 transition-all ${
                             selectedShirtColor === color.id
-                              ? "border-primary bg-primary/5"
+                              ? "border-primary ring-2 ring-primary/20"
                               : "border-gray-300 hover:border-gray-400"
                           }`}
                           data-testid={`shirt-color-${color.id}`}
+                          title={color.name}
                         >
-                          <div 
-                            className="w-8 h-8 rounded border border-gray-300 flex-shrink-0"
-                            style={{ backgroundColor: color.hex }}
+                          <img 
+                            src={color.image} 
+                            alt={color.name}
+                            className="w-12 h-12 rounded-full"
                           />
-                          <span className="text-sm text-gray-900">{color.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Neck Tie - Image thumbnails, None option + 6 colors */}
+                  <div>
+                    <label className="block text-sm font-bold text-gray-900 mb-3">
+                      Neck Tie
+                    </label>
+                    <div className="flex gap-2">
+                      {neckTies.map((tie) => (
+                        <button
+                          key={tie.id}
+                          onClick={() => {
+                            if (selectedNeckTie === tie.id) {
+                              setSelectedNeckTie(null);
+                            } else {
+                              setSelectedNeckTie(tie.id);
+                            }
+                          }}
+                          className={`flex-shrink-0 rounded-full border-2 transition-all ${
+                            selectedNeckTie === tie.id
+                              ? "border-primary ring-2 ring-primary/20"
+                              : "border-gray-300 hover:border-gray-400"
+                          }`}
+                          data-testid={`neck-tie-${tie.id}`}
+                          title={tie.name}
+                        >
+                          {tie.image ? (
+                            <img 
+                              src={tie.image} 
+                              alt={tie.name}
+                              className="w-12 h-12 rounded-full"
+                            />
+                          ) : (
+                            <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-xs text-gray-600">
+                              None
+                            </div>
+                          )}
                         </button>
                       ))}
                     </div>
@@ -662,7 +796,13 @@ export default function Upload() {
                         <Button
                           key={bg.id}
                           variant={selectedBackground === bg.id ? "default" : "outline"}
-                          onClick={() => setSelectedBackground(bg.id)}
+                          onClick={() => {
+                            if (selectedBackground === bg.id) {
+                              setSelectedBackground(null);
+                            } else {
+                              setSelectedBackground(bg.id);
+                            }
+                          }}
                           className={
                             selectedBackground === bg.id
                               ? "bg-primary text-black hover:bg-primary/90 text-left justify-start"
@@ -679,7 +819,7 @@ export default function Upload() {
                   {/* Composition */}
                   <div>
                     <label className="block text-sm font-bold text-gray-900 mb-3">
-                      Composition <span className="text-gray-500 text-xs font-normal">(Optional)</span>
+                      Composition
                     </label>
                     <div className="flex gap-3">
                       {compositions.map((comp) => (
@@ -714,7 +854,7 @@ export default function Upload() {
                   {selectedComposition === "above-waist" && (
                     <div>
                       <label className="block text-sm font-bold text-gray-900 mb-3">
-                        Hand Pose <span className="text-gray-500 text-xs font-normal">(Optional)</span>
+                        Hand Pose
                       </label>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                         {handPoses.map((pose) => (
@@ -745,7 +885,7 @@ export default function Upload() {
                   {/* Eye Direction */}
                   <div>
                     <label className="block text-sm font-bold text-gray-900 mb-3">
-                      Eye Direction <span className="text-gray-500 text-xs font-normal">(Optional)</span>
+                      Eye Direction
                     </label>
                     <div className="flex gap-3">
                       {eyeDirections.map((eye) => (
@@ -775,7 +915,7 @@ export default function Upload() {
                   {/* Expression */}
                   <div>
                     <label className="block text-sm font-bold text-gray-900 mb-3">
-                      Expression <span className="text-gray-500 text-xs font-normal">(Optional)</span>
+                      Expression
                     </label>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                       {expressions.map((expr) => (
@@ -810,7 +950,7 @@ export default function Upload() {
                   <Link href={
                     styleId === "2" 
                       ? `/checkout?style=${styleId}&country=${selectedCountry}&documentType=${selectedDocumentType}&size=${encodeURIComponent(currentDocSpec?.size || customSize)}&dpi=${currentDocSpec?.dpi || customDPI}&backgroundColor=${encodeURIComponent(currentDocSpec?.backgroundColor || customBgColor)}&fileFormat=${currentDocSpec?.fileFormat || customFileFormat}`
-                      : `/checkout?style=${styleId}&suitFabric=${selectedSuitFabric}&suitColor=${selectedSuitColor}&shirtColor=${selectedShirtColor}&background=${selectedBackground}${selectedComposition ? `&composition=${selectedComposition}` : ''}${selectedHandPose ? `&handPose=${selectedHandPose}` : ''}${selectedEyeDirection ? `&eyeDirection=${selectedEyeDirection}` : ''}${selectedExpression ? `&expression=${selectedExpression}` : ''}`
+                      : `/checkout?style=${styleId}${selectedSuitFabric ? `&suitFabric=${selectedSuitFabric}` : ''}${selectedSuitColor ? `&suitColor=${selectedSuitColor}` : ''}${selectedShirtColor ? `&shirtColor=${selectedShirtColor}` : ''}${selectedNeckTie ? `&neckTie=${selectedNeckTie}` : ''}${selectedBackground ? `&background=${selectedBackground}` : ''}${selectedComposition ? `&composition=${selectedComposition}` : ''}${selectedHandPose ? `&handPose=${selectedHandPose}` : ''}${selectedEyeDirection ? `&eyeDirection=${selectedEyeDirection}` : ''}${selectedExpression ? `&expression=${selectedExpression}` : ''}`
                   }>
                     <Button 
                       className="w-full bg-primary text-black hover:bg-primary/90 h-12 text-base font-normal"
