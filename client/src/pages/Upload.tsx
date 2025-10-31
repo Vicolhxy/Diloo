@@ -743,7 +743,7 @@ export default function Upload() {
                                   setSelectedSuitColor(color.id);
                                 }
                               }}
-                              className={`flex-shrink-0 rounded-full transition-all ring-2 ring-inset ${
+                              className={`flex-shrink-0 rounded-full transition-all ring-2 ring-inset p-0.5 ${
                                 selectedSuitColor === color.id
                                   ? "ring-4 ring-primary"
                                   : "ring-gray-300 hover:ring-4 hover:ring-primary"
@@ -754,7 +754,7 @@ export default function Upload() {
                               <img 
                                 src={color.image} 
                                 alt={color.name}
-                                className="w-12 h-12 rounded-full"
+                                className="w-11 h-11 rounded-full"
                               />
                             </button>
                           );
@@ -798,7 +798,7 @@ export default function Upload() {
                                   setSelectedShirtColor(color.id);
                                 }
                               }}
-                              className={`flex-shrink-0 rounded-full transition-all ring-2 ring-inset ${
+                              className={`flex-shrink-0 rounded-full transition-all ring-2 ring-inset p-0.5 ${
                                 selectedShirtColor === color.id
                                   ? "ring-4 ring-primary"
                                   : "ring-gray-300 hover:ring-4 hover:ring-primary"
@@ -809,7 +809,7 @@ export default function Upload() {
                               <img 
                                 src={color.image} 
                                 alt={color.name}
-                                className="w-12 h-12 rounded-full"
+                                className="w-11 h-11 rounded-full"
                               />
                             </button>
                           );
@@ -853,7 +853,7 @@ export default function Upload() {
                                   setSelectedNeckTie(tie.id);
                                 }
                               }}
-                              className={`flex-shrink-0 rounded-full transition-all ring-2 ring-inset ${
+                              className={`flex-shrink-0 rounded-full transition-all ring-2 ring-inset p-0.5 ${
                                 selectedNeckTie === tie.id
                                   ? "ring-4 ring-primary"
                                   : "ring-gray-300 hover:ring-4 hover:ring-primary"
@@ -865,10 +865,10 @@ export default function Upload() {
                                 <img 
                                   src={tie.image} 
                                   alt={tie.name}
-                                  className="w-12 h-12 rounded-full"
+                                  className="w-11 h-11 rounded-full"
                                 />
                               ) : (
-                                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-xs text-gray-600">
+                                <div className="w-11 h-11 rounded-full bg-gray-100 flex items-center justify-center text-xs text-gray-600">
                                   None
                                 </div>
                               )}
@@ -919,7 +919,7 @@ export default function Upload() {
                               setSelectedBackground(bg.id);
                             }
                           }}
-                          className={`flex-shrink-0 rounded-md transition-all ring-2 ring-inset ${
+                          className={`flex-shrink-0 rounded-md transition-all ring-2 ring-inset p-0.5 ${
                             selectedBackground === bg.id
                               ? "ring-4 ring-primary"
                               : "ring-gray-300 hover:ring-4 hover:ring-primary"
@@ -930,7 +930,7 @@ export default function Upload() {
                           <img 
                             src={bg.image} 
                             alt={bg.name}
-                            className="w-full h-16 object-cover rounded-md"
+                            className="w-full h-[60px] object-cover rounded-sm"
                           />
                         </button>
                       ))}
