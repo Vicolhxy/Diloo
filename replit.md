@@ -63,3 +63,23 @@ The platform features a custom color palette centered around teal (#25ced1), wit
 - `Diloo-logo-original.png`, `Diloo-logo-white.png`: Project logos.
 - `Banner.png`: Hero section background.
 - 16 professional headshot photos: For Pro Headshot showcase.
+
+## Recent Changes
+
+### Pro Headshot Upload Page Major Redesign (October 31, 2025 - Latest)
+- **Layout Restructure**: Changed left-right ratio from 1:1 to 2:3 (left smaller, right larger)
+  - Grid changed from `lg:grid-cols-2` to `lg:grid-cols-5` with `lg:col-span-2` (left) and `lg:col-span-3` (right)
+- **Carousel Upgrade**: Replaced with 16 professional headshot photos (female-01 to 08, male-01 to 08)
+  - Pro Headshot (styleId=1) exclusively uses 16 professional photos
+  - Other styles retain original 8 sample images
+- **Customization Options Overhaul**:
+  - **Suit Fabric**: Expanded from 3 to 5 options (+ Silk Blend, Tweed)
+  - **Suit Color**: Redesigned with 12 circular image thumbnails in single horizontal row
+  - **Shirt Color**: Redesigned with 6 circular image thumbnails
+  - **NEW: Neck Tie**: 7 options (None + 6 color thumbnails)
+  - **Background**: Redesigned with 10 square image thumbnails
+    - Changed from text buttons to visual thumbnails in 5-column grid
+    - Square thumbnails (rounded-md) showing gradients and environment photos
+  - **Hand Pose**: Expanded from 6 to 9 options
+- **Toggle Functionality**: All options support deselect (click selected item → null state)
+- **UI Polish**: Removed all "(Optional)" labels, image-only displays with tooltip text

@@ -69,6 +69,18 @@ import tieBlack from "@assets/Headshot-Customized-TieColorThumbnail-Black_176185
 import tieSilver from "@assets/Headshot-Customized-TieColorThumbnail-Silver_1761856179159.png";
 import tieStriped from "@assets/Headshot-Customized-TieColorThumbnail-Striped_1761856179158.png";
 
+// Import background thumbnails
+import bgSilverGrey from "@assets/Headshot-Customized-BgColor-SilverGreyGradient_1761878132208.png";
+import bgLightBlue from "@assets/Headshot-Customized-BgColor-LightBlueGradient_1761878132238.png";
+import bgLightGrey from "@assets/Headshot-Customized-BgColor-LightGreyGradient_1761878132236.png";
+import bgLightBeige from "@assets/Headshot-Customized-BgColor-LightBeigeGradient_1761878132234.png";
+import bgLightBlueGrey from "@assets/Headshot-Customized-BgColor-LightBlueGreyGradient_1761878132232.png";
+import bgLightSilver from "@assets/Headshot-Customized-BgColor-LightSliverGradient_1761878132231.png";
+import bgOffice from "@assets/Headshot-Customized-BgColor-Office_1761878132230.png";
+import bgConference from "@assets/Headshot-Customized-BgColor-Conference_1761878132229.png";
+import bgTreeAvenue from "@assets/Headshot-Customized-BgColor-TreeAvenue_1761878132227.png";
+import bgBalcony from "@assets/Headshot-Customized-BgColor-Balcony_1761878132226.png";
+
 // All 16 professional headshot photos for Pro Headshot carousel
 const proHeadshotImages = [
   female01, female02, female03, female04, female05, female06, female07, female08,
@@ -170,16 +182,16 @@ const neckTies = [
 ];
 
 const backgrounds = [
-  { id: 1, name: "Silver gray gradient" },
-  { id: 2, name: "Light blue gradient" },
-  { id: 3, name: "Light gray gradient" },
-  { id: 4, name: "Light beige gradient" },
-  { id: 5, name: "Light blue-gray gradient" },
-  { id: 6, name: "Light silver gradient" },
-  { id: 7, name: "Modern office interior (glass, white walls, plants, blurred)" },
-  { id: 8, name: "Conference room background (blurred)" },
-  { id: 9, name: "Tree-lined street (blurred)" },
-  { id: 10, name: "Outdoor terrace or balcony (blurred)" },
+  { id: 1, name: "Silver gray gradient", image: bgSilverGrey },
+  { id: 2, name: "Light blue gradient", image: bgLightBlue },
+  { id: 3, name: "Light gray gradient", image: bgLightGrey },
+  { id: 4, name: "Light beige gradient", image: bgLightBeige },
+  { id: 5, name: "Light blue-gray gradient", image: bgLightBlueGrey },
+  { id: 6, name: "Light silver gradient", image: bgLightSilver },
+  { id: 7, name: "Modern office interior", image: bgOffice },
+  { id: 8, name: "Conference room background", image: bgConference },
+  { id: 9, name: "Tree-lined street", image: bgTreeAvenue },
+  { id: 10, name: "Outdoor terrace or balcony", image: bgBalcony },
 ];
 
 const compositions = [
@@ -786,16 +798,15 @@ export default function Upload() {
                     </div>
                   </div>
 
-                  {/* Background */}
+                  {/* Background - Square image thumbnails */}
                   <div>
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Background
                     </label>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-5 gap-2">
                       {backgrounds.map((bg) => (
-                        <Button
+                        <button
                           key={bg.id}
-                          variant={selectedBackground === bg.id ? "default" : "outline"}
                           onClick={() => {
                             if (selectedBackground === bg.id) {
                               setSelectedBackground(null);
@@ -803,15 +814,20 @@ export default function Upload() {
                               setSelectedBackground(bg.id);
                             }
                           }}
-                          className={
+                          className={`flex-shrink-0 rounded-md border-2 transition-all ${
                             selectedBackground === bg.id
-                              ? "bg-primary text-black hover:bg-primary/90 text-left justify-start"
-                              : "border-gray-300 text-gray-700 hover:bg-gray-100 text-left justify-start"
-                          }
+                              ? "border-primary ring-2 ring-primary/20"
+                              : "border-gray-300 hover:border-gray-400"
+                          }`}
                           data-testid={`background-${bg.id}`}
+                          title={bg.name}
                         >
-                          {bg.name}
-                        </Button>
+                          <img 
+                            src={bg.image} 
+                            alt={bg.name}
+                            className="w-full h-16 object-cover rounded-md"
+                          />
+                        </button>
                       ))}
                     </div>
                   </div>
