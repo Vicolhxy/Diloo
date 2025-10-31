@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import Navigation from "@/components/Navigation";
 import StyleTabNav from "@/components/StyleTabNav";
 import Footer from "@/components/Footer";
@@ -771,39 +772,66 @@ export default function Upload() {
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Neck Tie
                     </label>
-                    <div className="flex gap-2">
-                      {neckTies.map((tie) => (
-                        <button
-                          key={tie.id}
-                          onClick={() => {
-                            if (selectedNeckTie === tie.id) {
-                              setSelectedNeckTie(null);
-                            } else {
-                              setSelectedNeckTie(tie.id);
-                            }
-                          }}
-                          className={`flex-shrink-0 rounded-full border-2 transition-all ${
-                            selectedNeckTie === tie.id
-                              ? "border-primary ring-2 ring-primary/20"
-                              : "border-gray-300 hover:border-gray-400"
-                          }`}
-                          data-testid={`neck-tie-${tie.id}`}
-                          title={tie.name}
-                        >
-                          {tie.image ? (
-                            <img 
-                              src={tie.image} 
-                              alt={tie.name}
-                              className="w-12 h-12 rounded-full"
-                            />
-                          ) : (
-                            <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-xs text-gray-600">
-                              None
-                            </div>
-                          )}
-                        </button>
-                      ))}
-                    </div>
+                    <TooltipProvider>
+                      <div className="flex gap-2">
+                        {neckTies.map((tie) => {
+                          const tieButton = (
+                            <button
+                              onClick={() => {
+                                if (selectedNeckTie === tie.id) {
+                                  setSelectedNeckTie(null);
+                                } else {
+                                  setSelectedNeckTie(tie.id);
+                                }
+                              }}
+                              className={`flex-shrink-0 rounded-full border-2 transition-all ${
+                                selectedNeckTie === tie.id
+                                  ? "border-primary ring-2 ring-primary/20"
+                                  : "border-gray-300 hover:border-gray-400"
+                              }`}
+                              data-testid={`neck-tie-${tie.id}`}
+                              title={tie.previewImage ? undefined : tie.name}
+                            >
+                              {tie.image ? (
+                                <img 
+                                  src={tie.image} 
+                                  alt={tie.name}
+                                  className="w-12 h-12 rounded-full"
+                                />
+                              ) : (
+                                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-xs text-gray-600">
+                                  None
+                                </div>
+                              )}
+                            </button>
+                          );
+
+                          // If the tie has a preview image, wrap it with Tooltip
+                          if (tie.previewImage) {
+                            return (
+                              <Tooltip key={tie.id}>
+                                <TooltipTrigger asChild>
+                                  {tieButton}
+                                </TooltipTrigger>
+                                <TooltipContent side="top" className="p-2 bg-white border-2 border-gray-200 shadow-lg">
+                                  <div className="text-center">
+                                    <p className="text-sm font-semibold mb-2 text-gray-900">{tie.name}</p>
+                                    <img 
+                                      src={tie.previewImage} 
+                                      alt={`${tie.name} preview`}
+                                      className="h-[300px] w-auto object-contain"
+                                    />
+                                  </div>
+                                </TooltipContent>
+                              </Tooltip>
+                            );
+                          }
+
+                          // For "None" option, just return the button
+                          return <div key={tie.id}>{tieButton}</div>;
+                        })}
+                      </div>
+                    </TooltipProvider>
                   </div>
 
                   {/* Background - Square image thumbnails */}
