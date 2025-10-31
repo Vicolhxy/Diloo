@@ -180,13 +180,13 @@ const shirtColors = [
 ];
 
 const neckTies = [
-  { id: "none", name: "None", image: null },
-  { id: "navy", name: "Navy", image: tieNavy },
-  { id: "burgundy", name: "Burgundy", image: tieBurgundy },
-  { id: "charcoal", name: "Charcoal", image: tieCharcoal },
-  { id: "black", name: "Black", image: tieBlack },
-  { id: "silver", name: "Silver", image: tieSilver },
-  { id: "striped", name: "Striped", image: tieStriped },
+  { id: "none", name: "None", image: null, previewImage: null },
+  { id: "navy", name: "Navy", image: tieNavy, previewImage: tieNavyPreview },
+  { id: "burgundy", name: "Burgundy", image: tieBurgundy, previewImage: tieBurgundyPreview },
+  { id: "charcoal", name: "Charcoal", image: tieCharcoal, previewImage: tieCharcoalPreview },
+  { id: "black", name: "Black", image: tieBlack, previewImage: tieBlackPreview },
+  { id: "silver", name: "Silver", image: tieSilver, previewImage: tieSilverPreview },
+  { id: "striped", name: "Striped", image: tieStriped, previewImage: tieStripedPreview },
 ];
 
 const backgrounds = [
