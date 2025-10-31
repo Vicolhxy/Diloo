@@ -715,8 +715,8 @@ export default function Upload() {
                           }}
                           className={
                             selectedSuitFabric === fabric.id
-                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary p-4"
-                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 p-4"
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4"
                           }
                           data-testid={`suit-fabric-${fabric.id}`}
                         >
@@ -960,8 +960,8 @@ export default function Upload() {
                           }}
                           className={
                             selectedComposition === comp.value
-                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary p-4"
-                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 p-4"
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4"
                           }
                           data-testid={`composition-${comp.value}`}
                         >
@@ -1024,8 +1024,8 @@ export default function Upload() {
                           }}
                           className={
                             selectedEyeDirection === eye.value
-                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary p-4"
-                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 p-4"
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4"
                           }
                           data-testid={`eye-direction-${eye.value}`}
                         >
@@ -1054,8 +1054,8 @@ export default function Upload() {
                           }}
                           className={
                             selectedExpression === expr.value
-                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary p-4"
-                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 p-4"
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4"
                           }
                           data-testid={`expression-${expr.value}`}
                         >
