@@ -250,7 +250,7 @@ const eyeDirections = [
 const expressions = [
   { value: "serious", label: "Serious and professional" },
   { value: "natural-smile", label: "Natural smile" },
-  { value: "laughing", label: "Laughing (slight motion)" },
+  { value: "laughing", label: "Gentle laugh" },
 ];
 
 export default function Upload() {
