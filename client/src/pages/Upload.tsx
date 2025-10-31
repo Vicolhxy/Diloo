@@ -61,6 +61,21 @@ import shirtLightPink from "@assets/Headshot-Customized-ShirtColorThumbnail-Ligh
 import shirtIvory from "@assets/Headshot-Customized-ShirtColorThumbnail-Ivory_1761856108984.png";
 import shirtSoftBeige from "@assets/Headshot-Customized-ShirtColorThumbnail-SoftBeige_1761856108985.png";
 
+// Import tie color thumbnails
+import tieNavy from "@assets/Headshot-Customized-TieColorThumbnail-Navy_1761856179158.png";
+import tieBurgundy from "@assets/Headshot-Customized-TieColorThumbnail-Burgundy_1761856179160.png";
+import tieCharcoal from "@assets/Headshot-Customized-TieColorThumbnail-Charcoal_1761856179159.png";
+import tieBlack from "@assets/Headshot-Customized-TieColorThumbnail-Black_1761856179152.png";
+import tieSilver from "@assets/Headshot-Customized-TieColorThumbnail-Silver_1761856179159.png";
+import tieStriped from "@assets/Headshot-Customized-TieColorThumbnail-Striped_1761856179158.png";
+
+// Import tie preview images for hover tooltips
+import tieNavyPreview from "@assets/Headshot-Customized-Tie-Navy_1761922194486.png";
+import tieBurgundyPreview from "@assets/Headshot-Customized-Tie-Burgundy_1761922194485.png";
+import tieCharcoalPreview from "@assets/Headshot-Customized-Tie-Charcoal_1761922194486.png";
+import tieBlackPreview from "@assets/Headshot-Customized-Tie-Black_1761922194468.png";
+import tieSilverPreview from "@assets/Headshot-Customized-Tie-Silver_1761922194487.png";
+import tieStripedPreview from "@assets/Headshot-Customized-Tie-Striped_1761922194488.png";
 
 // Import background thumbnails
 import bgSilverGrey from "@assets/Headshot-Customized-BgColor-SilverGreyGradient_1761878132208.png";
