@@ -992,12 +992,13 @@ export default function Upload() {
                               setSelectedHandPose(pose.value);
                             }
                           }}
-                          className={
+                          className={`truncate ${
                             selectedHandPose === pose.value
                               ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary"
                               : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
-                          }
+                          }`}
                           data-testid={`hand-pose-${pose.value}`}
+                          title={pose.label}
                         >
                           {pose.label}
                         </Button>
