@@ -665,11 +665,11 @@ export default function Upload() {
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Suit Fabric
                     </label>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <div className="flex flex-wrap gap-3">
                       {suitFabrics.map((fabric) => (
                         <Button
                           key={fabric.id}
-                          variant={selectedSuitFabric === fabric.id ? "default" : "outline"}
+                          variant="outline"
                           onClick={() => {
                             if (selectedSuitFabric === fabric.id) {
                               setSelectedSuitFabric(null);
@@ -679,8 +679,8 @@ export default function Upload() {
                           }}
                           className={
                             selectedSuitFabric === fabric.id
-                              ? "bg-primary text-black hover:bg-primary/90"
-                              : "border-gray-300 text-gray-700 hover:bg-gray-100"
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary p-4"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 p-4"
                           }
                           data-testid={`suit-fabric-${fabric.id}`}
                         >
@@ -837,7 +837,7 @@ export default function Upload() {
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Composition
                     </label>
-                    <div className="flex gap-3">
+                    <div className="flex flex-wrap gap-3">
                       {compositions.map((comp) => (
                         <Button
                           key={comp.value}
@@ -855,8 +855,8 @@ export default function Upload() {
                           }}
                           className={
                             selectedComposition === comp.value
-                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary"
-                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary p-4"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 p-4"
                           }
                           data-testid={`composition-${comp.value}`}
                         >
@@ -903,7 +903,7 @@ export default function Upload() {
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Eye Direction
                     </label>
-                    <div className="flex gap-3">
+                    <div className="flex flex-wrap gap-3">
                       {eyeDirections.map((eye) => (
                         <Button
                           key={eye.value}
@@ -917,8 +917,8 @@ export default function Upload() {
                           }}
                           className={
                             selectedEyeDirection === eye.value
-                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary"
-                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary p-4"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 p-4"
                           }
                           data-testid={`eye-direction-${eye.value}`}
                         >
@@ -933,7 +933,7 @@ export default function Upload() {
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Expression
                     </label>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="flex flex-wrap gap-3">
                       {expressions.map((expr) => (
                         <Button
                           key={expr.value}
@@ -947,8 +947,8 @@ export default function Upload() {
                           }}
                           className={
                             selectedExpression === expr.value
-                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary"
-                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary p-4"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 p-4"
                           }
                           data-testid={`expression-${expr.value}`}
                         >

@@ -83,3 +83,8 @@ The platform features a custom color palette centered around teal (#25ced1), wit
   - **Hand Pose**: Expanded from 6 to 9 options
 - **Toggle Functionality**: All options support deselect (click selected item → null state)
 - **UI Polish**: Removed all "(Optional)" labels, image-only displays with tooltip text
+- **Text Option Styling Unification**:
+  - Suit Fabric, Composition, Eye Direction, Expression use consistent styling
+  - All have default light gray border (border-2 border-gray-300)
+  - Unified padding: 16px (p-4) across all text options
+  - Auto-width layout: flex flex-wrap allows width to adapt to text length
