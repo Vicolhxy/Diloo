@@ -726,33 +726,54 @@ export default function Upload() {
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Suit Color
                     </label>
-                    <div className="flex flex-nowrap gap-2 overflow-x-auto pb-2">
-                      {suitColors.map((color) => (
-                        <button
-                          key={color.id}
-                          onClick={() => {
-                            if (selectedSuitColor === color.id) {
-                              setSelectedSuitColor(null);
-                            } else {
-                              setSelectedSuitColor(color.id);
-                            }
-                          }}
-                          className={`flex-shrink-0 rounded-full border-2 transition-all ${
-                            selectedSuitColor === color.id
-                              ? "border-primary ring-2 ring-primary/20"
-                              : "border-gray-300 hover:border-gray-400"
-                          }`}
-                          data-testid={`suit-color-${color.id}`}
-                          title={color.name}
-                        >
-                          <img 
-                            src={color.image} 
-                            alt={color.name}
-                            className="w-12 h-12 rounded-full"
-                          />
-                        </button>
-                      ))}
-                    </div>
+                    <TooltipProvider delayDuration={0}>
+                      <div className="flex flex-nowrap gap-2 overflow-x-auto pb-2">
+                        {suitColors.map((color) => {
+                          const colorButton = (
+                            <button
+                              onClick={() => {
+                                if (selectedSuitColor === color.id) {
+                                  setSelectedSuitColor(null);
+                                } else {
+                                  setSelectedSuitColor(color.id);
+                                }
+                              }}
+                              className={`flex-shrink-0 rounded-full border-2 transition-all ${
+                                selectedSuitColor === color.id
+                                  ? "border-primary ring-2 ring-primary/20"
+                                  : "border-gray-300 hover:border-gray-400"
+                              }`}
+                              data-testid={`suit-color-${color.id}`}
+                              title={color.previewImage ? undefined : color.name}
+                            >
+                              <img 
+                                src={color.image} 
+                                alt={color.name}
+                                className="w-12 h-12 rounded-full"
+                              />
+                            </button>
+                          );
+
+                          return (
+                            <Tooltip key={color.id}>
+                              <TooltipTrigger asChild>
+                                {colorButton}
+                              </TooltipTrigger>
+                              <TooltipContent side="top" className="p-2 bg-white border-2 border-gray-200 shadow-lg w-[490px]">
+                                <div className="text-center">
+                                  <p className="text-sm font-semibold mb-2 text-gray-900">{color.name}</p>
+                                  <img 
+                                    src={color.previewImage} 
+                                    alt={`${color.name} preview`}
+                                    className="w-full h-auto object-contain"
+                                  />
+                                </div>
+                              </TooltipContent>
+                            </Tooltip>
+                          );
+                        })}
+                      </div>
+                    </TooltipProvider>
                   </div>
 
                   {/* Shirt Color - Image thumbnails only */}
@@ -760,33 +781,54 @@ export default function Upload() {
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Shirt Color
                     </label>
-                    <div className="flex gap-2">
-                      {shirtColors.map((color) => (
-                        <button
-                          key={color.id}
-                          onClick={() => {
-                            if (selectedShirtColor === color.id) {
-                              setSelectedShirtColor(null);
-                            } else {
-                              setSelectedShirtColor(color.id);
-                            }
-                          }}
-                          className={`flex-shrink-0 rounded-full border-2 transition-all ${
-                            selectedShirtColor === color.id
-                              ? "border-primary ring-2 ring-primary/20"
-                              : "border-gray-300 hover:border-gray-400"
-                          }`}
-                          data-testid={`shirt-color-${color.id}`}
-                          title={color.name}
-                        >
-                          <img 
-                            src={color.image} 
-                            alt={color.name}
-                            className="w-12 h-12 rounded-full"
-                          />
-                        </button>
-                      ))}
-                    </div>
+                    <TooltipProvider delayDuration={0}>
+                      <div className="flex gap-2">
+                        {shirtColors.map((color) => {
+                          const colorButton = (
+                            <button
+                              onClick={() => {
+                                if (selectedShirtColor === color.id) {
+                                  setSelectedShirtColor(null);
+                                } else {
+                                  setSelectedShirtColor(color.id);
+                                }
+                              }}
+                              className={`flex-shrink-0 rounded-full border-2 transition-all ${
+                                selectedShirtColor === color.id
+                                  ? "border-primary ring-2 ring-primary/20"
+                                  : "border-gray-300 hover:border-gray-400"
+                              }`}
+                              data-testid={`shirt-color-${color.id}`}
+                              title={color.previewImage ? undefined : color.name}
+                            >
+                              <img 
+                                src={color.image} 
+                                alt={color.name}
+                                className="w-12 h-12 rounded-full"
+                              />
+                            </button>
+                          );
+
+                          return (
+                            <Tooltip key={color.id}>
+                              <TooltipTrigger asChild>
+                                {colorButton}
+                              </TooltipTrigger>
+                              <TooltipContent side="top" className="p-2 bg-white border-2 border-gray-200 shadow-lg w-[490px]">
+                                <div className="text-center">
+                                  <p className="text-sm font-semibold mb-2 text-gray-900">{color.name}</p>
+                                  <img 
+                                    src={color.previewImage} 
+                                    alt={`${color.name} preview`}
+                                    className="w-full h-auto object-contain"
+                                  />
+                                </div>
+                              </TooltipContent>
+                            </Tooltip>
+                          );
+                        })}
+                      </div>
+                    </TooltipProvider>
                   </div>
 
                   {/* Neck Tie - Image thumbnails, None option + 6 colors */}
@@ -794,7 +836,7 @@ export default function Upload() {
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Neck Tie
                     </label>
-                    <TooltipProvider>
+                    <TooltipProvider delayDuration={0}>
                       <div className="flex gap-2">
                         {neckTies.map((tie) => {
                           const tieButton = (
