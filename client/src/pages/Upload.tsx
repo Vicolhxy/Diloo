@@ -179,27 +179,27 @@ const suitFabrics = [
 ];
 
 const suitColors = [
-  { id: "charcoal", name: "Charcoal", image: suitCharcoal },
-  { id: "navy", name: "Navy", image: suitNavy },
-  { id: "black", name: "Black", image: suitBlack },
-  { id: "light-grey", name: "Light Grey", image: suitLightGrey },
-  { id: "midnight-blue", name: "Midnight Blue", image: suitMidnightBlue },
-  { id: "charcoal-blue", name: "Charcoal Blue", image: suitCharcoalBlue },
-  { id: "pinstripe-charcoal", name: "Pinstripe Charcoal", image: suitPinstripeCharcoal },
-  { id: "cream", name: "Cream", image: suitCream },
-  { id: "soft-blue", name: "Soft Blue", image: suitSoftBlue },
-  { id: "light-pink", name: "Light Pink", image: suitLightPink },
-  { id: "taupe", name: "Taupe", image: suitTaupe },
-  { id: "white", name: "White", image: suitWhite },
+  { id: "charcoal", name: "Charcoal", image: suitCharcoal, previewImage: suitCharcoalPreview },
+  { id: "navy", name: "Navy", image: suitNavy, previewImage: suitNavyPreview },
+  { id: "black", name: "Black", image: suitBlack, previewImage: suitBlackPreview },
+  { id: "light-grey", name: "Light Grey", image: suitLightGrey, previewImage: suitLightGreyPreview },
+  { id: "midnight-blue", name: "Midnight Blue", image: suitMidnightBlue, previewImage: suitMidnightBluePreview },
+  { id: "charcoal-blue", name: "Charcoal Blue", image: suitCharcoalBlue, previewImage: suitCharcoalBluePreview },
+  { id: "pinstripe-charcoal", name: "Pinstripe Charcoal", image: suitPinstripeCharcoal, previewImage: suitPinstripeCharcoalPreview },
+  { id: "cream", name: "Cream", image: suitCream, previewImage: suitCreamPreview },
+  { id: "soft-blue", name: "Soft Blue", image: suitSoftBlue, previewImage: suitSoftBluePreview },
+  { id: "light-pink", name: "Light Pink", image: suitLightPink, previewImage: suitLightPinkPreview },
+  { id: "taupe", name: "Taupe", image: suitTaupe, previewImage: suitTaupePreview },
+  { id: "white", name: "White", image: suitWhite, previewImage: suitWhitePreview },
 ];
 
 const shirtColors = [
-  { id: "white", name: "White", image: shirtWhite },
-  { id: "light-blue", name: "Light Blue", image: shirtLightBlue },
-  { id: "pale-grey", name: "Pale Grey", image: shirtPaleGrey },
-  { id: "light-pink", name: "Light Pink", image: shirtLightPink },
-  { id: "ivory", name: "Ivory", image: shirtIvory },
-  { id: "soft-beige", name: "Soft Beige", image: shirtSoftBeige },
+  { id: "white", name: "White", image: shirtWhite, previewImage: shirtWhitePreview },
+  { id: "light-blue", name: "Light Blue", image: shirtLightBlue, previewImage: shirtLightBluePreview },
+  { id: "pale-grey", name: "Pale Grey", image: shirtPaleGrey, previewImage: shirtPaleGreyPreview },
+  { id: "light-pink", name: "Light Pink", image: shirtLightPink, previewImage: shirtLightPinkPreview },
+  { id: "ivory", name: "Ivory", image: shirtIvory, previewImage: shirtIvoryPreview },
+  { id: "soft-beige", name: "Soft Beige", image: shirtSoftBeige, previewImage: shirtSoftBeigePreview },
 ];
 
 const neckTies = [
