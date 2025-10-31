@@ -745,8 +745,8 @@ export default function Upload() {
                               }}
                               className={`flex-shrink-0 rounded-full transition-all ${
                                 selectedSuitColor === color.id
-                                  ? "border-4 border-primary"
-                                  : "border-2 border-gray-300 hover:border-4 hover:border-primary"
+                                  ? "shadow-[inset_0_0_0_4px_#25ced1]"
+                                  : "shadow-[inset_0_0_0_2px_#d1d5db] hover:shadow-[inset_0_0_0_4px_#25ced1]"
                               }`}
                               data-testid={`suit-color-${color.id}`}
                               title={color.previewImage ? undefined : color.name}
@@ -800,8 +800,8 @@ export default function Upload() {
                               }}
                               className={`flex-shrink-0 rounded-full transition-all ${
                                 selectedShirtColor === color.id
-                                  ? "border-4 border-primary"
-                                  : "border-2 border-gray-300 hover:border-4 hover:border-primary"
+                                  ? "shadow-[inset_0_0_0_4px_#25ced1]"
+                                  : "shadow-[inset_0_0_0_2px_#d1d5db] hover:shadow-[inset_0_0_0_4px_#25ced1]"
                               }`}
                               data-testid={`shirt-color-${color.id}`}
                               title={color.previewImage ? undefined : color.name}
@@ -855,8 +855,8 @@ export default function Upload() {
                               }}
                               className={`flex-shrink-0 rounded-full transition-all ${
                                 selectedNeckTie === tie.id
-                                  ? "border-4 border-primary"
-                                  : "border-2 border-gray-300 hover:border-4 hover:border-primary"
+                                  ? "shadow-[inset_0_0_0_4px_#25ced1]"
+                                  : "shadow-[inset_0_0_0_2px_#d1d5db] hover:shadow-[inset_0_0_0_4px_#25ced1]"
                               }`}
                               data-testid={`neck-tie-${tie.id}`}
                               title={tie.previewImage ? undefined : tie.name}
@@ -921,8 +921,8 @@ export default function Upload() {
                           }}
                           className={`flex-shrink-0 rounded-md transition-all ${
                             selectedBackground === bg.id
-                              ? "border-4 border-primary"
-                              : "border-2 border-gray-300 hover:border-4 hover:border-primary"
+                              ? "shadow-[inset_0_0_0_4px_#25ced1]"
+                              : "shadow-[inset_0_0_0_2px_#d1d5db] hover:shadow-[inset_0_0_0_4px_#25ced1]"
                           }`}
                           data-testid={`background-${bg.id}`}
                           title={bg.name}
