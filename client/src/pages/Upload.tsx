@@ -587,94 +587,140 @@ export default function Upload() {
                     </div>
 
                     {/* Specifications */}
-                    <div className="bg-gray-50 rounded-lg p-4 space-y-4">
-                      <h3 className="font-semibold text-gray-900 text-sm">Specifications</h3>
-                      
-                      {/* Photo Size - Dropdown */}
+                    <div className="space-y-6">
+                      {/* Photo Size - Button Options */}
                       <div>
-                        <label className="block text-sm font-bold text-gray-900 mb-2">
+                        <label className="block text-sm font-bold text-gray-900 mb-3">
                           Photo Size
                         </label>
-                        <Select value={customSize} onValueChange={setCustomSize}>
-                          <SelectTrigger className="w-full" data-testid="select-photo-size">
-                            <SelectValue placeholder="Please select" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {idPhotoSpecs.common.commonPhotoSizes.map((size) => (
-                              <SelectItem key={size.label} value={size.label}>
-                                {size.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <div className="flex flex-wrap gap-3">
+                          {idPhotoSpecs.common.commonPhotoSizes.map((size) => (
+                            <Button
+                              key={size.label}
+                              variant="outline"
+                              onClick={() => setCustomSize(size.label)}
+                              className={
+                                customSize === size.label
+                                  ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
+                                  : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4"
+                              }
+                              data-testid={`photo-size-${size.label.replace(/\s+/g, '-').toLowerCase()}`}
+                            >
+                              {size.label}
+                            </Button>
+                          ))}
+                        </div>
                       </div>
 
-                      {/* DPI - Radio Group */}
+                      {/* DPI - Button Options */}
                       <div>
-                        <label className="block text-sm font-bold text-gray-900 mb-2">
+                        <label className="block text-sm font-bold text-gray-900 mb-3">
                           DPI
                         </label>
-                        <RadioGroup value={customDPI} onValueChange={setCustomDPI} data-testid="radio-group-dpi">
-                          <div className="flex gap-4">
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem value="300" id="dpi-300" data-testid="radio-dpi-300" />
-                              <Label htmlFor="dpi-300" className="cursor-pointer">300</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem value="600" id="dpi-600" data-testid="radio-dpi-600" />
-                              <Label htmlFor="dpi-600" className="cursor-pointer">600</Label>
-                            </div>
-                          </div>
-                        </RadioGroup>
+                        <div className="flex flex-wrap gap-3">
+                          <Button
+                            variant="outline"
+                            onClick={() => setCustomDPI("300")}
+                            className={
+                              customDPI === "300"
+                                ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
+                                : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4"
+                            }
+                            data-testid="dpi-300"
+                          >
+                            300
+                          </Button>
+                          <Button
+                            variant="outline"
+                            onClick={() => setCustomDPI("600")}
+                            className={
+                              customDPI === "600"
+                                ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
+                                : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4"
+                            }
+                            data-testid="dpi-600"
+                          >
+                            600
+                          </Button>
+                        </div>
                       </div>
 
-                      {/* Background - Radio Group with Color Preview */}
+                      {/* Background - Square Color Blocks */}
                       <div>
-                        <label className="block text-sm font-bold text-gray-900 mb-2">
+                        <label className="block text-sm font-bold text-gray-900 mb-3">
                           Background
                         </label>
-                        <RadioGroup value={customBgColor} onValueChange={setCustomBgColor} data-testid="radio-group-background">
-                          <div className="flex gap-4">
-                            {idPhotoSpecs.common.backgroundColors.map((bgColor) => (
-                              <div key={bgColor.name} className="flex items-center space-x-2">
-                                <RadioGroupItem 
-                                  value={bgColor.name} 
-                                  id={`bg-${bgColor.name.toLowerCase()}`} 
-                                  data-testid={`radio-bg-${bgColor.name.toLowerCase()}`}
-                                />
-                                <Label 
-                                  htmlFor={`bg-${bgColor.name.toLowerCase()}`} 
-                                  className="cursor-pointer flex items-center gap-2"
-                                >
-                                  <span 
-                                    className="w-4 h-4 rounded border border-gray-300" 
-                                    style={{ backgroundColor: bgColor.hex }}
-                                  />
-                                  {bgColor.name}
-                                </Label>
-                              </div>
-                            ))}
-                          </div>
-                        </RadioGroup>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => setCustomBgColor("White")}
+                            className={`w-12 h-12 rounded-md transition-all ring-2 ring-inset p-0.5 ${
+                              customBgColor === "White"
+                                ? "ring-4 ring-primary"
+                                : "ring-gray-300 hover:ring-4 hover:ring-primary"
+                            }`}
+                            data-testid="bg-white"
+                            title="White"
+                          >
+                            <div className="w-full h-full rounded-sm" style={{ backgroundColor: '#FFFFFF', border: '1px solid #e5e7eb' }}></div>
+                          </button>
+                          <button
+                            onClick={() => setCustomBgColor("Blue")}
+                            className={`w-12 h-12 rounded-md transition-all ring-2 ring-inset p-0.5 ${
+                              customBgColor === "Blue"
+                                ? "ring-4 ring-primary"
+                                : "ring-gray-300 hover:ring-4 hover:ring-primary"
+                            }`}
+                            data-testid="bg-blue"
+                            title="Blue"
+                          >
+                            <div className="w-full h-full rounded-sm" style={{ backgroundColor: '#438EDB' }}></div>
+                          </button>
+                          <button
+                            onClick={() => setCustomBgColor("Red")}
+                            className={`w-12 h-12 rounded-md transition-all ring-2 ring-inset p-0.5 ${
+                              customBgColor === "Red"
+                                ? "ring-4 ring-primary"
+                                : "ring-gray-300 hover:ring-4 hover:ring-primary"
+                            }`}
+                            data-testid="bg-red"
+                            title="Red"
+                          >
+                            <div className="w-full h-full rounded-sm" style={{ backgroundColor: '#FF0000' }}></div>
+                          </button>
+                        </div>
                       </div>
 
-                      {/* File Format - Radio Group */}
+                      {/* File Format - Button Options */}
                       <div>
-                        <label className="block text-sm font-bold text-gray-900 mb-2">
+                        <label className="block text-sm font-bold text-gray-900 mb-3">
                           File Format
                         </label>
-                        <RadioGroup value={customFileFormat} onValueChange={setCustomFileFormat} data-testid="radio-group-format">
-                          <div className="flex gap-4">
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem value="JPG" id="format-jpg" data-testid="radio-format-jpg" />
-                              <Label htmlFor="format-jpg" className="cursor-pointer">JPG</Label>
-                            </div>
-                            <div className="flex items-center space-x-2">
-                              <RadioGroupItem value="PNG" id="format-png" data-testid="radio-format-png" />
-                              <Label htmlFor="format-png" className="cursor-pointer">PNG</Label>
-                            </div>
-                          </div>
-                        </RadioGroup>
+                        <div className="flex flex-wrap gap-3">
+                          <Button
+                            variant="outline"
+                            onClick={() => setCustomFileFormat("JPG")}
+                            className={
+                              customFileFormat === "JPG"
+                                ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
+                                : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4"
+                            }
+                            data-testid="format-jpg"
+                          >
+                            JPG
+                          </Button>
+                          <Button
+                            variant="outline"
+                            onClick={() => setCustomFileFormat("PNG")}
+                            className={
+                              customFileFormat === "PNG"
+                                ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
+                                : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4"
+                            }
+                            data-testid="format-png"
+                          >
+                            PNG
+                          </Button>
+                        </div>
                       </div>
 
                       {/* Calculated Pixel Dimensions - Read-only */}
@@ -682,7 +728,7 @@ export default function Upload() {
                         <label className="block text-sm font-bold text-gray-900 mb-2">
                           Pixel Dimensions
                         </label>
-                        <span className="text-sm font-medium text-primary" data-testid="text-pixel-dimensions">
+                        <span className="text-sm font-medium text-gray-900" data-testid="text-pixel-dimensions">
                           {(() => {
                             // Convert label to size string for calculation
                             const photoSize = findPhotoSizeByLabel(customSize);
