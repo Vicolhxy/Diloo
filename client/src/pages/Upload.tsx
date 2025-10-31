@@ -971,37 +971,39 @@ export default function Upload() {
                     </div>
                   </div>
 
-                  {/* Hand Pose - Only show when "Above waist" is selected */}
-                  {selectedComposition === "above-waist" && (
-                    <div>
-                      <label className="block text-sm font-bold text-gray-900 mb-3">
-                        Hand Pose
-                      </label>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                        {handPoses.map((pose) => (
-                          <Button
-                            key={pose.value}
-                            variant="outline"
-                            onClick={() => {
-                              if (selectedHandPose === pose.value) {
-                                setSelectedHandPose(null);
-                              } else {
-                                setSelectedHandPose(pose.value);
-                              }
-                            }}
-                            className={
-                              selectedHandPose === pose.value
-                                ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary"
-                                : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
+                  {/* Hand Pose - Always visible but disabled unless "Above Waist" is selected */}
+                  <div>
+                    <label className="block text-sm font-bold text-gray-900 mb-1">
+                      Hand Pose
+                    </label>
+                    <p className="text-xs text-gray-500 mb-3">
+                      Only available when 'Above Waist' is selected
+                    </p>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {handPoses.map((pose) => (
+                        <Button
+                          key={pose.value}
+                          variant="outline"
+                          disabled={selectedComposition !== "above-waist"}
+                          onClick={() => {
+                            if (selectedHandPose === pose.value) {
+                              setSelectedHandPose(null);
+                            } else {
+                              setSelectedHandPose(pose.value);
                             }
-                            data-testid={`hand-pose-${pose.value}`}
-                          >
-                            {pose.label}
-                          </Button>
-                        ))}
-                      </div>
+                          }}
+                          className={
+                            selectedHandPose === pose.value
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
+                          }
+                          data-testid={`hand-pose-${pose.value}`}
+                        >
+                          {pose.label}
+                        </Button>
+                      ))}
                     </div>
-                  )}
+                  </div>
 
                   {/* Eye Direction */}
                   <div>
