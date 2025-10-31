@@ -731,7 +731,7 @@ export default function Upload() {
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Suit Color
                     </label>
-                    <TooltipProvider delayDuration={0}>
+                    <TooltipProvider delayDuration={0} skipDelayDuration={0}>
                       <div className="flex flex-nowrap gap-2 overflow-x-auto pb-2">
                         {suitColors.map((color) => {
                           const colorButton = (
@@ -786,7 +786,7 @@ export default function Upload() {
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Shirt Color
                     </label>
-                    <TooltipProvider delayDuration={0}>
+                    <TooltipProvider delayDuration={0} skipDelayDuration={0}>
                       <div className="flex gap-2">
                         {shirtColors.map((color) => {
                           const colorButton = (
@@ -841,7 +841,7 @@ export default function Upload() {
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Neck Tie
                     </label>
-                    <TooltipProvider delayDuration={0}>
+                    <TooltipProvider delayDuration={0} skipDelayDuration={0}>
                       <div className="flex gap-2">
                         {neckTies.map((tie) => {
                           const tieButton = (
