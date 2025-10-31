@@ -57,7 +57,18 @@ function getRandomElement<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-export default function StyleShowcase() {
+interface StyleShowcaseProps {
+  activeCategory: string;
+}
+
+// Map category ID to style ID
+const categoryToStyleMap: Record<string, string> = {
+  "pro-headshot": "1",
+  "id-photo": "2",
+  "social-avatar": "3",
+};
+
+export default function StyleShowcase({ activeCategory }: StyleShowcaseProps) {
   // State for currently displayed 8 photos
   const [displayedPhotos, setDisplayedPhotos] = useState<typeof photoPool>(() => {
     // Randomly select 8 photos from the pool on initial load
@@ -226,7 +237,7 @@ export default function StyleShowcase() {
         </div>
 
         <div className="flex flex-col items-center gap-3 mt-6">
-          <Link href="/upload?style=3">
+          <Link href={`/upload?style=${categoryToStyleMap[activeCategory] || "1"}`}>
             <Button 
               size="lg"
               className="bg-primary text-black hover:bg-primary/90 font-normal"

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import CategoryNav from "@/components/CategoryNav";
@@ -10,12 +11,14 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 
 export default function Home() {
+  const [activeCategory, setActiveCategory] = useState("pro-headshot");
+
   return (
     <div className="min-h-screen w-full bg-white">
       <Navigation />
       <HeroSection />
-      <CategoryNav />
-      <StyleShowcase />
+      <CategoryNav activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
+      <StyleShowcase activeCategory={activeCategory} />
       
       <HowItWorks />
       <WhyChooseUs />

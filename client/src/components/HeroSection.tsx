@@ -19,7 +19,7 @@ export default function HeroSection() {
             Always on trend.
           </h1>
           <div className="mt-8">
-            <Link href="/upload?style=3">
+            <Link href="/upload?style=1">
               <Button 
                 size="lg"
                 className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 min-h-10 rounded-md px-8 bg-primary text-black hover:bg-primary/90 font-normal"

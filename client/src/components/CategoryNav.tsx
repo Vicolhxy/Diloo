@@ -1,13 +1,15 @@
-import { useState } from "react";
-
 const categories = [
   { id: "pro-headshot", label: "Pro Headshot" },
   { id: "id-photo", label: "ID Photo" },
   { id: "social-avatar", label: "Social Avatar Decors" },
 ];
 
-export default function CategoryNav() {
-  const [activeCategory, setActiveCategory] = useState("pro-headshot");
+interface CategoryNavProps {
+  activeCategory: string;
+  setActiveCategory: (category: string) => void;
+}
+
+export default function CategoryNav({ activeCategory, setActiveCategory }: CategoryNavProps) {
 
   return (
     <div className="w-full bg-gray-50" data-testid="category-nav">
