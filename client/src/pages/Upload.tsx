@@ -282,6 +282,11 @@ export default function Upload() {
   const primaryInputRef = useRef<HTMLInputElement>(null);
   const optionalInputRef = useRef<HTMLInputElement>(null);
 
+  // Scroll to top on page load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { styleId } = useMemo(() => {
     const params = new URLSearchParams(searchString);
     const styleId = params.get('style') || "1";

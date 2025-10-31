@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import CategoryNav from "@/components/CategoryNav";
@@ -12,6 +12,10 @@ import { Link } from "wouter";
 
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState("pro-headshot");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen w-full bg-white">
