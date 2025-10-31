@@ -88,3 +88,10 @@ The platform features a custom color palette centered around teal (#25ced1), wit
   - All have default light gray border (border-2 border-gray-300)
   - Unified padding: 16px (p-4) across all text options
   - Auto-width layout: flex flex-wrap allows width to adapt to text length
+- **Hover Preview Tooltips** (October 31, 2025 - Latest Update):
+  - **Suit Color**: All 12 colors display hover preview with 490px width showing male and female suit versions
+  - **Shirt Color**: All 6 colors display hover preview with 490px width showing male and female shirt versions
+  - **Neck Tie**: 6 color options display hover preview (300px height) showing full tie appearance; "None" option excluded
+  - All tooltips set to `delayDuration={0}` for instant display on hover
+  - Preview images include color name labels for user reference
+  - Implemented using shadcn Tooltip component with TooltipProvider, TooltipTrigger, and TooltipContent
