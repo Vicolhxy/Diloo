@@ -61,13 +61,6 @@ import shirtLightPink from "@assets/Headshot-Customized-ShirtColorThumbnail-Ligh
 import shirtIvory from "@assets/Headshot-Customized-ShirtColorThumbnail-Ivory_1761856108984.png";
 import shirtSoftBeige from "@assets/Headshot-Customized-ShirtColorThumbnail-SoftBeige_1761856108985.png";
 
-// Import tie color thumbnails
-import tieNavy from "@assets/Headshot-Customized-TieColorThumbnail-Navy_1761856179158.png";
-import tieBurgundy from "@assets/Headshot-Customized-TieColorThumbnail-Burgundy_1761856179160.png";
-import tieCharcoal from "@assets/Headshot-Customized-TieColorThumbnail-Charcoal_1761856179159.png";
-import tieBlack from "@assets/Headshot-Customized-TieColorThumbnail-Black_1761856179152.png";
-import tieSilver from "@assets/Headshot-Customized-TieColorThumbnail-Silver_1761856179159.png";
-import tieStriped from "@assets/Headshot-Customized-TieColorThumbnail-Striped_1761856179158.png";
 
 // Import background thumbnails
 import bgSilverGrey from "@assets/Headshot-Customized-BgColor-SilverGreyGradient_1761878132208.png";
