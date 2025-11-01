@@ -2,6 +2,7 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import { Link, useSearch } from "wouter";
 import { User, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -779,30 +780,37 @@ export default function Upload() {
                     </label>
                     <TooltipProvider delayDuration={0} skipDelayDuration={0}>
                       <div className="flex flex-nowrap gap-2 overflow-x-auto pb-2">
-                        {suitColors.map((color) => {
+                        {suitColors.map((color, index) => {
                           const colorButton = (
-                            <button
-                              onClick={() => {
-                                if (selectedSuitColor === color.id) {
-                                  setSelectedSuitColor(null);
-                                } else {
-                                  setSelectedSuitColor(color.id);
-                                }
-                              }}
-                              className={`flex-shrink-0 rounded-full transition-all ring-2 ring-inset p-0.5 ${
-                                selectedSuitColor === color.id
-                                  ? "ring-4 ring-primary"
-                                  : "ring-gray-300 hover:ring-4 hover:ring-primary"
-                              }`}
-                              data-testid={`suit-color-${color.id}`}
-                              title={color.previewImage ? undefined : color.name}
-                            >
-                              <img 
-                                src={color.image} 
-                                alt={color.name}
-                                className="w-11 h-11 rounded-full"
-                              />
-                            </button>
+                            <div className="relative flex-shrink-0">
+                              <button
+                                onClick={() => {
+                                  if (selectedSuitColor === color.id) {
+                                    setSelectedSuitColor(null);
+                                  } else {
+                                    setSelectedSuitColor(color.id);
+                                  }
+                                }}
+                                className={`rounded-full transition-all ring-2 ring-inset p-0.5 ${
+                                  selectedSuitColor === color.id
+                                    ? "ring-4 ring-primary"
+                                    : "ring-gray-300 hover:ring-4 hover:ring-primary"
+                                }`}
+                                data-testid={`suit-color-${color.id}`}
+                                title={color.previewImage ? undefined : color.name}
+                              >
+                                <img 
+                                  src={color.image} 
+                                  alt={color.name}
+                                  className="w-11 h-11 rounded-full"
+                                />
+                              </button>
+                              {index === 0 && (
+                                <Badge className="absolute -top-1 -right-1 bg-green-500 text-white text-[10px] px-1.5 py-0 h-4 hover:bg-green-500">
+                                  Free
+                                </Badge>
+                              )}
+                            </div>
                           );
 
                           return (
