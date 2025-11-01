@@ -22,23 +22,23 @@ import b2Img from "@assets/B2_1761159011571.png";
 import w3Img from "@assets/W3_1761159011572.png";
 import i1Img from "@assets/I1_1761159011573.png";
 
-// Import 16 professional headshot photos for Pro Headshot carousel
-import female01 from "@assets/female-01.png";
-import female02 from "@assets/female-02.png";
-import female03 from "@assets/female-03.png";
-import female04 from "@assets/female-04.png";
-import female05 from "@assets/female-05.png";
-import female06 from "@assets/female-06.png";
-import female07 from "@assets/female-07.png";
-import female08 from "@assets/female-08.png";
-import male01 from "@assets/male-01.png";
-import male02 from "@assets/male-02.png";
-import male03 from "@assets/male-03.png";
-import male04 from "@assets/male-04.png";
-import male05 from "@assets/male-05.png";
-import male06 from "@assets/male-06.png";
-import male07 from "@assets/male-07.png";
-import male08 from "@assets/male-08.png";
+// Import 16 professional headshot photos for Pro Headshot carousel (optimized)
+import female01 from "@assets/Sample-headshot-female-01_1762008889169.png";
+import female02 from "@assets/Sample-headshot-female-02_1762008889166.png";
+import female03 from "@assets/Sample-headshot-female-03_1762008889165.png";
+import female04 from "@assets/Sample-headshot-female-04_1762008889163.png";
+import female05 from "@assets/Sample-headshot-female-05_1762008889156.png";
+import female06 from "@assets/Sample-headshot-female-06_1762008889158.png";
+import female07 from "@assets/Sample-headshot-female-07_1762008889153.png";
+import female08 from "@assets/Sample-headshot-female-08_1762008889154.png";
+import male01 from "@assets/Sample-headshot-male-01_1762008889170.png";
+import male02 from "@assets/Sample-headshot-male-02_1762008889168.png";
+import male03 from "@assets/Sample-headshot-male-03_1762008889168.png";
+import male04 from "@assets/Sample-headshot-male-04_1762008889165.png";
+import male05 from "@assets/Sample-headshot-male-05_1762008889162.png";
+import male06 from "@assets/Sample-headshot-male-06_1762008889159.png";
+import male07 from "@assets/Sample-headshot-male-07_1762008889155.png";
+import male08 from "@assets/Sample-headshot-male-08_1762008889149.png";
 
 // Import suit color thumbnails
 import suitCharcoal from "@assets/Headshot-Customized-SuitColorThumbnail-Charcoal_1761856108986.png";
