@@ -1,6 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link, useSearch, useLocation } from "wouter";
-import { ChevronLeft, CheckCircle2, XCircle, Loader2 } from "lucide-react";
+import { ChevronLeft, CheckCircle2, XCircle, Loader2, Trash2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -158,6 +158,25 @@ export default function Checkout() {
   const [pageState, setPageState] = useState<PageState>('checkout');
   const [userEmail, setUserEmail] = useState<string>("");
   const [emailInput, setEmailInput] = useState<string>("");
+  const [isPhotoLoading, setIsPhotoLoading] = useState<boolean>(true);
+  const [showSparkle, setShowSparkle] = useState<boolean>(false);
+
+  // Auto-scroll to top when entering checkout page
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Simulate photo generation loading (3 seconds)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPhotoLoading(false);
+      setShowSparkle(true);
+      // Hide sparkle effect after animation completes
+      setTimeout(() => setShowSparkle(false), 1000);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const {
     suitFabric,
@@ -277,7 +296,7 @@ export default function Checkout() {
       <div className="min-h-screen w-full bg-gray-50">
         <Navigation />
         
-        <div className="pt-24 pb-12 px-6 md:px-12">
+        <div className="pt-12 pb-12 px-6 md:px-12">
           <div className="container mx-auto max-w-7xl">
             <Link href="/upload" data-testid="link-back-upload">
               <div className="flex items-center gap-2 text-gray-700 hover:text-gray-900 mb-8 cursor-pointer w-fit">
@@ -293,35 +312,73 @@ export default function Checkout() {
                   <h2 className="text-xl font-semibold mb-6 text-gray-900">Your Generated Photo</h2>
                   
                   {/* Photo with Improved Watermark */}
-                  <div className="relative aspect-[3/4] rounded-xl overflow-hidden">
-                    {/* Actual Generated Photo */}
-                    <img 
-                      src={selectedStyleImage} 
-                      alt="Generated AI Photo Preview" 
-                      className="w-full h-full object-cover"
-                      data-testid="img-generated-photo"
-                    />
-                    
-                    {/* Improved Diagonal Watermark Matrix - Less Dense, Better Coverage */}
-                    <div className="absolute inset-0 pointer-events-none">
-                      {Array.from({ length: 12 }).map((_, i) => {
-                        const row = Math.floor(i / 3);
-                        const col = i % 3;
-                        return (
-                          <div
-                            key={i}
-                            className="absolute text-white text-5xl font-bold opacity-20 select-none whitespace-nowrap"
-                            style={{
-                              top: `${row * 25}%`,
-                              left: `${col * 33}%`,
-                              transform: 'rotate(-45deg)',
-                            }}
-                          >
-                            Diloo
+                  <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-gray-100">
+                    {isPhotoLoading ? (
+                      /* Loading State */
+                      <div className="w-full h-full flex flex-col items-center justify-center">
+                        <Loader2 className="w-12 h-12 text-primary animate-spin mb-4" />
+                        <p className="text-sm text-gray-600">Generating your photo...</p>
+                      </div>
+                    ) : (
+                      <>
+                        {/* Actual Generated Photo */}
+                        <img 
+                          src={selectedStyleImage} 
+                          alt="Generated AI Photo Preview" 
+                          className="w-full h-full object-cover"
+                          data-testid="img-generated-photo"
+                        />
+                        
+                        {/* Improved Diagonal Watermark Matrix - Less Dense, Better Coverage */}
+                        <div className="absolute inset-0 pointer-events-none">
+                          {Array.from({ length: 12 }).map((_, i) => {
+                            const row = Math.floor(i / 3);
+                            const col = i % 3;
+                            return (
+                              <div
+                                key={i}
+                                className="absolute text-white text-5xl font-bold opacity-20 select-none whitespace-nowrap"
+                                style={{
+                                  top: `${row * 25}%`,
+                                  left: `${col * 33}%`,
+                                  transform: 'rotate(-45deg)',
+                                }}
+                              >
+                                Diloo
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        {/* Sparkle Effect on Photo Reveal */}
+                        {showSparkle && (
+                          <div className="absolute inset-0 pointer-events-none">
+                            {/* Center sparkle */}
+                            <Sparkles 
+                              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 text-yellow-400 animate-pulse"
+                              style={{ animation: 'pulse 0.5s ease-in-out' }}
+                            />
+                            {/* Corner sparkles */}
+                            <Sparkles 
+                              className="absolute top-8 left-8 w-8 h-8 text-yellow-300 animate-ping"
+                              style={{ animation: 'ping 0.6s ease-in-out' }}
+                            />
+                            <Sparkles 
+                              className="absolute top-8 right-8 w-8 h-8 text-yellow-300 animate-ping"
+                              style={{ animation: 'ping 0.7s ease-in-out' }}
+                            />
+                            <Sparkles 
+                              className="absolute bottom-8 left-8 w-8 h-8 text-yellow-300 animate-ping"
+                              style={{ animation: 'ping 0.8s ease-in-out' }}
+                            />
+                            <Sparkles 
+                              className="absolute bottom-8 right-8 w-8 h-8 text-yellow-300 animate-ping"
+                              style={{ animation: 'ping 0.9s ease-in-out' }}
+                            />
                           </div>
-                        );
-                      })}
-                    </div>
+                        )}
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -529,11 +586,11 @@ export default function Checkout() {
                                   <button
                                     type="button"
                                     onClick={() => removeOption('composition')}
-                                    className="text-gray-400 hover:text-red-600 text-lg"
+                                    className="text-red-500 hover:text-red-700 transition-colors"
                                     aria-label="Remove composition"
                                     data-testid="button-remove-composition"
                                   >
-                                    ×
+                                    <Trash2 className="w-4 h-4" />
                                   </button>
                                 </div>
                                 <span className="font-medium text-gray-900">CAD $0.50</span>
@@ -547,11 +604,11 @@ export default function Checkout() {
                                   <button
                                     type="button"
                                     onClick={() => removeOption('handPose')}
-                                    className="text-gray-400 hover:text-red-600 text-lg"
+                                    className="text-red-500 hover:text-red-700 transition-colors"
                                     aria-label="Remove hand pose"
                                     data-testid="button-remove-handPose"
                                   >
-                                    ×
+                                    <Trash2 className="w-4 h-4" />
                                   </button>
                                 </div>
                                 <span className="font-medium text-gray-900">CAD $0.50</span>
@@ -565,11 +622,11 @@ export default function Checkout() {
                                   <button
                                     type="button"
                                     onClick={() => removeOption('eyeDirection')}
-                                    className="text-gray-400 hover:text-red-600 text-lg"
+                                    className="text-red-500 hover:text-red-700 transition-colors"
                                     aria-label="Remove eye direction"
                                     data-testid="button-remove-eyeDirection"
                                   >
-                                    ×
+                                    <Trash2 className="w-4 h-4" />
                                   </button>
                                 </div>
                                 <span className="font-medium text-gray-900">CAD $0.50</span>
@@ -583,11 +640,11 @@ export default function Checkout() {
                                   <button
                                     type="button"
                                     onClick={() => removeOption('expression')}
-                                    className="text-gray-400 hover:text-red-600 text-lg"
+                                    className="text-red-500 hover:text-red-700 transition-colors"
                                     aria-label="Remove expression"
                                     data-testid="button-remove-expression"
                                   >
-                                    ×
+                                    <Trash2 className="w-4 h-4" />
                                   </button>
                                 </div>
                                 <span className="font-medium text-gray-900">CAD $0.50</span>
