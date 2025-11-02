@@ -21,19 +21,19 @@ export default function HeroSection() {
 
           <div className="flex flex-wrap gap-4 mb-8">
             <div className="bg-white border-2 border-gray-200 rounded-md p-4 min-w-[140px]" data-testid="card-stats-styles">
-              <div className="text-3xl font-bold text-black mb-1">3+</div>
+              <div className="font-bold text-black mb-1 text-[24px]">3+</div>
               <div className="text-sm font-semibold text-black mb-1">Styles</div>
               <div className="text-xs text-gray-600">Less, but better</div>
             </div>
 
             <div className="bg-white border-2 border-gray-200 rounded-md p-4 min-w-[140px]" data-testid="card-stats-settings">
-              <div className="text-3xl font-bold text-black mb-1">18+</div>
+              <div className="font-bold text-black mb-1 text-[24px]">18+</div>
               <div className="text-sm font-semibold text-black mb-1">Settings</div>
               <div className="text-xs text-gray-600">All you want</div>
             </div>
 
             <div className="bg-white border-2 border-gray-200 rounded-md p-4 min-w-[140px]" data-testid="card-stats-users">
-              <div className="text-3xl font-bold text-black mb-1">200+</div>
+              <div className="font-bold text-black mb-1 text-[24px]">200+</div>
               <div className="text-sm font-semibold text-black mb-1">Users</div>
               <div className="text-xs text-gray-600">5-star rates</div>
             </div>
