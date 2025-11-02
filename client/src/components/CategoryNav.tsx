@@ -13,7 +13,7 @@ export default function CategoryNav({ activeCategory, setActiveCategory }: Categ
 
   return (
     <div className="w-full bg-gray-50" data-testid="category-nav">
-      <div className="container mx-auto px-6 md:px-12 max-w-7xl py-4">
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl py-4 mt-[20px] mb-[20px] pt-[0px] pb-[0px]">
         <div className="flex flex-wrap items-center gap-3">
           {categories.map((category) => (
             <button
