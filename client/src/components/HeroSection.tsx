@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
-import bannerImg from "@assets/Banner_1761159003003.png";
+import bannerImg from "@assets/banner_1762115202011.png";
 
 export default function HeroSection() {
   return (
@@ -9,25 +7,36 @@ export default function HeroSection() {
       style={{backgroundImage: `url(${bannerImg})`}}
       data-testid="hero-section"
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent"></div>
-      
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
-        <div className="max-w-xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4" data-testid="text-hero-title">
-            Expert-crafted AI styles.
+        <div className="max-w-2xl">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight mb-4" data-testid="text-hero-title">
+            Choose your style.
             <br />
-            Always on trend.
+            Customize every detail.
           </h1>
-          <div className="mt-8">
-            <Link href="/upload?style=1">
-              <Button 
-                size="lg"
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover-elevate active-elevate-2 min-h-10 rounded-md px-8 bg-primary text-black hover:bg-primary/90 font-normal"
-                data-testid="button-hero-create-now"
-              >
-                Create Now
-              </Button>
-            </Link>
+          
+          <p className="text-base md:text-lg text-gray-700 mb-8" data-testid="text-hero-caption">
+            AI-powered photo creation with full professional control.
+          </p>
+
+          <div className="flex flex-wrap gap-4 mb-8">
+            <div className="bg-white border-2 border-gray-200 rounded-md p-4 min-w-[140px]" data-testid="card-stats-styles">
+              <div className="text-3xl font-bold text-black mb-1">3+</div>
+              <div className="text-sm font-semibold text-black mb-1">Styles</div>
+              <div className="text-xs text-gray-600">Less, but better</div>
+            </div>
+
+            <div className="bg-white border-2 border-gray-200 rounded-md p-4 min-w-[140px]" data-testid="card-stats-settings">
+              <div className="text-3xl font-bold text-black mb-1">18+</div>
+              <div className="text-sm font-semibold text-black mb-1">Settings</div>
+              <div className="text-xs text-gray-600">All you want</div>
+            </div>
+
+            <div className="bg-white border-2 border-gray-200 rounded-md p-4 min-w-[140px]" data-testid="card-stats-users">
+              <div className="text-3xl font-bold text-black mb-1">200+</div>
+              <div className="text-sm font-semibold text-black mb-1">Users</div>
+              <div className="text-xs text-gray-600">5-star rates</div>
+            </div>
           </div>
         </div>
       </div>
