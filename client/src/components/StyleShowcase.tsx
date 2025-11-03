@@ -20,6 +20,12 @@ import male06 from "@assets/Sample-headshot-male-06_1762008889159.png";
 import male07 from "@assets/Sample-headshot-male-07_1762008889155.png";
 import male08 from "@assets/Sample-headshot-male-08_1762008889149.png";
 
+// Import ID Photo samples and background
+import idSample01 from "@assets/Sample-ID-01_1762195385633.png";
+import idSample02 from "@assets/Sample-ID-02_1762195385661.png";
+import idSample03 from "@assets/Sample-ID-03_1762195385660.png";
+import idSampleBg from "@assets/IdSample-BG_1762195402922.png";
+
 // Define the photo pool with all 16 photos
 const photoPool = [
   { id: 1, image: female01, alt: "Professional female headshot 1", gender: "female" },
@@ -41,6 +47,31 @@ const photoPool = [
 ];
 
 type Photo = typeof photoPool[0];
+
+// Define ID Photo card data
+const idPhotoCards = [
+  {
+    id: 1,
+    documentType: "Driver's License",
+    countryEmoji: "🇨🇦",
+    sampleImage: idSample01,
+    alt: "ID Photo Sample - Driver's License"
+  },
+  {
+    id: 2,
+    documentType: "Passport",
+    countryEmoji: "🇺🇸",
+    sampleImage: idSample02,
+    alt: "ID Photo Sample - Passport"
+  },
+  {
+    id: 3,
+    documentType: "Visa",
+    countryEmoji: "🇪🇺",
+    sampleImage: idSample03,
+    alt: "ID Photo Sample - Visa"
+  }
+];
 
 // Helper function to shuffle array using Fisher-Yates algorithm
 function shuffleArray<T>(array: T[]): T[] {
@@ -210,32 +241,84 @@ export default function StyleShowcase({ activeCategory }: StyleShowcaseProps) {
   return (
     <section className="w-full bg-gray-50 pt-3 pb-12 md:pt-4 md:pb-16" data-testid="style-showcase">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
-          {displayedPhotos.map((photo, index) => (
-            <div
-              key={`${photo.id}-${index}`}
-              className="aspect-[3/4] rounded-2xl overflow-hidden shadow-md relative"
-              data-testid={`card-style-${index + 1}`}
-            >
-              {/* Current photo */}
-              <img
-                src={photo.image}
-                alt={photo.alt}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              
-              {/* Next photo (slides up from bottom) */}
-              {nextPhotos[index] && (
+        {/* Conditional rendering based on activeCategory */}
+        {activeCategory === "id-photo" ? (
+          // ID Photo: 3 horizontal cards layout
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {idPhotoCards.map((card) => (
+              <div
+                key={card.id}
+                className="relative rounded-2xl overflow-hidden shadow-md"
+                style={{
+                  backgroundImage: `url(${idSampleBg})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  aspectRatio: '1.6'
+                }}
+                data-testid={`card-id-photo-${card.id}`}
+              >
+                <div className="absolute inset-0 flex items-center justify-between p-6">
+                  {/* Left side: Document type and country emoji */}
+                  <div className="flex flex-col justify-center gap-2 flex-shrink-0">
+                    <p 
+                      className="font-bold text-gray-900 leading-tight"
+                      style={{ fontFamily: 'Hanuman, serif', fontSize: '18px' }}
+                      data-testid={`text-document-type-${card.id}`}
+                    >
+                      {card.documentType}
+                    </p>
+                    <p 
+                      className="leading-none"
+                      style={{ fontSize: '56px' }}
+                      data-testid={`text-country-emoji-${card.id}`}
+                    >
+                      {card.countryEmoji}
+                    </p>
+                  </div>
+                  
+                  {/* Right side: Sample photo */}
+                  <div className="flex-shrink-0">
+                    <img
+                      src={card.sampleImage}
+                      alt={card.alt}
+                      className="h-40 w-auto object-cover rounded-lg"
+                      data-testid={`img-sample-${card.id}`}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          // Pro Headshot & Social Avatar: Original carousel layout
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
+            {displayedPhotos.map((photo, index) => (
+              <div
+                key={`${photo.id}-${index}`}
+                className="aspect-[3/4] rounded-2xl overflow-hidden shadow-md relative"
+                data-testid={`card-style-${index + 1}`}
+              >
+                {/* Current photo */}
                 <img
-                  src={nextPhotos[index]!.image}
-                  alt={nextPhotos[index]!.alt}
-                  className="absolute inset-0 w-full h-full object-cover slide-up-animation"
+                  src={photo.image}
+                  alt={photo.alt}
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
-              )}
-            </div>
-          ))}
-        </div>
+                
+                {/* Next photo (slides up from bottom) */}
+                {nextPhotos[index] && (
+                  <img
+                    src={nextPhotos[index]!.image}
+                    alt={nextPhotos[index]!.alt}
+                    className="absolute inset-0 w-full h-full object-cover slide-up-animation"
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        )}
 
+        {/* Common CTA section for all categories */}
         <div className="flex flex-col items-center gap-3 mt-6">
           <Link href={`/upload?style=${categoryToStyleMap[activeCategory] || "1"}`}>
             <Button 
