@@ -251,25 +251,26 @@ export default function StyleShowcase({ activeCategory }: StyleShowcaseProps) {
                 className="relative rounded-2xl overflow-hidden shadow-md"
                 style={{
                   backgroundImage: `url(${idSampleBg})`,
-                  backgroundSize: 'cover',
+                  backgroundSize: '100% 100%',
                   backgroundPosition: 'center',
-                  aspectRatio: '1.6'
+                  backgroundRepeat: 'no-repeat',
+                  aspectRatio: '1.586'
                 }}
                 data-testid={`card-id-photo-${card.id}`}
               >
-                <div className="absolute inset-0 flex items-center justify-between p-6">
+                <div className="absolute inset-0 flex items-center justify-between px-6">
                   {/* Left side: Document type and country emoji */}
-                  <div className="flex flex-col justify-center gap-2 flex-shrink-0">
+                  <div className="flex flex-col justify-center gap-2 flex-shrink-0" style={{ marginTop: '-16px' }}>
                     <p 
                       className="font-bold text-gray-900 leading-tight"
-                      style={{ fontFamily: 'Hanuman, serif', fontSize: '18px' }}
+                      style={{ fontFamily: 'Hanuman, serif', fontSize: '16px' }}
                       data-testid={`text-document-type-${card.id}`}
                     >
                       {card.documentType}
                     </p>
                     <p 
                       className="leading-none"
-                      style={{ fontSize: '56px' }}
+                      style={{ fontSize: '48px' }}
                       data-testid={`text-country-emoji-${card.id}`}
                     >
                       {card.countryEmoji}
@@ -277,11 +278,11 @@ export default function StyleShowcase({ activeCategory }: StyleShowcaseProps) {
                   </div>
                   
                   {/* Right side: Sample photo */}
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 flex items-center" style={{ height: 'calc(100% - 20px)' }}>
                     <img
                       src={card.sampleImage}
                       alt={card.alt}
-                      className="h-40 w-auto object-cover rounded-lg"
+                      className="h-full w-auto object-cover rounded-lg"
                       data-testid={`img-sample-${card.id}`}
                     />
                   </div>
