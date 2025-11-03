@@ -20,22 +20,22 @@ export default function HeroSection() {
           </p>
 
           <div className="flex flex-wrap gap-4 mb-8">
-            <div className="bg-white border-2 border-gray-200 rounded-md p-4 min-w-[140px]" data-testid="card-stats-styles">
+            <div className="bg-white border-2 border-gray-200 rounded-md p-4" data-testid="card-stats-styles">
               <div className="font-bold text-black mb-1 text-[24px]">3+</div>
-              <div className="text-sm font-semibold text-black mb-1">Styles</div>
-              <div className="text-xs text-gray-600">Less, but better</div>
+              <div className="text-sm font-semibold text-black mb-1 whitespace-nowrap">Styles</div>
+              <div className="text-xs text-gray-600 whitespace-nowrap">Less, but better</div>
             </div>
 
-            <div className="bg-white border-2 border-gray-200 rounded-md p-4 min-w-[140px]" data-testid="card-stats-settings">
+            <div className="bg-white border-2 border-gray-200 rounded-md p-4" data-testid="card-stats-settings">
               <div className="font-bold text-black mb-1 text-[24px]">18+</div>
-              <div className="text-sm font-semibold text-black mb-1">Settings</div>
-              <div className="text-xs text-gray-600">All you want</div>
+              <div className="text-sm font-semibold text-black mb-1 whitespace-nowrap">Settings</div>
+              <div className="text-xs text-gray-600 whitespace-nowrap">All you want</div>
             </div>
 
-            <div className="bg-white border-2 border-gray-200 rounded-md p-4 min-w-[140px]" data-testid="card-stats-users">
+            <div className="bg-white border-2 border-gray-200 rounded-md p-4" data-testid="card-stats-users">
               <div className="font-bold text-black mb-1 text-[24px]">200+</div>
-              <div className="text-sm font-semibold text-black mb-1">Users</div>
-              <div className="text-xs text-gray-600">5-star rates</div>
+              <div className="text-sm font-semibold text-black mb-1 whitespace-nowrap">Users</div>
+              <div className="text-xs text-gray-600 whitespace-nowrap">5-star rates</div>
             </div>
           </div>
         </div>
