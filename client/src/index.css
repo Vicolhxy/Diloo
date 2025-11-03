@@ -79,7 +79,7 @@
   --font-sans: Inter, sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
-  --font-heading: Hanuman, serif;
+  --font-heading: Hahmlet, serif;
   --radius: .5rem;
   --shadow-2xs: 0px 2px 0px 0px hsl(240 5% 15% / 0.02);
   --shadow-xs: 0px 2px 0px 0px hsl(240 5% 15% / 0.03);
@@ -240,10 +240,6 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
-  }
-
-  h1, h2, h3, h4, h5, h6, button, nav a {
-    @apply font-heading;
   }
 }
 
