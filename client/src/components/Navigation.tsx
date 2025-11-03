@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import dilooLogoOriginal from "@assets/Diloo-logo-original_1761244957235.png";
+import dilooLogoLong from "@assets/Logo-long_1762134546709.png";
 
 export default function Navigation() {
   const [location] = useLocation();
@@ -12,9 +12,8 @@ export default function Navigation() {
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         <div className="flex items-center justify-between h-16">
           <Link href="/" data-testid="link-home-logo">
-            <div className="flex items-center gap-2 cursor-pointer hover-elevate rounded-lg px-3 py-2 -ml-3">
-              <img src={dilooLogoOriginal} alt="Diloo Logo" className="w-6 h-6" data-testid="img-logo-nav" />
-              <span className="text-gray-900 font-semibold text-lg hidden sm:inline">Diloo</span>
+            <div className="cursor-pointer hover-elevate rounded-lg px-3 py-2 -ml-3">
+              <img src={dilooLogoLong} alt="Diloo Logo" className="h-8" data-testid="img-logo-nav" />
             </div>
           </Link>
 
