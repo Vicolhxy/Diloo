@@ -240,21 +240,22 @@ export default function StyleShowcase({ activeCategory }: StyleShowcaseProps) {
 
   return (
     <section className="w-full bg-gray-50 pt-3 pb-12 md:pt-4 md:pb-16" data-testid="style-showcase">
-      <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+      <div className={activeCategory === "id-photo" ? "w-full px-6 md:px-12" : "container mx-auto px-6 md:px-12 max-w-7xl"}>
         {/* Conditional rendering based on activeCategory */}
         {activeCategory === "id-photo" ? (
-          // ID Photo: 3 horizontal cards layout
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          // ID Photo: 3 horizontal cards layout with fixed 520x270 size on desktop and responsive gaps
+          <div className="flex flex-wrap justify-center mb-8" style={{ gap: 'clamp(20px, calc((100vw - 1560px - 96px) / 2), 100px)' }}>
             {idPhotoCards.map((card) => (
               <div
                 key={card.id}
-                className="relative rounded-2xl overflow-hidden shadow-md"
+                className="relative rounded-2xl overflow-hidden shadow-md flex-shrink-0"
                 style={{
+                  width: 'min(520px, calc(100vw - 48px))',
+                  height: 'min(270px, calc((100vw - 48px) * 270 / 520))',
                   backgroundImage: `url(${idSampleBg})`,
-                  backgroundSize: '100% 100%',
+                  backgroundSize: 'cover',
                   backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat',
-                  aspectRatio: '1.586'
+                  backgroundRepeat: 'no-repeat'
                 }}
                 data-testid={`card-id-photo-${card.id}`}
               >
