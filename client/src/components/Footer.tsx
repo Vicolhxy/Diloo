@@ -12,7 +12,7 @@ export default function Footer() {
             </h3>
           </div>
           <p className="text-white/90 text-sm mb-6" data-testid="text-footer-slogan">
-            Expert-crafted AI styles. Always on trend.
+            Choose your style. Customize every detail.
           </p>
           <p className="text-white/80 text-sm" data-testid="text-footer-copyright">
             © 2025 Diloo. All rights reserved.
