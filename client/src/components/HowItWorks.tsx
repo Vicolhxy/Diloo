@@ -27,7 +27,7 @@ export default function HowItWorks() {
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4" style={{fontFamily: 'Hanuman, serif'}} data-testid="text-how-it-works-title">
-            How It Works
+            How Diloo Works
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto" data-testid="text-how-it-works-subtitle">
             Transform your photos into any artistic style within seconds
