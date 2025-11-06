@@ -281,6 +281,8 @@ export default function Upload() {
   
   const primaryInputRef = useRef<HTMLInputElement>(null);
   const optionalInputRef = useRef<HTMLInputElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [isTransitioning, setIsTransitioning] = useState(true);
 
   // Scroll to top on page load
   useEffect(() => {
@@ -343,22 +345,41 @@ export default function Upload() {
   // Use professional headshot images for Pro Headshot carousel, original images for other styles
   const otherStyleImages = [w1Img, y1Img, w2Img, b1Img, y2Img, b2Img, w3Img, i1Img];
   const styleSampleImages = styleId === "1" ? proHeadshotImages : otherStyleImages;
+  
+  // Create extended array with first image duplicated at end for seamless loop
+  const extendedImages = [...styleSampleImages, styleSampleImages[0]];
 
   // Reset carousel index when style changes
   useEffect(() => {
     setCurrentCarouselIndex(0);
+    setIsTransitioning(true);
   }, [styleId]);
+
+  // Handle seamless loop when reaching the duplicate image
+  useEffect(() => {
+    if (currentCarouselIndex === styleSampleImages.length) {
+      // We're at the duplicate, wait for transition to finish then jump to real first image
+      const timeout = setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentCarouselIndex(0);
+        // Re-enable transition after a brief moment
+        setTimeout(() => setIsTransitioning(true), 50);
+      }, 500); // Match the transition duration
+      
+      return () => clearTimeout(timeout);
+    }
+  }, [currentCarouselIndex, styleSampleImages.length]);
 
   // Auto-rotate carousel every 2 seconds, pause on hover
   useEffect(() => {
     if (isCarouselHovered) return;
     
     const interval = setInterval(() => {
-      setCurrentCarouselIndex((prev) => (prev + 1) % styleSampleImages.length);
+      setCurrentCarouselIndex((prev) => prev + 1);
     }, 2000);
     
     return () => clearInterval(interval);
-  }, [styleSampleImages.length, isCarouselHovered]);
+  }, [isCarouselHovered]);
 
   const handleImageUpload = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -393,14 +414,18 @@ export default function Upload() {
               >
                 <div className="aspect-[3/4] rounded-xl overflow-hidden bg-gray-100">
                   <div 
-                    className="flex h-full transition-transform duration-500 ease-in-out"
-                    style={{ transform: `translateX(-${currentCarouselIndex * 100}%)` }}
+                    ref={carouselRef}
+                    className="flex h-full"
+                    style={{ 
+                      transform: `translateX(-${currentCarouselIndex * 100}%)`,
+                      transition: isTransitioning ? 'transform 500ms ease-in-out' : 'none'
+                    }}
                   >
-                    {styleSampleImages.map((image, index) => (
+                    {extendedImages.map((image, index) => (
                       <img 
                         key={index}
                         src={image} 
-                        alt={`Sample photo ${index + 1}`}
+                        alt={`Sample photo ${(index % styleSampleImages.length) + 1}`}
                         className="w-full h-full object-cover flex-shrink-0"
                         data-testid={`img-sample-photo-${index}`}
                       />
@@ -410,19 +435,26 @@ export default function Upload() {
                 
                 {/* Dots indicator */}
                 <div className="flex justify-center gap-2 mt-4" data-testid="carousel-dots">
-                  {styleSampleImages.map((_: string, index: number) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentCarouselIndex(index)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        index === currentCarouselIndex 
-                          ? 'bg-primary w-6' 
-                          : 'bg-gray-300 hover:bg-gray-400'
-                      }`}
-                      data-testid={`carousel-dot-${index}`}
-                      aria-label={`Go to slide ${index + 1}`}
-                    />
-                  ))}
+                  {styleSampleImages.map((_: string, index: number) => {
+                    const isActive = index === currentCarouselIndex || 
+                                    (currentCarouselIndex === styleSampleImages.length && index === 0);
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          setIsTransitioning(true);
+                          setCurrentCarouselIndex(index);
+                        }}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          isActive
+                            ? 'bg-primary w-6' 
+                            : 'bg-gray-300 hover:bg-gray-400'
+                        }`}
+                        data-testid={`carousel-dot-${index}`}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             </div>
