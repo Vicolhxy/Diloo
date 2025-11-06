@@ -38,16 +38,6 @@ export default function WhyChooseUs() {
   return (
     <section className="w-full bg-gray-50 py-16 md:py-24" data-testid="why-choose-us">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
-        <div className="text-center mb-16">
-          <h2 
-            className="text-3xl md:text-5xl font-bold text-black" 
-            style={{fontFamily: 'Hanuman, serif'}} 
-            data-testid="text-why-choose-us-title"
-          >
-            Why People Love Diloo
-          </h2>
-        </div>
-
         <div className="flex flex-col gap-[150px] md:gap-32">
           {features.map((feature) => (
             <div
