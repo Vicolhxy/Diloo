@@ -48,13 +48,13 @@ export default function WhyChooseUs() {
           </h2>
         </div>
 
-        <div className="flex flex-col gap-20 md:gap-32">
+        <div className="flex flex-col gap-[150px] md:gap-32">
           {features.map((feature) => (
             <div
               key={feature.id}
               className={`flex flex-col ${
                 feature.imagePosition === "right" ? "md:flex-row-reverse" : "md:flex-row"
-              } items-center gap-8 md:gap-12`}
+              } items-center gap-8 md:gap-[120px]`}
               data-testid={`section-feature-${feature.id}`}
             >
               {/* Image */}
