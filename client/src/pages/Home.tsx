@@ -23,9 +23,8 @@ export default function Home() {
       <HeroSection />
       <CategoryNav activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
       <StyleShowcase activeCategory={activeCategory} />
-      
-      <HowItWorks />
       <WhyChooseUs />
+      <HowItWorks />
       <Testimonials />
       <Footer />
     </div>
