@@ -17,7 +17,7 @@ export default function StyleTabNav() {
 
   return (
     <div className="w-full bg-gray-50" data-testid="style-tab-nav">
-      <div className="container mx-auto px-6 md:px-12 max-w-7xl py-4">
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl pt-10 pb-4">
         <div className="flex flex-wrap items-center gap-3">
           {styles.map((style) => (
             <Link key={style.id} href={`/upload?style=${style.id}`}>
