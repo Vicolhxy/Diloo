@@ -3,8 +3,8 @@ import bannerImg from "@assets/banner_1762115202011.png";
 export default function HeroSection() {
   return (
     <section 
-      className="relative w-full h-[600px] md:h-[500px] flex items-center bg-cover bg-center"
-      style={{backgroundImage: `url(${bannerImg})`}}
+      className="relative w-full h-[600px] md:h-[500px] flex items-center bg-contain bg-center bg-no-repeat"
+      style={{backgroundImage: `url(${bannerImg})`, backgroundColor: '#f9fafb'}}
       data-testid="hero-section"
     >
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
