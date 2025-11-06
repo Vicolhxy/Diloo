@@ -381,7 +381,7 @@ export default function Upload() {
       <Navigation />
       <StyleTabNav />
       
-      <div className="pt-8 pb-12 px-6 md:px-12">
+      <div className="pt-4 pb-12 px-6 md:px-12">
         <div className="container mx-auto max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
             <div className="lg:col-span-2 bg-white rounded-2xl p-8" data-testid="section-sample-photo">
