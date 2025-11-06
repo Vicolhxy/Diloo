@@ -9,7 +9,7 @@ export default function HeroSection() {
     >
       <div className="container mx-auto px-6 md:px-12 max-w-7xl relative z-10">
         <div className="max-w-2xl">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-[40px] 3xl:text-[60px] font-bold text-black leading-tight mb-4" style={{fontFamily: 'Hanuman, serif'}} data-testid="text-hero-title">
+          <h1 className="text-3xl md:text-4xl lg:text-[36px] font-bold text-black leading-tight mb-4" style={{fontFamily: 'Hanuman, serif'}} data-testid="text-hero-title">
             Choose your style.
             <br />
             <span style={{marginTop: '10px', display: 'inline-block'}}>Customize every detail.</span>
