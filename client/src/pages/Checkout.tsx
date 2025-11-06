@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link, useSearch, useLocation } from "wouter";
 import { ChevronLeft, CheckCircle2, XCircle, Loader2, Trash2, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -81,6 +82,116 @@ function calculatePixelDimensions(size: string, dpi: string): string {
   const heightPixels = Math.round(heightInches * dpiNumber);
 
   return `${widthPixels} × ${heightPixels} pixels`;
+}
+
+// GlowingLoader Component - Fancy gradient glow animation
+function GlowingLoader() {
+  return (
+    <div className="relative w-32 h-32 flex items-center justify-center">
+      {/* Outer glow ring - largest */}
+      <motion.div
+        className="absolute w-32 h-32 rounded-full"
+        style={{
+          background: "radial-gradient(circle, rgba(37, 206, 209, 0.3) 0%, rgba(37, 206, 209, 0.1) 50%, transparent 70%)",
+          filter: "blur(8px)",
+        }}
+        animate={{
+          scale: [1, 1.3, 1],
+          opacity: [0.4, 0.7, 0.4],
+        }}
+        transition={{
+          duration: 2.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      
+      {/* Middle glow ring */}
+      <motion.div
+        className="absolute w-24 h-24 rounded-full"
+        style={{
+          background: "radial-gradient(circle, rgba(37, 206, 209, 0.5) 0%, rgba(37, 206, 209, 0.2) 60%, transparent 80%)",
+          filter: "blur(6px)",
+        }}
+        animate={{
+          scale: [1.2, 1, 1.2],
+          opacity: [0.5, 0.8, 0.5],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 0.3,
+        }}
+      />
+      
+      {/* Inner glow ring */}
+      <motion.div
+        className="absolute w-16 h-16 rounded-full"
+        style={{
+          background: "radial-gradient(circle, rgba(37, 206, 209, 0.7) 0%, rgba(37, 206, 209, 0.3) 70%, transparent 90%)",
+          filter: "blur(4px)",
+        }}
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.6, 1, 0.6],
+        }}
+        transition={{
+          duration: 1.8,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 0.6,
+        }}
+      />
+      
+      {/* Core light ball - solid center with gradient */}
+      <motion.div
+        className="absolute w-12 h-12 rounded-full"
+        style={{
+          background: "linear-gradient(135deg, #25ced1 0%, #1ab3b6 50%, #0f8c8e 100%)",
+          boxShadow: "0 0 20px rgba(37, 206, 209, 0.8), 0 0 40px rgba(37, 206, 209, 0.4)",
+        }}
+        animate={{
+          scale: [1, 1.1, 1],
+          boxShadow: [
+            "0 0 20px rgba(37, 206, 209, 0.8), 0 0 40px rgba(37, 206, 209, 0.4)",
+            "0 0 30px rgba(37, 206, 209, 1), 0 0 60px rgba(37, 206, 209, 0.6)",
+            "0 0 20px rgba(37, 206, 209, 0.8), 0 0 40px rgba(37, 206, 209, 0.4)",
+          ],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      
+      {/* Sparkle particles */}
+      {[0, 1, 2, 3].map((i) => (
+        <motion.div
+          key={i}
+          className="absolute w-2 h-2 rounded-full bg-white"
+          style={{
+            top: "50%",
+            left: "50%",
+            filter: "blur(1px)",
+          }}
+          animate={{
+            x: [0, Math.cos((i * Math.PI) / 2) * 40, 0],
+            y: [0, Math.sin((i * Math.PI) / 2) * 40, 0],
+            opacity: [0, 1, 0],
+            scale: [0, 1, 0],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeOut",
+            delay: i * 0.5,
+          }}
+        />
+      ))}
+    </div>
+  );
 }
 
 const suitFabrics = [
@@ -316,8 +427,8 @@ export default function Checkout() {
                     {isPhotoLoading ? (
                       /* Loading State */
                       <div className="w-full h-full flex flex-col items-center justify-center">
-                        <Loader2 className="w-12 h-12 text-primary animate-spin mb-4" />
-                        <p className="text-sm text-gray-600">Generating your photo...</p>
+                        <GlowingLoader />
+                        <p className="text-sm text-gray-600 mt-4">Generating your photo...</p>
                       </div>
                     ) : (
                       <>
@@ -710,7 +821,7 @@ export default function Checkout() {
           <div className="max-w-2xl mx-auto">
             <div className="bg-white rounded-2xl p-12 text-center" data-testid="section-processing">
               <div className="flex justify-center mb-6">
-                <Loader2 className="w-16 h-16 text-primary animate-spin" />
+                <GlowingLoader />
               </div>
               
               <h1 className="text-3xl font-bold text-gray-900 mb-4">Payment Processing</h1>
