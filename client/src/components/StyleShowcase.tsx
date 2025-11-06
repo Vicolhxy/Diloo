@@ -324,8 +324,7 @@ export default function StyleShowcase({ activeCategory }: StyleShowcaseProps) {
         <div className="flex flex-col items-center gap-3 mt-6">
           <Link href={`/upload?style=${categoryToStyleMap[activeCategory] || "1"}`}>
             <Button 
-              size="lg"
-              className="bg-primary text-black hover:bg-primary/90 font-normal"
+              className="bg-primary text-black hover:bg-primary/90 font-normal w-[480px] h-12"
               data-testid="button-showcase-create-now"
             >
               Create Now
