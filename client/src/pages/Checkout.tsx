@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link, useSearch, useLocation } from "wouter";
-import { ChevronLeft, CheckCircle2, XCircle, Loader2, Trash2, Sparkles } from "lucide-react";
+import { ChevronLeft, CheckCircle2, XCircle, Loader2, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -270,7 +270,6 @@ export default function Checkout() {
   const [userEmail, setUserEmail] = useState<string>("");
   const [emailInput, setEmailInput] = useState<string>("");
   const [isPhotoLoading, setIsPhotoLoading] = useState<boolean>(true);
-  const [showSparkle, setShowSparkle] = useState<boolean>(false);
 
   // Auto-scroll to top when entering checkout page
   useEffect(() => {
@@ -281,9 +280,6 @@ export default function Checkout() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsPhotoLoading(false);
-      setShowSparkle(true);
-      // Hide sparkle effect after animation completes
-      setTimeout(() => setShowSparkle(false), 1000);
     }, 3000);
 
     return () => clearTimeout(timer);
@@ -460,34 +456,6 @@ export default function Checkout() {
                             );
                           })}
                         </div>
-
-                        {/* Sparkle Effect on Photo Reveal */}
-                        {showSparkle && (
-                          <div className="absolute inset-0 pointer-events-none">
-                            {/* Center sparkle */}
-                            <Sparkles 
-                              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 text-yellow-400 animate-pulse"
-                              style={{ animation: 'pulse 0.5s ease-in-out' }}
-                            />
-                            {/* Corner sparkles */}
-                            <Sparkles 
-                              className="absolute top-8 left-8 w-8 h-8 text-yellow-300 animate-ping"
-                              style={{ animation: 'ping 0.6s ease-in-out' }}
-                            />
-                            <Sparkles 
-                              className="absolute top-8 right-8 w-8 h-8 text-yellow-300 animate-ping"
-                              style={{ animation: 'ping 0.7s ease-in-out' }}
-                            />
-                            <Sparkles 
-                              className="absolute bottom-8 left-8 w-8 h-8 text-yellow-300 animate-ping"
-                              style={{ animation: 'ping 0.8s ease-in-out' }}
-                            />
-                            <Sparkles 
-                              className="absolute bottom-8 right-8 w-8 h-8 text-yellow-300 animate-ping"
-                              style={{ animation: 'ping 0.9s ease-in-out' }}
-                            />
-                          </div>
-                        )}
                       </>
                     )}
                   </div>
