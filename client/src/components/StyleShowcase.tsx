@@ -247,18 +247,16 @@ export default function StyleShowcase({ activeCategory }: StyleShowcaseProps) {
 
   return (
     <section className="w-full bg-gray-50 pt-3 pb-12 md:pt-4 md:pb-16" data-testid="style-showcase">
-      <div className={activeCategory === "id-photo" ? "w-full px-6 md:px-12" : "container mx-auto px-6 md:px-12 max-w-7xl"}>
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         {/* Conditional rendering based on activeCategory */}
         {activeCategory === "id-photo" ? (
-          // ID Photo: 3 horizontal cards layout with fixed 520x270 size on desktop and responsive gaps
-          <div className="flex flex-wrap justify-center mb-8" style={{ gap: 'clamp(20px, calc((100vw - 1560px - 96px) / 2), 100px)' }}>
+          // ID Photo: 2x2 grid layout matching Pro Headshot width
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8">
             {idPhotoCards.map((card) => (
               <div
                 key={card.id}
-                className="relative rounded-2xl overflow-hidden shadow-md flex-shrink-0"
+                className="relative rounded-2xl overflow-hidden shadow-md w-full aspect-[520/270]"
                 style={{
-                  width: 'min(520px, calc(100vw - 48px))',
-                  height: 'min(270px, calc((100vw - 48px) * 270 / 520))',
                   backgroundImage: `url(${idSampleBg})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
