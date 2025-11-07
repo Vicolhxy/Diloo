@@ -250,50 +250,39 @@ export default function StyleShowcase({ activeCategory }: StyleShowcaseProps) {
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         {/* Conditional rendering based on activeCategory */}
         {activeCategory === "id-photo" ? (
-          // ID Photo: 1 row x 3 columns grid layout (378px x 274px per card)
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
+          // ID Photo: 1 row x 4 columns grid layout matching Pro Headshot style
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
             {idPhotoCards.map((card) => (
-              <div
-                key={card.id}
-                className="relative rounded-2xl overflow-hidden shadow-md w-full"
-                style={{
-                  height: '274px',
-                  backgroundImage: `url(${idSampleBg})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'no-repeat'
-                }}
-                data-testid={`card-id-photo-${card.id}`}
-              >
-                <div className="absolute inset-0 flex items-start justify-between" style={{ padding: '24px' }}>
-                  {/* Left side: Document type and country emoji */}
-                  <div className="flex flex-col" style={{ paddingTop: '8px', maxWidth: 'calc(100% - 24px - 226px - 24px)' }}>
-                    <p 
-                      className="font-bold text-gray-900 leading-tight break-words"
-                      style={{ fontFamily: 'Hanuman, serif', fontSize: '16px' }}
-                      data-testid={`text-document-type-${card.id}`}
-                    >
-                      {card.documentType}
-                    </p>
-                    <p 
-                      className="leading-none"
-                      style={{ fontSize: '32px', marginTop: '12px' }}
-                      data-testid={`text-country-emoji-${card.id}`}
-                    >
-                      {card.countryEmoji}
-                    </p>
-                  </div>
-                  
-                  {/* Right side: Sample photo */}
-                  <div className="flex-shrink-0">
-                    <img
-                      src={card.sampleImage}
-                      alt={card.alt}
-                      className="w-auto object-cover rounded-lg"
-                      style={{ height: '226px' }}
-                      data-testid={`img-sample-${card.id}`}
-                    />
-                  </div>
+              <div key={card.id} className="flex flex-col gap-3">
+                {/* Photo container with 3:4 aspect ratio */}
+                <div
+                  className="aspect-[3/4] rounded-2xl overflow-hidden shadow-md relative"
+                  data-testid={`card-id-photo-${card.id}`}
+                >
+                  <img
+                    src={card.sampleImage}
+                    alt={card.alt}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    data-testid={`img-sample-${card.id}`}
+                  />
+                </div>
+                
+                {/* Labels below photo: emoji and document type */}
+                <div className="flex flex-col items-center gap-1">
+                  <p 
+                    className="leading-none"
+                    style={{ fontSize: '24px' }}
+                    data-testid={`text-country-emoji-${card.id}`}
+                  >
+                    {card.countryEmoji}
+                  </p>
+                  <p 
+                    className="font-bold text-gray-900 text-center leading-tight"
+                    style={{ fontFamily: 'Hanuman, serif', fontSize: '16px' }}
+                    data-testid={`text-document-type-${card.id}`}
+                  >
+                    {card.documentType}
+                  </p>
                 </div>
               </div>
             ))}
