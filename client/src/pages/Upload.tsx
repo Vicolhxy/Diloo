@@ -353,9 +353,9 @@ export default function Upload() {
     }
   }, [styleId, currentDocSpec, selectedCountry, selectedDocumentType]);
   
-  // Use professional headshot images for Pro Headshot carousel, original images for other styles
+  // Use professional headshot images for Pro Headshot carousel, ID Photo samples for ID Photo, original images for other styles
   const otherStyleImages = [w1Img, y1Img, w2Img, b1Img, y2Img, b2Img, w3Img, i1Img];
-  const styleSampleImages = styleId === "1" ? proHeadshotImages : otherStyleImages;
+  const styleSampleImages = styleId === "1" ? proHeadshotImages : (styleId === "2" ? idPhotoImages : otherStyleImages);
   
   // Create extended array with first image duplicated at end for seamless loop
   const extendedImages = [...styleSampleImages, styleSampleImages[0]];
