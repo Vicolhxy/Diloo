@@ -377,7 +377,6 @@ export default function Checkout() {
 
   // Calculate price based on style type
   let totalPrice: number;
-  let customizationCount = 0;
   
   if (styleId === "2") {
     // ID Photos: Fixed price CAD $4.99
@@ -385,22 +384,21 @@ export default function Checkout() {
   } else {
     // Pro Headshot: Dynamic pricing - "Free First Option" strategy
     // Base price: CAD $2.99
-    // Only NON-DEFAULT options cost CAD $0.50 each
+    // Non-default options add their configured price (CAD $0.50 or CAD $0.80)
     // Default options are FREE
-    customizationCount = [
-      suitFabric !== DEFAULT_SUIT_FABRIC,        // Count only if NOT default
-      suitColor !== DEFAULT_SUIT_COLOR,          // Count only if NOT default
-      shirtColor !== DEFAULT_SHIRT_COLOR,        // Count only if NOT default
-      neckTie !== DEFAULT_NECK_TIE,              // Count only if NOT default
-      background !== DEFAULT_BACKGROUND,         // Count only if NOT default
-      composition !== DEFAULT_COMPOSITION,       // Count only if NOT default
-      eyeDirection !== DEFAULT_EYE_DIRECTION,    // Count only if NOT default
-      expression !== DEFAULT_EXPRESSION,         // Count only if NOT default
-    ].filter(Boolean).length;
-
     const basePrice = 2.99;
-    const perOptionPrice = 0.50;
-    totalPrice = basePrice + (customizationCount * perOptionPrice);
+    
+    let customizationCost = 0;
+    if (suitFabric !== DEFAULT_SUIT_FABRIC) customizationCost += OPTION_PRICES.suitFabric;
+    if (suitColor !== DEFAULT_SUIT_COLOR) customizationCost += OPTION_PRICES.suitColor;
+    if (shirtColor !== DEFAULT_SHIRT_COLOR) customizationCost += OPTION_PRICES.shirtColor;
+    if (neckTie !== DEFAULT_NECK_TIE) customizationCost += OPTION_PRICES.neckTie;
+    if (background !== DEFAULT_BACKGROUND) customizationCost += OPTION_PRICES.background;
+    if (composition !== DEFAULT_COMPOSITION) customizationCost += OPTION_PRICES.composition;
+    if (eyeDirection !== DEFAULT_EYE_DIRECTION) customizationCost += OPTION_PRICES.eyeDirection;
+    if (expression !== DEFAULT_EXPRESSION) customizationCost += OPTION_PRICES.expression;
+    
+    totalPrice = basePrice + customizationCost;
   }
 
   const form = useForm<EmailFormData>({
