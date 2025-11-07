@@ -516,14 +516,13 @@ export default function Upload() {
                         <div className="w-16 h-16 bg-primary rounded-lg flex items-center justify-center mb-4">
                           <User className="w-8 h-8 text-white" />
                         </div>
-                        <p className="text-gray-900 font-medium mb-1">Upload your photo</p>
-                        <p className="text-gray-500 text-sm mb-4">PNG and JPG only</p>
                         <Button 
-                          className="bg-primary text-black hover:bg-primary/90"
+                          className="bg-primary text-black hover:bg-primary/90 mb-2"
                           data-testid="button-upload-primary"
                         >
-                          Select from my device
+                          Upload my photo
                         </Button>
+                        <p className="text-gray-500 text-sm">PNG and JPG only</p>
                       </div>
                     )}
                   </div>
@@ -569,15 +568,14 @@ export default function Upload() {
                         <div className="w-16 h-16 border-2 border-primary rounded-lg flex items-center justify-center mb-4">
                           <User className="w-8 h-8 text-primary" />
                         </div>
-                        <p className="text-gray-900 font-medium mb-1">Upload your photo</p>
-                        <p className="text-gray-500 text-sm mb-4">Optional</p>
                         <Button 
                           variant="outline"
-                          className="border-primary text-primary hover:bg-primary/10"
+                          className="border-primary text-primary hover:bg-primary/10 mb-2"
                           data-testid="button-upload-optional"
                         >
-                          Select from my device
+                          Upload my photo
                         </Button>
+                        <p className="text-gray-500 text-sm">Optional</p>
                       </div>
                     )}
                   </div>
