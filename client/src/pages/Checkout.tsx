@@ -94,6 +94,18 @@ const DEFAULT_COMPOSITION = "above-shoulders";
 const DEFAULT_EYE_DIRECTION = "facing-camera";
 const DEFAULT_EXPRESSION = "serious";
 
+// Pricing configuration for Pro Headshot options (non-default selections)
+const OPTION_PRICES = {
+  suitFabric: 0.50,
+  suitColor: 0.80,    // Premium pricing for suit color
+  shirtColor: 0.80,   // Premium pricing for shirt color
+  neckTie: 0.80,      // Premium pricing for neck tie
+  background: 0.50,
+  composition: 0.50,
+  eyeDirection: 0.50,
+  expression: 0.50,
+} as const;
+
 // GlowingLoader Component - Fancy gradient glow animation
 function GlowingLoader() {
   return (
