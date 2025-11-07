@@ -605,7 +605,8 @@ export default function Upload() {
                               'Canada': '🇨🇦',
                               'USA': '🇺🇸',
                               'China': '🇨🇳',
-                              'UK': '🇬🇧',
+                              'EU': '🇪🇺',
+                              'Japan': '🇯🇵',
                               'Other': '🌐'
                             };
                             const flag = countryFlags[countryKey] || '🌐';
@@ -617,7 +618,7 @@ export default function Upload() {
                                   <SelectItem 
                                     key={`${countryKey}:${docType}`} 
                                     value={`${countryKey}:${docType}`}
-                                    className="pl-8"
+                                    className="pl-12"
                                   >
                                     {formatDocumentType(docType)}
                                   </SelectItem>
