@@ -112,10 +112,21 @@ import bgConference from "@assets/Headshot-Customized-BgColor-Conference_1761878
 import bgTreeAvenue from "@assets/Headshot-Customized-BgColor-TreeAvenue_1761878132227.png";
 import bgBalcony from "@assets/Headshot-Customized-BgColor-Balcony_1761878132226.png";
 
+// Import ID Photo samples (new 2x resolution)
+import idSample01 from "@assets/Sample-ID-01_1762479461886.png";
+import idSample02 from "@assets/Sample-ID-02_1762479461890.png";
+import idSample03 from "@assets/Sample-ID-03_1762479461893.png";
+import idSample04 from "@assets/Sample-ID-04_1762479461893.png";
+
 // All 16 professional headshot photos for Pro Headshot carousel
 const proHeadshotImages = [
   female01, female02, female03, female04, female05, female06, female07, female08,
   male01, male02, male03, male04, male05, male06, male07, male08
+];
+
+// 4 ID Photo samples for ID Photo carousel
+const idPhotoImages = [
+  idSample01, idSample02, idSample03, idSample04
 ];
 
 // Helper function to calculate pixel dimensions from size and DPI
