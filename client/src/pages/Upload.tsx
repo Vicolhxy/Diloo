@@ -581,13 +581,15 @@ export default function Upload() {
               <div className="bg-white rounded-2xl p-8" data-testid="section-customize">
                 <div className="flex items-center justify-between gap-3 mb-6">
                   <h2 className="text-xl font-semibold text-gray-900">Customize Your Photo</h2>
-                  <Badge 
-                    className="bg-primary/20 text-gray-900 dark:text-white dark:bg-primary/30 text-sm font-medium flex items-center gap-1.5"
-                    data-testid="badge-free-tip"
-                  >
-                    <Lightbulb className="w-4 h-4" />
-                    First option in each category is free
-                  </Badge>
+                  {styleId === "1" && (
+                    <Badge 
+                      className="bg-primary/20 text-gray-900 dark:text-white dark:bg-primary/30 text-sm font-medium flex items-center gap-1.5"
+                      data-testid="badge-free-tip"
+                    >
+                      <Lightbulb className="w-4 h-4" />
+                      First option in each category is free
+                    </Badge>
+                  )}
                 </div>
                 
                 {/* Conditional rendering based on style */}
