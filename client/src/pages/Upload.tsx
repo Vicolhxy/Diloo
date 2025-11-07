@@ -586,7 +586,10 @@ export default function Upload() {
                     data-testid="badge-free-tip"
                   >
                     <Lightbulb className="w-4 h-4" />
-                    First option in each category is free
+                    {styleId === "2" 
+                      ? "All options included in package price" 
+                      : "First option in each category is free"
+                    }
                   </Badge>
                 </div>
                 
