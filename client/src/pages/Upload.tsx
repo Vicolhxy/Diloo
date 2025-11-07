@@ -620,7 +620,7 @@ export default function Upload() {
                                     value={`${countryKey}:${docType}`}
                                     className="pl-12"
                                   >
-                                    {formatDocumentType(docType)}
+                                    {idPhotoSpecs.countries[countryKey].name} - {formatDocumentType(docType)}
                                   </SelectItem>
                                 ))}
                               </SelectGroup>
