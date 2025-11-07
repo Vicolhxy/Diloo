@@ -545,8 +545,8 @@ export default function Checkout() {
                           <span className="text-sm font-medium text-gray-900">{fileFormat.toUpperCase()}</span>
                         </div>
                         
-                        <div className="flex items-center justify-between py-2 bg-primary/5 rounded-lg px-3 mt-3">
-                          <span className="text-sm font-semibold text-gray-900">Pixel Dimensions</span>
+                        <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                          <span className="text-sm text-gray-600">Pixel Dimensions</span>
                           <span className="text-sm font-medium text-gray-900" data-testid="text-pixel-dimensions">
                             {(() => {
                               // Convert label to size string for calculation
