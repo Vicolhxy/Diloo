@@ -60,7 +60,8 @@ export default function WhyChooseUs() {
               {/* Text Content */}
               <div className="flex-1 max-w-2xl" data-testid={`text-container-${feature.id}`}>
                 <h3 
-                  className="text-2xl md:text-3xl font-heading font-bold text-black mb-4"
+                  className="text-2xl md:text-3xl font-bold text-black mb-4"
+                  style={{fontFamily: 'Hanuman, serif'}}
                   data-testid={`text-feature-${feature.id}-title`}
                 >
                   {feature.title}
