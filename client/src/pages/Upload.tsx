@@ -3,7 +3,7 @@ import { Link, useSearch } from "wouter";
 import { User, X, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -278,9 +278,8 @@ export default function Upload() {
   const [selectedEyeDirection, setSelectedEyeDirection] = useState<string>("facing-camera");
   const [selectedExpression, setSelectedExpression] = useState<string>("serious");
   
-  // ID Photos customization options
-  const [selectedCountry, setSelectedCountry] = useState<string>("Canada");
-  const [selectedDocumentType, setSelectedDocumentType] = useState<string>("Passport");
+  // ID Photos customization options - Combined country and document type
+  const [selectedDocumentType, setSelectedDocumentType] = useState<string>("Canada:Passport");
   const [customSize, setCustomSize] = useState<string>("");
   const [customDPI, setCustomDPI] = useState<string>("");
   const [customBgColor, setCustomBgColor] = useState<string>("");
@@ -304,30 +303,23 @@ export default function Upload() {
     };
   }, [searchString]);
   
+  // Parse country and document type from combined value
+  const { country, docType } = useMemo(() => {
+    const [country, docType] = selectedDocumentType.split(':');
+    return { country: country || 'Canada', docType: docType || 'Passport' };
+  }, [selectedDocumentType]);
+  
   // Get current document spec for ID Photos
   const currentDocSpec = useMemo(() => {
     if (styleId !== "2") return null;
-    return getDocumentSpec(selectedCountry, selectedDocumentType);
-  }, [styleId, selectedCountry, selectedDocumentType]);
-  
-  // Get available document types for selected country
-  const availableDocTypes = useMemo(() => {
-    if (styleId !== "2") return [];
-    return getDocumentTypes(selectedCountry);
-  }, [styleId, selectedCountry]);
-  
-  // Reset document type when country changes
-  useEffect(() => {
-    if (styleId === "2" && availableDocTypes.length > 0) {
-      setSelectedDocumentType(availableDocTypes[0]);
-    }
-  }, [selectedCountry, styleId, availableDocTypes]);
+    return getDocumentSpec(country, docType);
+  }, [styleId, country, docType]);
   
   // Auto-fill specification fields when document spec changes
   useEffect(() => {
     if (styleId === "2") {
       // Check if "Other" country or document type is selected
-      const isOther = selectedCountry === "Other" || selectedDocumentType === "Other" || selectedDocumentType === "Custom";
+      const isOther = country === "Other" || docType === "Other" || docType === "Custom";
       
       if (isOther) {
         // Set defaults for "Other" selection
@@ -347,7 +339,7 @@ export default function Upload() {
         if (currentDocSpec.fileFormat) setCustomFileFormat(currentDocSpec.fileFormat);
       }
     }
-  }, [styleId, currentDocSpec, selectedCountry, selectedDocumentType]);
+  }, [styleId, currentDocSpec, country, docType]);
   
   // Use professional headshot images for Pro Headshot carousel, ID Photo samples for ID Photo, original images for other styles
   const otherStyleImages = [w1Img, y1Img, w2Img, b1Img, y2Img, b2Img, w3Img, i1Img];
@@ -597,26 +589,7 @@ export default function Upload() {
                 {styleId === "2" ? (
                   /* ID Photos Form */
                   <div className="space-y-6">
-                    {/* Country Selection */}
-                    <div>
-                      <label className="block text-sm font-bold text-gray-900 mb-3">
-                        Country/Region
-                      </label>
-                      <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-                        <SelectTrigger className="w-full" data-testid="select-country">
-                          <SelectValue placeholder="Select country" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {Object.keys(idPhotoSpecs.countries).map((countryKey) => (
-                            <SelectItem key={countryKey} value={countryKey}>
-                              {idPhotoSpecs.countries[countryKey].name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Document Type Selection */}
+                    {/* Document Type Selection - Grouped by Country */}
                     <div>
                       <label className="block text-sm font-bold text-gray-900 mb-3">
                         Document Type
@@ -626,10 +599,15 @@ export default function Upload() {
                           <SelectValue placeholder="Select document type" />
                         </SelectTrigger>
                         <SelectContent>
-                          {availableDocTypes.map((docType: string) => (
-                            <SelectItem key={docType} value={docType}>
-                              {formatDocumentType(docType)}
-                            </SelectItem>
+                          {Object.keys(idPhotoSpecs.countries).map((countryKey) => (
+                            <SelectGroup key={countryKey}>
+                              <SelectLabel>{idPhotoSpecs.countries[countryKey].name}</SelectLabel>
+                              {getDocumentTypes(countryKey).map((docType: string) => (
+                                <SelectItem key={`${countryKey}:${docType}`} value={`${countryKey}:${docType}`}>
+                                  {formatDocumentType(docType)}
+                                </SelectItem>
+                              ))}
+                            </SelectGroup>
                           ))}
                         </SelectContent>
                       </Select>
@@ -1081,7 +1059,7 @@ export default function Upload() {
                 {(primaryImage || optionalImage) ? (
                   <Link href={
                     styleId === "2" 
-                      ? `/checkout?style=${styleId}&country=${selectedCountry}&documentType=${selectedDocumentType}&size=${encodeURIComponent(currentDocSpec?.size || customSize)}&dpi=${currentDocSpec?.dpi || customDPI}&backgroundColor=${encodeURIComponent(currentDocSpec?.backgroundColor || customBgColor)}&fileFormat=${currentDocSpec?.fileFormat || customFileFormat}`
+                      ? `/checkout?style=${styleId}&documentType=${encodeURIComponent(selectedDocumentType)}&size=${encodeURIComponent(currentDocSpec?.size || customSize)}&dpi=${currentDocSpec?.dpi || customDPI}&backgroundColor=${encodeURIComponent(currentDocSpec?.backgroundColor || customBgColor)}&fileFormat=${currentDocSpec?.fileFormat || customFileFormat}`
                       : `/checkout?style=${styleId}${selectedSuitFabric ? `&suitFabric=${selectedSuitFabric}` : ''}${selectedSuitColor ? `&suitColor=${selectedSuitColor}` : ''}${selectedShirtColor ? `&shirtColor=${selectedShirtColor}` : ''}${selectedNeckTie ? `&neckTie=${selectedNeckTie}` : ''}${selectedBackground ? `&background=${selectedBackground}` : ''}${selectedComposition ? `&composition=${selectedComposition}` : ''}${selectedEyeDirection ? `&eyeDirection=${selectedEyeDirection}` : ''}${selectedExpression ? `&expression=${selectedExpression}` : ''}`
                   }>
                     <Button 

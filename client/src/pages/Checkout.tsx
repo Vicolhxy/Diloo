@@ -347,6 +347,11 @@ export default function Checkout() {
   } = useMemo(() => {
     const params = new URLSearchParams(searchString);
     const styleId = params.get('style') || "3";
+    
+    // Parse documentType (format: "Country:DocumentType")
+    const documentTypeParam = params.get('documentType') || '';
+    const [countryPart, docTypePart] = documentTypeParam.split(':');
+    
     return {
       // Pro Headshot params
       suitFabric: params.get('suitFabric') || DEFAULT_SUIT_FABRIC,
@@ -360,8 +365,8 @@ export default function Checkout() {
       eyeDirection: params.get('eyeDirection') || DEFAULT_EYE_DIRECTION,
       expression: params.get('expression') || DEFAULT_EXPRESSION,
       // ID Photos params
-      country: params.get('country') || '',
-      documentType: params.get('documentType') || '',
+      country: countryPart || '',
+      documentType: docTypePart || '',
       size: params.get('size') || '',
       dpi: params.get('dpi') || '',
       backgroundColor: params.get('backgroundColor') || '',
