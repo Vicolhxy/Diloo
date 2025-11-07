@@ -231,16 +231,16 @@ const backgrounds = [
 
 // Labels for customization options
 const compositionLabels: Record<string, string> = {
-  "above-shoulders": "Above shoulders",
-  "above-waist-hands-down": "Above waist & Hands naturally down",
-  "above-waist-hands-pockets": "Above waist & Hands in pockets",
-  "above-waist-arms-crossed": "Above waist & Arms crossed",
-  "above-waist-buttoning": "Above waist & Buttoning jacket",
-  "above-waist-hand-chin": "Above waist & One hand touching chin",
-  "above-waist-adjusting-lapel": "Above waist & Adjusting lapel",
-  "above-waist-hands-crossed-front": "Above waist & Hands lightly crossed in front",
-  "above-waist-hand-on-waist": "Above waist & One hand on waist",
-  "above-waist-holding-blazer": "Above waist & Holding blazer edge",
+  "above-shoulders": "Shoulders up",
+  "above-waist-hands-down": "Hands naturally down",
+  "above-waist-hands-pockets": "Hands in pockets",
+  "above-waist-arms-crossed": "Arms crossed",
+  "above-waist-buttoning": "Buttoning jacket",
+  "above-waist-hand-chin": "One hand touching chin",
+  "above-waist-adjusting-lapel": "Adjusting lapel",
+  "above-waist-hands-crossed-front": "Hands lightly crossed in front",
+  "above-waist-hand-on-waist": "One hand on waist",
+  "above-waist-holding-blazer": "Holding blazer edge",
 };
 
 const eyeDirectionLabels: Record<string, string> = {
