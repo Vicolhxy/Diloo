@@ -21,7 +21,7 @@ import male07 from "@assets/Sample-headshot-male-07_1762008889155.png";
 import male08 from "@assets/Sample-headshot-male-08_1762008889149.png";
 
 // Import ID Photo samples (new 2x resolution)
-import idSample01 from "@assets/Sample-ID-01_1762479461886.png";
+import idSample01 from "@assets/Sample-ID-01_1762527951817.png";
 import idSample02 from "@assets/Sample-ID-02_1762479461890.png";
 import idSample03 from "@assets/Sample-ID-03_1762479461893.png";
 import idSample04 from "@assets/Sample-ID-04_1762479461893.png";
