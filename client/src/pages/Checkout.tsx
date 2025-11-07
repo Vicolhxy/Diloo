@@ -84,6 +84,16 @@ function calculatePixelDimensions(size: string, dpi: string): string {
   return `${widthPixels} × ${heightPixels} pixels`;
 }
 
+// Default values for Pro Headshot customization options
+const DEFAULT_SUIT_FABRIC = "wool";
+const DEFAULT_SUIT_COLOR = "charcoal";
+const DEFAULT_SHIRT_COLOR = "white";
+const DEFAULT_NECK_TIE = "none";
+const DEFAULT_BACKGROUND = 1;
+const DEFAULT_COMPOSITION = "above-shoulders";
+const DEFAULT_EYE_DIRECTION = "facing-camera";
+const DEFAULT_EXPRESSION = "serious";
+
 // GlowingLoader Component - Fancy gradient glow animation
 function GlowingLoader() {
   return (
@@ -195,25 +205,45 @@ function GlowingLoader() {
 }
 
 const suitFabrics = [
-  { id: 1, name: "Wool" },
-  { id: 2, name: "Wool Blend" },
-  { id: 3, name: "Worsted Wool" },
+  { id: "wool", name: "Wool" },
+  { id: "wool-blend", name: "Wool Blend" },
+  { id: "worsted-wool", name: "Worsted Wool" },
+  { id: "silk-blend", name: "Silk Blend" },
+  { id: "tweed", name: "Tweed" },
 ];
 
 const suitColors = [
-  { id: 1, name: "Charcoal" },
-  { id: 2, name: "Navy" },
-  { id: 3, name: "Black" },
-  { id: 4, name: "Light Gray" },
-  { id: 5, name: "Midnight Blue" },
-  { id: 6, name: "Charcoal Blue" },
-  { id: 7, name: "Pinstripe Charcoal" },
+  { id: "charcoal", name: "Charcoal" },
+  { id: "navy", name: "Navy" },
+  { id: "black", name: "Black" },
+  { id: "light-grey", name: "Light Grey" },
+  { id: "midnight-blue", name: "Midnight Blue" },
+  { id: "charcoal-blue", name: "Charcoal Blue" },
+  { id: "pinstripe-charcoal", name: "Pinstripe Charcoal" },
+  { id: "cream", name: "Cream" },
+  { id: "soft-blue", name: "Soft Blue" },
+  { id: "light-pink", name: "Light Pink" },
+  { id: "taupe", name: "Taupe" },
+  { id: "white", name: "White" },
 ];
 
 const shirtColors = [
-  { id: 1, name: "White" },
-  { id: 2, name: "Light Blue" },
-  { id: 3, name: "Pale Gray" },
+  { id: "white", name: "White" },
+  { id: "light-blue", name: "Light Blue" },
+  { id: "pale-grey", name: "Pale Grey" },
+  { id: "light-pink", name: "Light Pink" },
+  { id: "ivory", name: "Ivory" },
+  { id: "soft-beige", name: "Soft Beige" },
+];
+
+const neckTies = [
+  { id: "none", name: "None" },
+  { id: "navy", name: "Navy" },
+  { id: "burgundy", name: "Burgundy" },
+  { id: "charcoal", name: "Charcoal" },
+  { id: "black", name: "Black" },
+  { id: "silver", name: "Silver" },
+  { id: "striped", name: "Striped" },
 ];
 
 const backgrounds = [
@@ -288,6 +318,7 @@ export default function Checkout() {
     suitFabric,
     suitColor,
     shirtColor,
+    neckTie,
     background,
     styleId,
     selectedStyleImage,
@@ -306,15 +337,16 @@ export default function Checkout() {
     const styleId = params.get('style') || "3";
     return {
       // Pro Headshot params
-      suitFabric: parseInt(params.get('suitFabric') || '1'),
-      suitColor: parseInt(params.get('suitColor') || '1'),
-      shirtColor: parseInt(params.get('shirtColor') || '1'),
-      background: parseInt(params.get('background') || '1'),
+      suitFabric: params.get('suitFabric') || DEFAULT_SUIT_FABRIC,
+      suitColor: params.get('suitColor') || DEFAULT_SUIT_COLOR,
+      shirtColor: params.get('shirtColor') || DEFAULT_SHIRT_COLOR,
+      neckTie: params.get('neckTie') || DEFAULT_NECK_TIE,
+      background: parseInt(params.get('background') || String(DEFAULT_BACKGROUND)),
       styleId,
       selectedStyleImage: styleImages[styleId as keyof typeof styleImages] || w2Img,
-      composition: params.get('composition') || null,
-      eyeDirection: params.get('eyeDirection') || null,
-      expression: params.get('expression') || null,
+      composition: params.get('composition') || DEFAULT_COMPOSITION,
+      eyeDirection: params.get('eyeDirection') || DEFAULT_EYE_DIRECTION,
+      expression: params.get('expression') || DEFAULT_EXPRESSION,
       // ID Photos params
       country: params.get('country') || '',
       documentType: params.get('documentType') || '',
@@ -328,6 +360,7 @@ export default function Checkout() {
   const selectedSuitFabric = suitFabrics.find(f => f.id === suitFabric) || suitFabrics[0];
   const selectedSuitColor = suitColors.find(c => c.id === suitColor) || suitColors[0];
   const selectedShirtColor = shirtColors.find(c => c.id === shirtColor) || shirtColors[0];
+  const selectedNeckTie = neckTies.find(t => t.id === neckTie) || neckTies[0];
   const selectedBackground = backgrounds.find(b => b.id === background) || backgrounds[0];
 
   // Calculate price based on style type
@@ -338,18 +371,19 @@ export default function Checkout() {
     // ID Photos: Fixed price CAD $4.99
     totalPrice = 4.99;
   } else {
-    // Pro Headshot: Dynamic pricing
-    // Calculate number of customization options selected (each adds CAD $0.50)
-    // Required options (always count): Suit Fabric, Suit Color, Shirt Color, Background
-    // Optional options (count if selected): Composition, Eye Direction, Expression
+    // Pro Headshot: Dynamic pricing - "Free First Option" strategy
+    // Base price: CAD $2.99
+    // Only NON-DEFAULT options cost CAD $0.50 each
+    // Default options are FREE
     customizationCount = [
-      true,                    // Suit Fabric (required)
-      true,                    // Suit Color (required)
-      true,                    // Shirt Color (required)
-      true,                    // Background (required)
-      composition !== null,    // Composition (optional, now includes hand pose)
-      eyeDirection !== null,   // Eye Direction (optional)
-      expression !== null,     // Expression (optional)
+      suitFabric !== DEFAULT_SUIT_FABRIC,        // Count only if NOT default
+      suitColor !== DEFAULT_SUIT_COLOR,          // Count only if NOT default
+      shirtColor !== DEFAULT_SHIRT_COLOR,        // Count only if NOT default
+      neckTie !== DEFAULT_NECK_TIE,              // Count only if NOT default
+      background !== DEFAULT_BACKGROUND,         // Count only if NOT default
+      composition !== DEFAULT_COMPOSITION,       // Count only if NOT default
+      eyeDirection !== DEFAULT_EYE_DIRECTION,    // Count only if NOT default
+      expression !== DEFAULT_EXPRESSION,         // Count only if NOT default
     ].filter(Boolean).length;
 
     const basePrice = 2.99;
@@ -387,10 +421,27 @@ export default function Checkout() {
     setPageState('checkout');
   };
 
-  const removeOption = (optionKey: string) => {
+  // Switch an option back to its default value
+  const switchToDefault = (optionKey: string) => {
     const params = new URLSearchParams(searchString);
-    params.delete(optionKey);
-    setLocation(`/checkout?${params.toString()}`);
+    
+    // Map option keys to their default values
+    const defaultValues: Record<string, string | number> = {
+      'suitFabric': DEFAULT_SUIT_FABRIC,
+      'suitColor': DEFAULT_SUIT_COLOR,
+      'shirtColor': DEFAULT_SHIRT_COLOR,
+      'neckTie': DEFAULT_NECK_TIE,
+      'background': DEFAULT_BACKGROUND,
+      'composition': DEFAULT_COMPOSITION,
+      'eyeDirection': DEFAULT_EYE_DIRECTION,
+      'expression': DEFAULT_EXPRESSION,
+    };
+    
+    // Set the parameter to its default value
+    if (optionKey in defaultValues) {
+      params.set(optionKey, String(defaultValues[optionKey]));
+      setLocation(`/checkout?${params.toString()}`);
+    }
   };
 
   // Checkout Initial State
@@ -616,89 +667,172 @@ export default function Checkout() {
                             </div>
                           </div>
                         ) : (
-                          /* Pro Headshot: Itemized Pricing */
+                          /* Pro Headshot: "Free First Option" Pricing Strategy */
                           <div className="space-y-2 mb-3">
                             <div className="flex items-center justify-between text-sm">
                               <span className="text-gray-600">Base Photo</span>
                               <span className="font-medium text-gray-900">CAD $2.99</span>
                             </div>
                             
-                            {/* Required customization items (always shown, no delete buttons) */}
+                            {/* Suit Fabric */}
                             <div className="flex items-center justify-between text-sm">
-                              <span className="text-gray-600">Suit Fabric: {selectedSuitFabric.name}</span>
-                              <span className="font-medium text-gray-900">CAD $0.50</span>
-                            </div>
-                            
-                            <div className="flex items-center justify-between text-sm">
-                              <span className="text-gray-600">Suit Color: {selectedSuitColor.name}</span>
-                              <span className="font-medium text-gray-900">CAD $0.50</span>
-                            </div>
-                            
-                            <div className="flex items-center justify-between text-sm">
-                              <span className="text-gray-600">Shirt Color: {selectedShirtColor.name}</span>
-                              <span className="font-medium text-gray-900">CAD $0.50</span>
-                            </div>
-                            
-                            <div className="flex items-center justify-between text-sm">
-                              <span className="text-gray-600">Background: {selectedBackground.name}</span>
-                              <span className="font-medium text-gray-900">CAD $0.50</span>
-                            </div>
-                            
-                            {/* Optional customization items (only shown if selected, with delete buttons) */}
-                            
-                            {composition && (
-                              <div className="flex items-center justify-between text-sm">
-                                <div className="flex items-center gap-2">
-                                  <span className="text-gray-600">Composition: {compositionLabels[composition]}</span>
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Suit Fabric: {selectedSuitFabric.name}</span>
+                                {suitFabric !== DEFAULT_SUIT_FABRIC && (
                                   <button
                                     type="button"
-                                    onClick={() => removeOption('composition')}
-                                    className="text-red-500 hover:text-red-700 transition-colors"
-                                    aria-label="Remove composition"
-                                    data-testid="button-remove-composition"
+                                    onClick={() => switchToDefault('suitFabric')}
+                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
+                                    data-testid="button-switch-suitFabric"
                                   >
-                                    <Trash2 className="w-4 h-4" />
+                                    Switch to default
                                   </button>
-                                </div>
-                                <span className="font-medium text-gray-900">CAD $0.50</span>
+                                )}
                               </div>
-                            )}
+                              <span className="font-medium text-gray-900">
+                                {suitFabric === DEFAULT_SUIT_FABRIC ? "Free" : "CAD $0.50"}
+                              </span>
+                            </div>
                             
-                            {eyeDirection && (
-                              <div className="flex items-center justify-between text-sm">
-                                <div className="flex items-center gap-2">
-                                  <span className="text-gray-600">Eye Direction: {eyeDirectionLabels[eyeDirection]}</span>
+                            {/* Suit Color */}
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Suit Color: {selectedSuitColor.name}</span>
+                                {suitColor !== DEFAULT_SUIT_COLOR && (
                                   <button
                                     type="button"
-                                    onClick={() => removeOption('eyeDirection')}
-                                    className="text-red-500 hover:text-red-700 transition-colors"
-                                    aria-label="Remove eye direction"
-                                    data-testid="button-remove-eyeDirection"
+                                    onClick={() => switchToDefault('suitColor')}
+                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
+                                    data-testid="button-switch-suitColor"
                                   >
-                                    <Trash2 className="w-4 h-4" />
+                                    Switch to default
                                   </button>
-                                </div>
-                                <span className="font-medium text-gray-900">CAD $0.50</span>
+                                )}
                               </div>
-                            )}
+                              <span className="font-medium text-gray-900">
+                                {suitColor === DEFAULT_SUIT_COLOR ? "Free" : "CAD $0.50"}
+                              </span>
+                            </div>
                             
-                            {expression && (
-                              <div className="flex items-center justify-between text-sm">
-                                <div className="flex items-center gap-2">
-                                  <span className="text-gray-600">Expression: {expressionLabels[expression]}</span>
+                            {/* Shirt Color */}
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Shirt Color: {selectedShirtColor.name}</span>
+                                {shirtColor !== DEFAULT_SHIRT_COLOR && (
                                   <button
                                     type="button"
-                                    onClick={() => removeOption('expression')}
-                                    className="text-red-500 hover:text-red-700 transition-colors"
-                                    aria-label="Remove expression"
-                                    data-testid="button-remove-expression"
+                                    onClick={() => switchToDefault('shirtColor')}
+                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
+                                    data-testid="button-switch-shirtColor"
                                   >
-                                    <Trash2 className="w-4 h-4" />
+                                    Switch to default
                                   </button>
-                                </div>
-                                <span className="font-medium text-gray-900">CAD $0.50</span>
+                                )}
                               </div>
-                            )}
+                              <span className="font-medium text-gray-900">
+                                {shirtColor === DEFAULT_SHIRT_COLOR ? "Free" : "CAD $0.50"}
+                              </span>
+                            </div>
+                            
+                            {/* Neck Tie */}
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Neck Tie: {selectedNeckTie.name}</span>
+                                {neckTie !== DEFAULT_NECK_TIE && (
+                                  <button
+                                    type="button"
+                                    onClick={() => switchToDefault('neckTie')}
+                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
+                                    data-testid="button-switch-neckTie"
+                                  >
+                                    Switch to default
+                                  </button>
+                                )}
+                              </div>
+                              <span className="font-medium text-gray-900">
+                                {neckTie === DEFAULT_NECK_TIE ? "Free" : "CAD $0.50"}
+                              </span>
+                            </div>
+                            
+                            {/* Background */}
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Background: {selectedBackground.name}</span>
+                                {background !== DEFAULT_BACKGROUND && (
+                                  <button
+                                    type="button"
+                                    onClick={() => switchToDefault('background')}
+                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
+                                    data-testid="button-switch-background"
+                                  >
+                                    Switch to default
+                                  </button>
+                                )}
+                              </div>
+                              <span className="font-medium text-gray-900">
+                                {background === DEFAULT_BACKGROUND ? "Free" : "CAD $0.50"}
+                              </span>
+                            </div>
+                            
+                            {/* Composition */}
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Composition: {compositionLabels[composition]}</span>
+                                {composition !== DEFAULT_COMPOSITION && (
+                                  <button
+                                    type="button"
+                                    onClick={() => switchToDefault('composition')}
+                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
+                                    data-testid="button-switch-composition"
+                                  >
+                                    Switch to default
+                                  </button>
+                                )}
+                              </div>
+                              <span className="font-medium text-gray-900">
+                                {composition === DEFAULT_COMPOSITION ? "Free" : "CAD $0.50"}
+                              </span>
+                            </div>
+                            
+                            {/* Eye Direction */}
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Eye Direction: {eyeDirectionLabels[eyeDirection]}</span>
+                                {eyeDirection !== DEFAULT_EYE_DIRECTION && (
+                                  <button
+                                    type="button"
+                                    onClick={() => switchToDefault('eyeDirection')}
+                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
+                                    data-testid="button-switch-eyeDirection"
+                                  >
+                                    Switch to default
+                                  </button>
+                                )}
+                              </div>
+                              <span className="font-medium text-gray-900">
+                                {eyeDirection === DEFAULT_EYE_DIRECTION ? "Free" : "CAD $0.50"}
+                              </span>
+                            </div>
+                            
+                            {/* Expression */}
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-2">
+                                <span className="text-gray-600">Expression: {expressionLabels[expression]}</span>
+                                {expression !== DEFAULT_EXPRESSION && (
+                                  <button
+                                    type="button"
+                                    onClick={() => switchToDefault('expression')}
+                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
+                                    data-testid="button-switch-expression"
+                                  >
+                                    Switch to default
+                                  </button>
+                                )}
+                              </div>
+                              <span className="font-medium text-gray-900">
+                                {expression === DEFAULT_EXPRESSION ? "Free" : "CAD $0.50"}
+                              </span>
+                            </div>
                           </div>
                         )}
                         
