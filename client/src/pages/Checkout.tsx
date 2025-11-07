@@ -547,7 +547,7 @@ export default function Checkout() {
                         
                         <div className="flex items-center justify-between py-2 bg-primary/5 rounded-lg px-3 mt-3">
                           <span className="text-sm font-semibold text-gray-900">Pixel Dimensions</span>
-                          <span className="text-sm font-medium text-primary" data-testid="text-pixel-dimensions">
+                          <span className="text-sm font-medium text-gray-900" data-testid="text-pixel-dimensions">
                             {(() => {
                               // Convert label to size string for calculation
                               const photoSize = findPhotoSizeByLabel(size);

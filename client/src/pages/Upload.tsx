@@ -599,16 +599,32 @@ export default function Upload() {
                           <SelectValue placeholder="Select document type" />
                         </SelectTrigger>
                         <SelectContent>
-                          {Object.keys(idPhotoSpecs.countries).map((countryKey) => (
-                            <SelectGroup key={countryKey}>
-                              <SelectLabel>{idPhotoSpecs.countries[countryKey].name}</SelectLabel>
-                              {getDocumentTypes(countryKey).map((docType: string) => (
-                                <SelectItem key={`${countryKey}:${docType}`} value={`${countryKey}:${docType}`}>
-                                  {formatDocumentType(docType)}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          ))}
+                          {Object.keys(idPhotoSpecs.countries).map((countryKey) => {
+                            // Country flag emojis
+                            const countryFlags: Record<string, string> = {
+                              'Canada': '🇨🇦',
+                              'USA': '🇺🇸',
+                              'China': '🇨🇳',
+                              'UK': '🇬🇧',
+                              'Other': '🌐'
+                            };
+                            const flag = countryFlags[countryKey] || '🌐';
+                            
+                            return (
+                              <SelectGroup key={countryKey}>
+                                <SelectLabel>{flag} {idPhotoSpecs.countries[countryKey].name}</SelectLabel>
+                                {getDocumentTypes(countryKey).map((docType: string) => (
+                                  <SelectItem 
+                                    key={`${countryKey}:${docType}`} 
+                                    value={`${countryKey}:${docType}`}
+                                    className="pl-8"
+                                  >
+                                    {formatDocumentType(docType)}
+                                  </SelectItem>
+                                ))}
+                              </SelectGroup>
+                            );
+                          })}
                         </SelectContent>
                       </Select>
                     </div>
