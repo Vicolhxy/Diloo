@@ -239,19 +239,15 @@ const backgrounds = [
 
 const compositions = [
   { value: "above-shoulders", label: "Above shoulders" },
-  { value: "above-waist", label: "Above waist" },
-];
-
-const handPoses = [
-  { value: "hands-down", label: "Hands naturally down" },
-  { value: "hands-pockets", label: "Hands in pockets" },
-  { value: "arms-crossed", label: "Arms crossed" },
-  { value: "buttoning", label: "Buttoning jacket" },
-  { value: "hand-chin", label: "One hand touching chin" },
-  { value: "adjusting-lapel", label: "Adjusting lapel" },
-  { value: "hands-crossed-front", label: "Hands lightly crossed in front" },
-  { value: "hand-on-waist", label: "One hand on waist" },
-  { value: "holding-blazer", label: "Holding blazer edge" },
+  { value: "above-waist-hands-down", label: "Above waist & Hands naturally down" },
+  { value: "above-waist-hands-pockets", label: "Above waist & Hands in pockets" },
+  { value: "above-waist-arms-crossed", label: "Above waist & Arms crossed" },
+  { value: "above-waist-buttoning", label: "Above waist & Buttoning jacket" },
+  { value: "above-waist-hand-chin", label: "Above waist & One hand touching chin" },
+  { value: "above-waist-adjusting-lapel", label: "Above waist & Adjusting lapel" },
+  { value: "above-waist-hands-crossed-front", label: "Above waist & Hands lightly crossed in front" },
+  { value: "above-waist-hand-on-waist", label: "Above waist & One hand on waist" },
+  { value: "above-waist-holding-blazer", label: "Above waist & Holding blazer edge" },
 ];
 
 const eyeDirections = [
@@ -279,7 +275,6 @@ export default function Upload() {
   
   // Customization options for Pro Headshot
   const [selectedComposition, setSelectedComposition] = useState<string | null>(null);
-  const [selectedHandPose, setSelectedHandPose] = useState<string | null>(null);
   const [selectedEyeDirection, setSelectedEyeDirection] = useState<string | null>(null);
   const [selectedExpression, setSelectedExpression] = useState<string | null>(null);
   
@@ -1039,7 +1034,7 @@ export default function Upload() {
                     <label className="block text-sm font-bold text-gray-900 mb-3">
                       Composition
                     </label>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="grid grid-cols-2 gap-3">
                       {compositions.map((comp) => (
                         <Button
                           key={comp.value}
@@ -1047,12 +1042,8 @@ export default function Upload() {
                           onClick={() => {
                             if (selectedComposition === comp.value) {
                               setSelectedComposition(null);
-                              setSelectedHandPose(null);
                             } else {
                               setSelectedComposition(comp.value);
-                              if (comp.value === "above-shoulders") {
-                                setSelectedHandPose(null);
-                              }
                             }
                           }}
                           className={
@@ -1063,41 +1054,6 @@ export default function Upload() {
                           data-testid={`composition-${comp.value}`}
                         >
                           {comp.label}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Hand Pose - Always visible but disabled unless "Above Waist" is selected */}
-                  <div>
-                    <label className="block text-sm font-bold text-gray-900 mb-1">
-                      Hand Pose
-                    </label>
-                    <p className="text-xs text-gray-500 mb-3">
-                      Only available when 'Above Waist' is selected
-                    </p>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                      {handPoses.map((pose) => (
-                        <Button
-                          key={pose.value}
-                          variant="outline"
-                          disabled={selectedComposition !== "above-waist"}
-                          onClick={() => {
-                            if (selectedHandPose === pose.value) {
-                              setSelectedHandPose(null);
-                            } else {
-                              setSelectedHandPose(pose.value);
-                            }
-                          }}
-                          className={`truncate ${
-                            selectedHandPose === pose.value
-                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary"
-                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
-                          }`}
-                          data-testid={`hand-pose-${pose.value}`}
-                          title={pose.label}
-                        >
-                          {pose.label}
                         </Button>
                       ))}
                     </div>
@@ -1171,7 +1127,7 @@ export default function Upload() {
                   <Link href={
                     styleId === "2" 
                       ? `/checkout?style=${styleId}&country=${selectedCountry}&documentType=${selectedDocumentType}&size=${encodeURIComponent(currentDocSpec?.size || customSize)}&dpi=${currentDocSpec?.dpi || customDPI}&backgroundColor=${encodeURIComponent(currentDocSpec?.backgroundColor || customBgColor)}&fileFormat=${currentDocSpec?.fileFormat || customFileFormat}`
-                      : `/checkout?style=${styleId}${selectedSuitFabric ? `&suitFabric=${selectedSuitFabric}` : ''}${selectedSuitColor ? `&suitColor=${selectedSuitColor}` : ''}${selectedShirtColor ? `&shirtColor=${selectedShirtColor}` : ''}${selectedNeckTie ? `&neckTie=${selectedNeckTie}` : ''}${selectedBackground ? `&background=${selectedBackground}` : ''}${selectedComposition ? `&composition=${selectedComposition}` : ''}${selectedHandPose ? `&handPose=${selectedHandPose}` : ''}${selectedEyeDirection ? `&eyeDirection=${selectedEyeDirection}` : ''}${selectedExpression ? `&expression=${selectedExpression}` : ''}`
+                      : `/checkout?style=${styleId}${selectedSuitFabric ? `&suitFabric=${selectedSuitFabric}` : ''}${selectedSuitColor ? `&suitColor=${selectedSuitColor}` : ''}${selectedShirtColor ? `&shirtColor=${selectedShirtColor}` : ''}${selectedNeckTie ? `&neckTie=${selectedNeckTie}` : ''}${selectedBackground ? `&background=${selectedBackground}` : ''}${selectedComposition ? `&composition=${selectedComposition}` : ''}${selectedEyeDirection ? `&eyeDirection=${selectedEyeDirection}` : ''}${selectedExpression ? `&expression=${selectedExpression}` : ''}`
                   }>
                     <Button 
                       className="w-full bg-primary text-black hover:bg-primary/90 h-12 text-base font-normal"

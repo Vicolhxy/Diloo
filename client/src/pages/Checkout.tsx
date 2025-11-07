@@ -232,16 +232,15 @@ const backgrounds = [
 // Labels for customization options
 const compositionLabels: Record<string, string> = {
   "above-shoulders": "Above shoulders",
-  "above-waist": "Above waist",
-};
-
-const handPoseLabels: Record<string, string> = {
-  "hands-down": "Hands naturally down",
-  "hands-pockets": "Hands in pockets",
-  "arms-crossed": "Arms crossed",
-  "buttoning": "Buttoning jacket",
-  "hand-chin": "One hand touching chin",
-  "adjusting-lapel": "Adjusting lapel",
+  "above-waist-hands-down": "Above waist & Hands naturally down",
+  "above-waist-hands-pockets": "Above waist & Hands in pockets",
+  "above-waist-arms-crossed": "Above waist & Arms crossed",
+  "above-waist-buttoning": "Above waist & Buttoning jacket",
+  "above-waist-hand-chin": "Above waist & One hand touching chin",
+  "above-waist-adjusting-lapel": "Above waist & Adjusting lapel",
+  "above-waist-hands-crossed-front": "Above waist & Hands lightly crossed in front",
+  "above-waist-hand-on-waist": "Above waist & One hand on waist",
+  "above-waist-holding-blazer": "Above waist & Holding blazer edge",
 };
 
 const eyeDirectionLabels: Record<string, string> = {
@@ -293,7 +292,6 @@ export default function Checkout() {
     styleId,
     selectedStyleImage,
     composition,
-    handPose,
     eyeDirection,
     expression,
     // ID Photos params
@@ -315,7 +313,6 @@ export default function Checkout() {
       styleId,
       selectedStyleImage: styleImages[styleId as keyof typeof styleImages] || w2Img,
       composition: params.get('composition') || null,
-      handPose: params.get('handPose') || null,
       eyeDirection: params.get('eyeDirection') || null,
       expression: params.get('expression') || null,
       // ID Photos params
@@ -344,14 +341,13 @@ export default function Checkout() {
     // Pro Headshot: Dynamic pricing
     // Calculate number of customization options selected (each adds CAD $0.50)
     // Required options (always count): Suit Fabric, Suit Color, Shirt Color, Background
-    // Optional options (count if selected): Composition, Hand Pose, Eye Direction, Expression
+    // Optional options (count if selected): Composition, Eye Direction, Expression
     customizationCount = [
       true,                    // Suit Fabric (required)
       true,                    // Suit Color (required)
       true,                    // Shirt Color (required)
       true,                    // Background (required)
-      composition !== null,    // Composition (optional)
-      handPose !== null,       // Hand Pose (optional)
+      composition !== null,    // Composition (optional, now includes hand pose)
       eyeDirection !== null,   // Eye Direction (optional)
       expression !== null,     // Expression (optional)
     ].filter(Boolean).length;
@@ -550,14 +546,6 @@ export default function Checkout() {
                           </div>
                         )}
                         
-                        {/* Only show hand pose if selected */}
-                        {handPose && (
-                          <div className="flex items-center justify-between py-2 border-b border-gray-200">
-                            <span className="text-sm text-gray-600">Hand Pose</span>
-                            <span className="text-sm font-medium text-gray-900">{handPoseLabels[handPose]}</span>
-                          </div>
-                        )}
-                        
                         {/* Only show eye direction if selected */}
                         {eyeDirection && (
                           <div className="flex items-center justify-between py-2 border-b border-gray-200">
@@ -668,24 +656,6 @@ export default function Checkout() {
                                     className="text-red-500 hover:text-red-700 transition-colors"
                                     aria-label="Remove composition"
                                     data-testid="button-remove-composition"
-                                  >
-                                    <Trash2 className="w-4 h-4" />
-                                  </button>
-                                </div>
-                                <span className="font-medium text-gray-900">CAD $0.50</span>
-                              </div>
-                            )}
-                            
-                            {handPose && (
-                              <div className="flex items-center justify-between text-sm">
-                                <div className="flex items-center gap-2">
-                                  <span className="text-gray-600">Hand Pose: {handPoseLabels[handPose]}</span>
-                                  <button
-                                    type="button"
-                                    onClick={() => removeOption('handPose')}
-                                    className="text-red-500 hover:text-red-700 transition-colors"
-                                    aria-label="Remove hand pose"
-                                    data-testid="button-remove-handPose"
                                   >
                                     <Trash2 className="w-4 h-4" />
                                   </button>
