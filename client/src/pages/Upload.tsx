@@ -238,16 +238,16 @@ const backgrounds = [
 ];
 
 const compositions = [
-  { value: "above-shoulders", label: "Above shoulders" },
-  { value: "above-waist-hands-down", label: "Above waist & Hands naturally down" },
-  { value: "above-waist-hands-pockets", label: "Above waist & Hands in pockets" },
-  { value: "above-waist-arms-crossed", label: "Above waist & Arms crossed" },
-  { value: "above-waist-buttoning", label: "Above waist & Buttoning jacket" },
-  { value: "above-waist-hand-chin", label: "Above waist & One hand touching chin" },
-  { value: "above-waist-adjusting-lapel", label: "Above waist & Adjusting lapel" },
-  { value: "above-waist-hands-crossed-front", label: "Above waist & Hands lightly crossed in front" },
-  { value: "above-waist-hand-on-waist", label: "Above waist & One hand on waist" },
-  { value: "above-waist-holding-blazer", label: "Above waist & Holding blazer edge" },
+  { value: "above-shoulders", label: "Shoulders up" },
+  { value: "above-waist-hands-down", label: "Hands naturally down" },
+  { value: "above-waist-hands-pockets", label: "Hands in pockets" },
+  { value: "above-waist-arms-crossed", label: "Arms crossed" },
+  { value: "above-waist-buttoning", label: "Buttoning jacket" },
+  { value: "above-waist-hand-chin", label: "One hand touching chin" },
+  { value: "above-waist-adjusting-lapel", label: "Adjusting lapel" },
+  { value: "above-waist-hands-crossed-front", label: "Hands lightly crossed in front" },
+  { value: "above-waist-hand-on-waist", label: "One hand on waist" },
+  { value: "above-waist-holding-blazer", label: "Holding blazer edge" },
 ];
 
 const eyeDirections = [
