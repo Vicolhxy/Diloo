@@ -1048,8 +1048,8 @@ export default function Upload() {
                           }}
                           className={
                             selectedComposition === comp.value
-                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
-                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4"
+                              ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4 whitespace-normal text-center min-h-[3rem]"
+                              : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4 whitespace-normal text-center min-h-[3rem]"
                           }
                           data-testid={`composition-${comp.value}`}
                         >
