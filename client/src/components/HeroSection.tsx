@@ -1,4 +1,4 @@
-import bannerImg from "@assets/banner_1762115202011.png";
+import bannerImg from "@assets/banner_1762526832477.png";
 
 export default function HeroSection() {
   return (
