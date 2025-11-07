@@ -431,29 +431,6 @@ export default function Checkout() {
     setPageState('checkout');
   };
 
-  // Switch an option back to its default value
-  const switchToDefault = (optionKey: string) => {
-    const params = new URLSearchParams(searchString);
-    
-    // Map option keys to their default values
-    const defaultValues: Record<string, string | number> = {
-      'suitFabric': DEFAULT_SUIT_FABRIC,
-      'suitColor': DEFAULT_SUIT_COLOR,
-      'shirtColor': DEFAULT_SHIRT_COLOR,
-      'neckTie': DEFAULT_NECK_TIE,
-      'background': DEFAULT_BACKGROUND,
-      'composition': DEFAULT_COMPOSITION,
-      'eyeDirection': DEFAULT_EYE_DIRECTION,
-      'expression': DEFAULT_EXPRESSION,
-    };
-    
-    // Set the parameter to its default value
-    if (optionKey in defaultValues) {
-      params.set(optionKey, String(defaultValues[optionKey]));
-      setLocation(`/checkout?${params.toString()}`);
-    }
-  };
-
   // Checkout Initial State
   if (pageState === 'checkout') {
     return (
@@ -686,161 +663,65 @@ export default function Checkout() {
                             
                             {/* Suit Fabric */}
                             <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Suit Fabric: {selectedSuitFabric.name}</span>
-                                {suitFabric !== DEFAULT_SUIT_FABRIC && (
-                                  <button
-                                    type="button"
-                                    onClick={() => switchToDefault('suitFabric')}
-                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
-                                    data-testid="button-switch-suitFabric"
-                                  >
-                                    Switch to default
-                                  </button>
-                                )}
-                              </div>
+                              <span className="text-gray-600">Suit Fabric: {selectedSuitFabric.name}</span>
                               <span className="font-medium text-gray-900">
-                                {suitFabric === DEFAULT_SUIT_FABRIC ? "Free" : "CAD $0.50"}
+                                {suitFabric === DEFAULT_SUIT_FABRIC ? "Free" : `CAD $${OPTION_PRICES.suitFabric.toFixed(2)}`}
                               </span>
                             </div>
                             
                             {/* Suit Color */}
                             <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Suit Color: {selectedSuitColor.name}</span>
-                                {suitColor !== DEFAULT_SUIT_COLOR && (
-                                  <button
-                                    type="button"
-                                    onClick={() => switchToDefault('suitColor')}
-                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
-                                    data-testid="button-switch-suitColor"
-                                  >
-                                    Switch to default
-                                  </button>
-                                )}
-                              </div>
+                              <span className="text-gray-600">Suit Color: {selectedSuitColor.name}</span>
                               <span className="font-medium text-gray-900">
-                                {suitColor === DEFAULT_SUIT_COLOR ? "Free" : "CAD $0.50"}
+                                {suitColor === DEFAULT_SUIT_COLOR ? "Free" : `CAD $${OPTION_PRICES.suitColor.toFixed(2)}`}
                               </span>
                             </div>
                             
                             {/* Shirt Color */}
                             <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Shirt Color: {selectedShirtColor.name}</span>
-                                {shirtColor !== DEFAULT_SHIRT_COLOR && (
-                                  <button
-                                    type="button"
-                                    onClick={() => switchToDefault('shirtColor')}
-                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
-                                    data-testid="button-switch-shirtColor"
-                                  >
-                                    Switch to default
-                                  </button>
-                                )}
-                              </div>
+                              <span className="text-gray-600">Shirt Color: {selectedShirtColor.name}</span>
                               <span className="font-medium text-gray-900">
-                                {shirtColor === DEFAULT_SHIRT_COLOR ? "Free" : "CAD $0.50"}
+                                {shirtColor === DEFAULT_SHIRT_COLOR ? "Free" : `CAD $${OPTION_PRICES.shirtColor.toFixed(2)}`}
                               </span>
                             </div>
                             
                             {/* Neck Tie */}
                             <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Neck Tie: {selectedNeckTie.name}</span>
-                                {neckTie !== DEFAULT_NECK_TIE && (
-                                  <button
-                                    type="button"
-                                    onClick={() => switchToDefault('neckTie')}
-                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
-                                    data-testid="button-switch-neckTie"
-                                  >
-                                    Switch to default
-                                  </button>
-                                )}
-                              </div>
+                              <span className="text-gray-600">Neck Tie: {selectedNeckTie.name}</span>
                               <span className="font-medium text-gray-900">
-                                {neckTie === DEFAULT_NECK_TIE ? "Free" : "CAD $0.50"}
+                                {neckTie === DEFAULT_NECK_TIE ? "Free" : `CAD $${OPTION_PRICES.neckTie.toFixed(2)}`}
                               </span>
                             </div>
                             
                             {/* Background */}
                             <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Background: {selectedBackground.name}</span>
-                                {background !== DEFAULT_BACKGROUND && (
-                                  <button
-                                    type="button"
-                                    onClick={() => switchToDefault('background')}
-                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
-                                    data-testid="button-switch-background"
-                                  >
-                                    Switch to default
-                                  </button>
-                                )}
-                              </div>
+                              <span className="text-gray-600">Background: {selectedBackground.name}</span>
                               <span className="font-medium text-gray-900">
-                                {background === DEFAULT_BACKGROUND ? "Free" : "CAD $0.50"}
+                                {background === DEFAULT_BACKGROUND ? "Free" : `CAD $${OPTION_PRICES.background.toFixed(2)}`}
                               </span>
                             </div>
                             
                             {/* Composition */}
                             <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Composition: {compositionLabels[composition]}</span>
-                                {composition !== DEFAULT_COMPOSITION && (
-                                  <button
-                                    type="button"
-                                    onClick={() => switchToDefault('composition')}
-                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
-                                    data-testid="button-switch-composition"
-                                  >
-                                    Switch to default
-                                  </button>
-                                )}
-                              </div>
+                              <span className="text-gray-600">Composition: {compositionLabels[composition]}</span>
                               <span className="font-medium text-gray-900">
-                                {composition === DEFAULT_COMPOSITION ? "Free" : "CAD $0.50"}
+                                {composition === DEFAULT_COMPOSITION ? "Free" : `CAD $${OPTION_PRICES.composition.toFixed(2)}`}
                               </span>
                             </div>
                             
                             {/* Eye Direction */}
                             <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Eye Direction: {eyeDirectionLabels[eyeDirection]}</span>
-                                {eyeDirection !== DEFAULT_EYE_DIRECTION && (
-                                  <button
-                                    type="button"
-                                    onClick={() => switchToDefault('eyeDirection')}
-                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
-                                    data-testid="button-switch-eyeDirection"
-                                  >
-                                    Switch to default
-                                  </button>
-                                )}
-                              </div>
+                              <span className="text-gray-600">Eye Direction: {eyeDirectionLabels[eyeDirection]}</span>
                               <span className="font-medium text-gray-900">
-                                {eyeDirection === DEFAULT_EYE_DIRECTION ? "Free" : "CAD $0.50"}
+                                {eyeDirection === DEFAULT_EYE_DIRECTION ? "Free" : `CAD $${OPTION_PRICES.eyeDirection.toFixed(2)}`}
                               </span>
                             </div>
                             
                             {/* Expression */}
                             <div className="flex items-center justify-between text-sm">
-                              <div className="flex items-center gap-2">
-                                <span className="text-gray-600">Expression: {expressionLabels[expression]}</span>
-                                {expression !== DEFAULT_EXPRESSION && (
-                                  <button
-                                    type="button"
-                                    onClick={() => switchToDefault('expression')}
-                                    className="text-primary hover:text-primary/80 text-xs font-medium transition-colors"
-                                    data-testid="button-switch-expression"
-                                  >
-                                    Switch to default
-                                  </button>
-                                )}
-                              </div>
+                              <span className="text-gray-600">Expression: {expressionLabels[expression]}</span>
                               <span className="font-medium text-gray-900">
-                                {expression === DEFAULT_EXPRESSION ? "Free" : "CAD $0.50"}
+                                {expression === DEFAULT_EXPRESSION ? "Free" : `CAD $${OPTION_PRICES.expression.toFixed(2)}`}
                               </span>
                             </div>
                           </div>
