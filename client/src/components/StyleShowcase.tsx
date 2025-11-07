@@ -70,6 +70,13 @@ const idPhotoCards = [
     countryEmoji: "🇪🇺",
     sampleImage: idSample03,
     alt: "ID Photo Sample - Visa"
+  },
+  {
+    id: 4,
+    documentType: "Visa",
+    countryEmoji: "🇪🇺",
+    sampleImage: idSample03,
+    alt: "ID Photo Sample - Visa"
   }
 ];
 
