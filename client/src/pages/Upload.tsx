@@ -263,20 +263,20 @@ const expressions = [
 
 export default function Upload() {
   const searchString = useSearch();
-  const [selectedSuitFabric, setSelectedSuitFabric] = useState<string | null>(null);
-  const [selectedSuitColor, setSelectedSuitColor] = useState<string | null>(null);
-  const [selectedShirtColor, setSelectedShirtColor] = useState<string | null>(null);
-  const [selectedNeckTie, setSelectedNeckTie] = useState<string | null>(null);
-  const [selectedBackground, setSelectedBackground] = useState<number | null>(null);
+  const [selectedSuitFabric, setSelectedSuitFabric] = useState<string>("wool");
+  const [selectedSuitColor, setSelectedSuitColor] = useState<string>("charcoal");
+  const [selectedShirtColor, setSelectedShirtColor] = useState<string>("white");
+  const [selectedNeckTie, setSelectedNeckTie] = useState<string>("none");
+  const [selectedBackground, setSelectedBackground] = useState<number>(1);
   const [primaryImage, setPrimaryImage] = useState<string | null>(null);
   const [optionalImage, setOptionalImage] = useState<string | null>(null);
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
   const [isCarouselHovered, setIsCarouselHovered] = useState(false);
   
   // Customization options for Pro Headshot
-  const [selectedComposition, setSelectedComposition] = useState<string | null>(null);
-  const [selectedEyeDirection, setSelectedEyeDirection] = useState<string | null>(null);
-  const [selectedExpression, setSelectedExpression] = useState<string | null>(null);
+  const [selectedComposition, setSelectedComposition] = useState<string>("above-shoulders");
+  const [selectedEyeDirection, setSelectedEyeDirection] = useState<string>("facing-camera");
+  const [selectedExpression, setSelectedExpression] = useState<string>("serious");
   
   // ID Photos customization options
   const [selectedCountry, setSelectedCountry] = useState<string>("Canada");
@@ -798,13 +798,7 @@ export default function Upload() {
                         <Button
                           key={fabric.id}
                           variant="outline"
-                          onClick={() => {
-                            if (selectedSuitFabric === fabric.id) {
-                              setSelectedSuitFabric(null);
-                            } else {
-                              setSelectedSuitFabric(fabric.id);
-                            }
-                          }}
+                          onClick={() => setSelectedSuitFabric(fabric.id)}
                           className={
                             selectedSuitFabric === fabric.id
                               ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
@@ -828,13 +822,7 @@ export default function Upload() {
                         {suitColors.map((color) => {
                           const colorButton = (
                             <button
-                              onClick={() => {
-                                if (selectedSuitColor === color.id) {
-                                  setSelectedSuitColor(null);
-                                } else {
-                                  setSelectedSuitColor(color.id);
-                                }
-                              }}
+                              onClick={() => setSelectedSuitColor(color.id)}
                               className={`flex-shrink-0 rounded-full transition-all ring-2 ring-inset p-0.5 ${
                                 selectedSuitColor === color.id
                                   ? "ring-4 ring-primary"
@@ -883,13 +871,7 @@ export default function Upload() {
                         {shirtColors.map((color) => {
                           const colorButton = (
                             <button
-                              onClick={() => {
-                                if (selectedShirtColor === color.id) {
-                                  setSelectedShirtColor(null);
-                                } else {
-                                  setSelectedShirtColor(color.id);
-                                }
-                              }}
+                              onClick={() => setSelectedShirtColor(color.id)}
                               className={`flex-shrink-0 rounded-full transition-all ring-2 ring-inset p-0.5 ${
                                 selectedShirtColor === color.id
                                   ? "ring-4 ring-primary"
@@ -938,13 +920,7 @@ export default function Upload() {
                         {neckTies.map((tie) => {
                           const tieButton = (
                             <button
-                              onClick={() => {
-                                if (selectedNeckTie === tie.id) {
-                                  setSelectedNeckTie(null);
-                                } else {
-                                  setSelectedNeckTie(tie.id);
-                                }
-                              }}
+                              onClick={() => setSelectedNeckTie(tie.id)}
                               className={`flex-shrink-0 rounded-full transition-all ring-2 ring-inset p-0.5 ${
                                 selectedNeckTie === tie.id
                                   ? "ring-4 ring-primary"
@@ -1004,13 +980,7 @@ export default function Upload() {
                       {backgrounds.map((bg) => (
                         <button
                           key={bg.id}
-                          onClick={() => {
-                            if (selectedBackground === bg.id) {
-                              setSelectedBackground(null);
-                            } else {
-                              setSelectedBackground(bg.id);
-                            }
-                          }}
+                          onClick={() => setSelectedBackground(bg.id)}
                           className={`flex-shrink-0 rounded-md transition-all ring-2 ring-inset p-0.5 ${
                             selectedBackground === bg.id
                               ? "ring-4 ring-primary"
@@ -1039,13 +1009,7 @@ export default function Upload() {
                         <Button
                           key={comp.value}
                           variant="outline"
-                          onClick={() => {
-                            if (selectedComposition === comp.value) {
-                              setSelectedComposition(null);
-                            } else {
-                              setSelectedComposition(comp.value);
-                            }
-                          }}
+                          onClick={() => setSelectedComposition(comp.value)}
                           className={
                             selectedComposition === comp.value
                               ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
@@ -1069,13 +1033,7 @@ export default function Upload() {
                         <Button
                           key={eye.value}
                           variant="outline"
-                          onClick={() => {
-                            if (selectedEyeDirection === eye.value) {
-                              setSelectedEyeDirection(null);
-                            } else {
-                              setSelectedEyeDirection(eye.value);
-                            }
-                          }}
+                          onClick={() => setSelectedEyeDirection(eye.value)}
                           className={
                             selectedEyeDirection === eye.value
                               ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
@@ -1099,13 +1057,7 @@ export default function Upload() {
                         <Button
                           key={expr.value}
                           variant="outline"
-                          onClick={() => {
-                            if (selectedExpression === expr.value) {
-                              setSelectedExpression(null);
-                            } else {
-                              setSelectedExpression(expr.value);
-                            }
-                          }}
+                          onClick={() => setSelectedExpression(expr.value)}
                           className={
                             selectedExpression === expr.value
                               ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
