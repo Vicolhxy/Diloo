@@ -20,11 +20,11 @@ import male06 from "@assets/Sample-headshot-male-06_1762008889159.png";
 import male07 from "@assets/Sample-headshot-male-07_1762008889155.png";
 import male08 from "@assets/Sample-headshot-male-08_1762008889149.png";
 
-// Import ID Photo samples and background
-import idSample01 from "@assets/Sample-ID-01_1762195385633.png";
-import idSample02 from "@assets/Sample-ID-02_1762195385661.png";
-import idSample03 from "@assets/Sample-ID-03_1762195385660.png";
-import idSampleBg from "@assets/IdSample-BG_1762477477577.png";
+// Import ID Photo samples (new 2x resolution)
+import idSample01 from "@assets/Sample-ID-01_1762479461886.png";
+import idSample02 from "@assets/Sample-ID-02_1762479461890.png";
+import idSample03 from "@assets/Sample-ID-03_1762479461893.png";
+import idSample04 from "@assets/Sample-ID-04_1762479461893.png";
 
 // Define the photo pool with all 16 photos
 const photoPool = [
@@ -48,28 +48,35 @@ const photoPool = [
 
 type Photo = typeof photoPool[0];
 
-// Define ID Photo card data
+// Define ID Photo card data (4 samples)
 const idPhotoCards = [
   {
     id: 1,
-    documentType: "Driver's License",
-    countryEmoji: "🇨🇦",
-    sampleImage: idSample01,
-    alt: "ID Photo Sample - Driver's License"
-  },
-  {
-    id: 2,
     documentType: "Passport",
     countryEmoji: "🇺🇸",
-    sampleImage: idSample02,
+    sampleImage: idSample01,
     alt: "ID Photo Sample - Passport"
   },
   {
-    id: 3,
+    id: 2,
     documentType: "Visa",
+    countryEmoji: "🇨🇦",
+    sampleImage: idSample02,
+    alt: "ID Photo Sample - Visa"
+  },
+  {
+    id: 3,
+    documentType: "Driver's License",
     countryEmoji: "🇪🇺",
     sampleImage: idSample03,
-    alt: "ID Photo Sample - Visa"
+    alt: "ID Photo Sample - Driver's License"
+  },
+  {
+    id: 4,
+    documentType: "ID Card",
+    countryEmoji: "🇨🇳",
+    sampleImage: idSample04,
+    alt: "ID Photo Sample - ID Card"
   }
 ];
 
