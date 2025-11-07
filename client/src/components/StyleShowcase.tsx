@@ -24,7 +24,7 @@ import male08 from "@assets/Sample-headshot-male-08_1762008889149.png";
 import idSample01 from "@assets/Sample-ID-01_1762195385633.png";
 import idSample02 from "@assets/Sample-ID-02_1762195385661.png";
 import idSample03 from "@assets/Sample-ID-03_1762195385660.png";
-import idSampleBg from "@assets/IdSample-BG_1762195402922.png";
+import idSampleBg from "@assets/IdSample-BG_1762477477577.png";
 
 // Define the photo pool with all 16 photos
 const photoPool = [
@@ -66,13 +66,6 @@ const idPhotoCards = [
   },
   {
     id: 3,
-    documentType: "Visa",
-    countryEmoji: "🇪🇺",
-    sampleImage: idSample03,
-    alt: "ID Photo Sample - Visa"
-  },
-  {
-    id: 4,
     documentType: "Visa",
     countryEmoji: "🇪🇺",
     sampleImage: idSample03,
