@@ -19,17 +19,17 @@ export default function Privacy() {
       
       <div className="pt-24 pb-12 px-6">
         <div className="container mx-auto max-w-4xl">
+          <Button
+            variant="ghost"
+            onClick={handleBack}
+            className="mb-4 text-gray-600 hover:text-gray-900"
+            data-testid="button-back"
+          >
+            <ArrowLeft className="w-5 h-5 mr-2" />
+            Back
+          </Button>
+          
           <div className="bg-white rounded-2xl p-8 md:p-12">
-            <Button
-              variant="ghost"
-              onClick={handleBack}
-              className="mb-6 -ml-2 text-gray-600 hover:text-gray-900"
-              data-testid="button-back"
-            >
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              Back
-            </Button>
-            
             <h1 
               className="text-3xl md:text-4xl font-bold text-black mb-6"
               style={{fontFamily: 'Hanuman, serif'}}
