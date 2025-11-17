@@ -17,7 +17,7 @@ export default function Terms() {
     <div className="min-h-screen w-full bg-gray-50">
       <Navigation />
       
-      <div className="pt-24 pb-12 px-6">
+      <div className="pt-12 pb-12 px-6">
         <div className="container mx-auto max-w-4xl">
           <Button
             variant="ghost"
