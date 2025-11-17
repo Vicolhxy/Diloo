@@ -757,14 +757,17 @@ export default function Checkout() {
                       {/* Privacy Policy Agreement */}
                       <p className="text-xs text-gray-500 text-center" data-testid="text-privacy-notice">
                         By clicking 'Proceed to Payment' you agree to our{" "}
-                        <a 
-                          href="#" 
-                          onClick={(e) => e.preventDefault()}
-                          className="text-primary hover:underline"
-                          data-testid="link-privacy-policy"
-                        >
-                          Privacy Policy
-                        </a>
+                        <Link href="/privacy">
+                          <a className="text-primary hover:underline" data-testid="link-privacy-policy">
+                            Privacy Policy
+                          </a>
+                        </Link>
+                        {" "}and{" "}
+                        <Link href="/terms">
+                          <a className="text-primary hover:underline" data-testid="link-terms-conditions">
+                            Terms and Conditions
+                          </a>
+                        </Link>
                       </p>
                     </form>
                   </Form>
