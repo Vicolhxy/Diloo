@@ -119,10 +119,10 @@ import idSample02 from "@assets/Sample-ID-02_1762479461890.png";
 import idSample03 from "@assets/Sample-ID-03_1762479461893.png";
 import idSample04 from "@assets/Sample-ID-04_1762479461893.png";
 
-// All 16 professional headshot photos for Pro Headshot carousel
+// All 16 professional headshot photos for Pro Headshot carousel (alternating male/female)
 const proHeadshotImages = [
-  female01, female02, female03, female04, female05, female06, female07, female08,
-  male01, male02, male03, male04, male05, male06, male07, male08
+  female01, male01, female02, male02, female03, male03, female04, male04,
+  female05, male05, female06, male06, female07, male07, female08, male08
 ];
 
 // 4 ID Photo samples for ID Photo carousel
