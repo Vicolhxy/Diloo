@@ -1,4 +1,6 @@
 import { useEffect } from "react";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
@@ -7,6 +9,10 @@ export default function Terms() {
     window.scrollTo(0, 0);
   }, []);
 
+  const handleBack = () => {
+    window.history.back();
+  };
+
   return (
     <div className="min-h-screen w-full bg-gray-50">
       <Navigation />
@@ -14,6 +20,16 @@ export default function Terms() {
       <div className="pt-24 pb-12 px-6">
         <div className="container mx-auto max-w-4xl">
           <div className="bg-white rounded-2xl p-8 md:p-12">
+            <Button
+              variant="ghost"
+              onClick={handleBack}
+              className="mb-6 -ml-2 text-gray-600 hover:text-gray-900"
+              data-testid="button-back"
+            >
+              <ArrowLeft className="w-5 h-5 mr-2" />
+              Back
+            </Button>
+            
             <h1 
               className="text-3xl md:text-4xl font-bold text-black mb-6"
               style={{fontFamily: 'Hanuman, serif'}}
