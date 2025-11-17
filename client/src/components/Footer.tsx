@@ -1,7 +1,6 @@
 import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
-import dilooLogoBlackWhite from "@assets/Logo-long-W&B_1763345947329.png";
+import { Mail } from "lucide-react";
+import dilooLogoBlack from "@assets/Logo-long-Black_1763346818703.png";
 
 export default function Footer() {
   return (
@@ -11,7 +10,7 @@ export default function Footer() {
           {/* Left Section: Logo & Slogan */}
           <div className="flex flex-col">
             <div className="mb-3">
-              <img src={dilooLogoBlackWhite} alt="Diloo Logo" className="h-8 w-auto" data-testid="img-logo" />
+              <img src={dilooLogoBlack} alt="Diloo Logo" className="h-8 w-auto" data-testid="img-logo" />
             </div>
             <p className="text-gray-900 text-sm mb-4" data-testid="text-footer-slogan">
               Choose your style. Customize every detail.
@@ -40,20 +39,17 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Contact/Feedback */}
+            {/* Contact */}
             <div>
               <h4 className="text-sm font-bold text-gray-900 mb-3" data-testid="text-contact-heading">Contact Us</h4>
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-2 border-gray-300 text-gray-700 hover:bg-gray-100"
-                disabled
-                data-testid="button-feedback"
+              <a 
+                href="mailto:info@diloo.ca" 
+                className="flex items-center text-sm text-gray-700 hover:text-gray-900 transition-colors"
+                data-testid="link-email"
               >
-                <MessageCircle className="w-4 h-4 mr-2" />
-                Send Feedback
-              </Button>
-              <p className="text-xs text-gray-500 mt-2">Coming soon</p>
+                <Mail className="w-4 h-4 mr-2" />
+                info@diloo.ca
+              </a>
             </div>
           </div>
         </div>

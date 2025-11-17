@@ -1,7 +1,12 @@
+import { useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
 export default function Privacy() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="min-h-screen w-full bg-gray-50">
       <Navigation />
@@ -28,13 +33,13 @@ export default function Privacy() {
                 This policy applies to all services offered under <strong>diloo.ca</strong>.
               </p>
 
-              <h2 className="text-2xl font-bold text-black mt-8 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
+              <h2 className="text-2xl font-bold text-black mt-12 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
                 1. Information We Collect
               </h2>
               
               <p>We only collect information necessary to deliver our services.</p>
 
-              <h3 className="text-xl font-semibold text-black mt-6 mb-3">1.1 Personal Information</h3>
+              <h3 className="text-xl font-semibold text-black mt-6 mb-2">1.1 Personal Information</h3>
               <p>When you use our services, we may collect:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Email address</strong> (to deliver your final HD image)</li>
@@ -42,7 +47,7 @@ export default function Privacy() {
                 <li><strong>Uploaded photos</strong>, including images you choose to process on our platform</li>
               </ul>
 
-              <h3 className="text-xl font-semibold text-black mt-6 mb-3">1.2 Automatically Collected Data</h3>
+              <h3 className="text-xl font-semibold text-black mt-6 mb-2">1.2 Automatically Collected Data</h3>
               <p>We may collect anonymized usage data such as:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Device type</li>
@@ -52,7 +57,7 @@ export default function Privacy() {
               </ul>
               <p>This information cannot identify you personally.</p>
 
-              <h2 className="text-2xl font-bold text-black mt-8 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
+              <h2 className="text-2xl font-bold text-black mt-12 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
                 2. How We Use Your Information
               </h2>
 
@@ -74,11 +79,11 @@ export default function Privacy() {
                 <li>Sharing or selling to third parties (except essential service providers)</li>
               </ul>
 
-              <h2 className="text-2xl font-bold text-black mt-8 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
+              <h2 className="text-2xl font-bold text-black mt-12 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
                 3. Image Storage and Deletion
               </h2>
 
-              <h3 className="text-xl font-semibold text-black mt-6 mb-3">3.1 Image Retention</h3>
+              <h3 className="text-xl font-semibold text-black mt-6 mb-2">3.1 Image Retention</h3>
               <p>
                 Uploaded and generated images are stored securely on our servers for <strong>90 days</strong>.
               </p>
@@ -88,13 +93,13 @@ export default function Privacy() {
                 <li>Customer support requests</li>
               </ul>
 
-              <h3 className="text-xl font-semibold text-black mt-6 mb-3">3.2 Automatic Deletion</h3>
+              <h3 className="text-xl font-semibold text-black mt-6 mb-2">3.2 Automatic Deletion</h3>
               <p>All images are <strong>automatically deleted after 90 days</strong>.</p>
 
-              <h3 className="text-xl font-semibold text-black mt-6 mb-3">3.3 No Secondary Use</h3>
+              <h3 className="text-xl font-semibold text-black mt-6 mb-2">3.3 No Secondary Use</h3>
               <p>Your photos are <strong>never reused</strong>, sold, published, or used to train models.</p>
 
-              <h2 className="text-2xl font-bold text-black mt-8 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
+              <h2 className="text-2xl font-bold text-black mt-12 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
                 4. Sharing Your Data
               </h2>
 
@@ -108,7 +113,7 @@ export default function Privacy() {
               <p>These partners are contractually required to follow strict data protection practices.</p>
               <p>We do <strong>not</strong> share personal data with advertisers or data brokers.</p>
 
-              <h2 className="text-2xl font-bold text-black mt-8 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
+              <h2 className="text-2xl font-bold text-black mt-12 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
                 5. Legal Basis & Compliance
               </h2>
 
@@ -119,7 +124,7 @@ export default function Privacy() {
               </ul>
               <p>We also follow industry-standard security practices to protect your data.</p>
 
-              <h2 className="text-2xl font-bold text-black mt-8 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
+              <h2 className="text-2xl font-bold text-black mt-12 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
                 6. Your Rights
               </h2>
 
@@ -132,12 +137,12 @@ export default function Privacy() {
                 <li>Object to certain data processing activities</li>
               </ul>
 
-              <h3 className="text-xl font-semibold text-black mt-6 mb-3">6.1 How to Make a Request</h3>
+              <h3 className="text-xl font-semibold text-black mt-6 mb-2">6.1 How to Make a Request</h3>
               <p>You can exercise your rights at any time by contacting:</p>
               <p className="font-semibold">info@diloo.ca</p>
               <p>We will respond within a reasonable time frame and in accordance with Canadian law.</p>
 
-              <h2 className="text-2xl font-bold text-black mt-8 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
+              <h2 className="text-2xl font-bold text-black mt-12 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
                 7. Data Security
               </h2>
 
@@ -150,19 +155,19 @@ export default function Privacy() {
               </ul>
               <p>No method of transmission is 100% secure, but we make every reasonable effort to safeguard your data.</p>
 
-              <h2 className="text-2xl font-bold text-black mt-8 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
+              <h2 className="text-2xl font-bold text-black mt-12 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
                 8. Cookies
               </h2>
 
               <p>We use minimal cookies and tracking technologies.</p>
 
-              <h3 className="text-xl font-semibold text-black mt-6 mb-3">8.1 Essential Cookies</h3>
+              <h3 className="text-xl font-semibold text-black mt-6 mb-2">8.1 Essential Cookies</h3>
               <p>Required for website functionality.</p>
 
-              <h3 className="text-xl font-semibold text-black mt-6 mb-3">8.2 Optional/Analytics Cookies</h3>
+              <h3 className="text-xl font-semibold text-black mt-6 mb-2">8.2 Optional/Analytics Cookies</h3>
               <p>Used only with user consent for improving performance. You may decline non-essential cookies at any time.</p>
 
-              <h2 className="text-2xl font-bold text-black mt-8 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
+              <h2 className="text-2xl font-bold text-black mt-12 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
                 9. Third-Party Services
               </h2>
 
@@ -172,7 +177,7 @@ export default function Privacy() {
                 We recommend reviewing their policies separately.
               </p>
 
-              <h2 className="text-2xl font-bold text-black mt-8 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
+              <h2 className="text-2xl font-bold text-black mt-12 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
                 10. Children's Privacy
               </h2>
 
@@ -181,7 +186,7 @@ export default function Privacy() {
                 If you are under 13, a parent or legal guardian must supervise and approve usage.
               </p>
 
-              <h2 className="text-2xl font-bold text-black mt-8 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
+              <h2 className="text-2xl font-bold text-black mt-12 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
                 11. Changes to This Policy
               </h2>
 
@@ -190,7 +195,7 @@ export default function Privacy() {
                 Changes will be posted on <strong>diloo.ca</strong>, and continued use of our service constitutes acceptance of the updated policy.
               </p>
 
-              <h2 className="text-2xl font-bold text-black mt-8 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
+              <h2 className="text-2xl font-bold text-black mt-12 mb-4" style={{fontFamily: 'Hanuman, serif'}}>
                 12. Contact Us
               </h2>
 
