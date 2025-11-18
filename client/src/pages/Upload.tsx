@@ -806,9 +806,9 @@ export default function Upload() {
                                 <button
                                   onClick={() => !isDisabled && setSelectedTShirtColor(color.id)}
                                   disabled={isDisabled}
-                                  className={`flex-shrink-0 rounded-full transition-all ring-2 ring-inset p-0.5 ${
+                                  className={`relative flex-shrink-0 rounded-full transition-all ring-2 ring-inset p-0.5 ${
                                     isDisabled 
-                                      ? "ring-gray-200 opacity-30 cursor-not-allowed pointer-events-none" 
+                                      ? "ring-gray-300 opacity-30 cursor-not-allowed pointer-events-none" 
                                       : selectedTShirtColor === color.id
                                         ? "ring-4 ring-primary"
                                         : "ring-gray-300 hover:ring-4 hover:ring-primary"
@@ -821,6 +821,14 @@ export default function Upload() {
                                     alt={color.name}
                                     className="w-11 h-11 rounded-full"
                                   />
+                                  {isDisabled && (
+                                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                      <div 
+                                        className="w-[50px] h-[2px] bg-gray-500 rounded-full"
+                                        style={{ transform: 'rotate(45deg)' }}
+                                      />
+                                    </div>
+                                  )}
                                 </button>
                               );
 
