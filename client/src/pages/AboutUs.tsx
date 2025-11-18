@@ -1,9 +1,13 @@
 import { Heart, Users, Sparkles, Mail } from "lucide-react";
 import teamPhoto from "@assets/AboutUs_1763503986056.png";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 export default function AboutUs() {
   return (
     <div className="min-h-screen bg-[#F9FAFB]">
+      <Navigation />
+      
       {/* Hero Section with Team Photo */}
       <section className="relative h-[500px] w-full overflow-hidden" data-testid="section-hero">
         {/* Background Image */}
@@ -44,7 +48,7 @@ export default function AboutUs() {
             Our Mission
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
             {/* Mission Card 1 */}
             <div 
               className="bg-white rounded-lg p-8 shadow-sm border border-gray-200"
@@ -125,6 +129,8 @@ export default function AboutUs() {
           </a>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }
