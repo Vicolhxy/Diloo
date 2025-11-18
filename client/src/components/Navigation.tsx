@@ -29,17 +29,13 @@ export default function Navigation() {
             >
               Home
             </Link>
-            <Link 
-              href="/feedback" 
+            <a 
+              href="mailto:info@diloo.ca" 
               data-testid="link-nav-feedback"
-              className={`text-sm font-medium cursor-pointer transition-colors inline-block ${
-                location === "/feedback"
-                  ? "text-primary border-b-2 border-primary pb-1" 
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
+              className="text-sm font-medium cursor-pointer transition-colors inline-block text-gray-600 hover:text-gray-900"
             >
               Feedback
-            </Link>
+            </a>
           </div>
         </div>
       </div>
