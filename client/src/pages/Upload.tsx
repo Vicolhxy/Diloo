@@ -315,6 +315,7 @@ export default function Upload() {
   const [customDPI, setCustomDPI] = useState<string>("");
   const [customBgColor, setCustomBgColor] = useState<string>("");
   const [customFileFormat, setCustomFileFormat] = useState<string>("");
+  const [selectedTShirtColor, setSelectedTShirtColor] = useState<string>("white");
   
   const primaryInputRef = useRef<HTMLInputElement>(null);
   const optionalInputRef = useRef<HTMLInputElement>(null);
