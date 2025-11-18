@@ -58,7 +58,11 @@ export default function AboutUs() {
                 <div className="p-3 bg-primary/10 rounded-lg">
                   <Heart className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900" data-testid="text-mission-1-title">
+                <h3 
+                  className="text-xl font-bold text-gray-900" 
+                  style={{ fontFamily: 'Hanuman, serif' }}
+                  data-testid="text-mission-1-title"
+                >
                   Preserving the natural beauty in all faces.
                 </h3>
               </div>
@@ -76,7 +80,11 @@ export default function AboutUs() {
                 <div className="p-3 bg-primary/10 rounded-lg">
                   <Users className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900" data-testid="text-mission-2-title">
+                <h3 
+                  className="text-xl font-bold text-gray-900" 
+                  style={{ fontFamily: 'Hanuman, serif' }}
+                  data-testid="text-mission-2-title"
+                >
                   Giving people more power, not less.
                 </h3>
               </div>
@@ -94,7 +102,11 @@ export default function AboutUs() {
                 <div className="p-3 bg-primary/10 rounded-lg">
                   <Sparkles className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900" data-testid="text-mission-3-title">
+                <h3 
+                  className="text-xl font-bold text-gray-900" 
+                  style={{ fontFamily: 'Hanuman, serif' }}
+                  data-testid="text-mission-3-title"
+                >
                   Making it easy for anyone to create pro-quality portraits.
                 </h3>
               </div>
@@ -117,7 +129,8 @@ export default function AboutUs() {
             Contact Us
           </h2>
           <p className="text-lg text-gray-700 leading-relaxed mb-8" data-testid="text-contact-description">
-            We support full remote work, so we don't maintain a fixed office. But that doesn't mean you can't reach us — our support is always with you.
+            We support full remote work, so we don't maintain a fixed office. <br />
+            But that doesn't mean you can't reach us — our support is always with you.
           </p>
           <a 
             href="mailto:info@diloo.ca"
