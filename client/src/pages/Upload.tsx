@@ -689,28 +689,32 @@ export default function Upload() {
 
                     {/* Specifications */}
                     <div className="space-y-6">
-                      {/* Photo Size - Button Options */}
+                      {/* Photo Size - Dropdown Select */}
                       <div>
                         <label className="block text-sm font-bold text-gray-900 mb-3">
                           Photo Size
                         </label>
-                        <div className="flex flex-wrap gap-3">
-                          {idPhotoSpecs.common.commonPhotoSizes.map((size) => (
-                            <Button
-                              key={size.label}
-                              variant="outline"
-                              onClick={() => setCustomSize(size.label)}
-                              className={
-                                customSize === size.label
-                                  ? "bg-primary text-black hover:bg-primary/90 border-2 border-primary py-2 px-4"
-                                  : "border-2 border-gray-300 text-gray-700 hover:bg-gray-100 py-2 px-4"
-                              }
-                              data-testid={`photo-size-${size.label.replace(/\s+/g, '-').toLowerCase()}`}
-                            >
-                              {size.label}
-                            </Button>
-                          ))}
-                        </div>
+                        <Select value={customSize} onValueChange={setCustomSize}>
+                          <SelectTrigger className="w-full" data-testid="select-photo-size">
+                            <SelectValue placeholder="Please select a photo size" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              {idPhotoSpecs.common.commonPhotoSizes.map((size) => {
+                                const isRecommended = currentDocSpec?.size === size.label;
+                                return (
+                                  <SelectItem 
+                                    key={size.label} 
+                                    value={size.label}
+                                    data-testid={`photo-size-option-${size.label.replace(/\s+/g, '-').toLowerCase()}`}
+                                  >
+                                    {size.label}{isRecommended ? " (Recommended)" : ""}
+                                  </SelectItem>
+                                );
+                              })}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
                       </div>
 
                       {/* DPI - Button Options */}
@@ -806,7 +810,7 @@ export default function Upload() {
                                 <button
                                   onClick={() => !isDisabled && setSelectedTShirtColor(color.id)}
                                   disabled={isDisabled}
-                                  className={`relative flex-shrink-0 rounded-full transition-all ring-2 ring-inset p-0.5 ${
+                                  className={`relative flex-shrink-0 rounded-full transition-all ring-2 ring-inset p-0.5 w-[52px] h-[52px] ${
                                     isDisabled 
                                       ? "ring-gray-300 opacity-30 cursor-not-allowed pointer-events-none" 
                                       : selectedTShirtColor === color.id
