@@ -799,16 +799,22 @@ export default function Upload() {
                         <TooltipProvider delayDuration={0} skipDelayDuration={0}>
                           <div className="flex gap-2">
                             {idTShirtColors.map((color) => {
+                              const disabledColors = disabledTShirtColorsByBackground[customBgColor] || [];
+                              const isDisabled = disabledColors.includes(color.id);
+                              
                               const colorButton = (
                                 <button
-                                  onClick={() => setSelectedTShirtColor(color.id)}
+                                  onClick={() => !isDisabled && setSelectedTShirtColor(color.id)}
+                                  disabled={isDisabled}
                                   className={`flex-shrink-0 rounded-full transition-all ring-2 ring-inset p-0.5 ${
-                                    selectedTShirtColor === color.id
-                                      ? "ring-4 ring-primary"
-                                      : "ring-gray-300 hover:ring-4 hover:ring-primary"
+                                    isDisabled 
+                                      ? "ring-gray-200 opacity-30 cursor-not-allowed pointer-events-none" 
+                                      : selectedTShirtColor === color.id
+                                        ? "ring-4 ring-primary"
+                                        : "ring-gray-300 hover:ring-4 hover:ring-primary"
                                   }`}
                                   data-testid={`tshirt-color-${color.id}`}
-                                  title={color.previewImage ? undefined : color.name}
+                                  title={!color.previewImage || isDisabled ? color.name : undefined}
                                 >
                                   <img 
                                     src={color.image} 
@@ -817,6 +823,11 @@ export default function Upload() {
                                   />
                                 </button>
                               );
+
+                              // Only show tooltip for non-disabled colors
+                              if (isDisabled) {
+                                return <div key={color.id}>{colorButton}</div>;
+                              }
 
                               return (
                                 <Tooltip key={color.id}>
