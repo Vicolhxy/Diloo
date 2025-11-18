@@ -245,6 +245,13 @@ const idTShirtColors = [
   { id: "black", name: "Black", image: idTShirtBlack, previewImage: idTShirtBlackPreview },
 ];
 
+// Background color and T-shirt color validation rules for ID Photo
+const disabledTShirtColorsByBackground: Record<string, string[]> = {
+  "White": ["white", "ivory", "soft-beige", "pale-grey"],
+  "Blue": ["light-blue", "navy"],
+  "Red": ["light-pink", "soft-beige"],
+};
+
 const neckTies = [
   { id: "none", name: "None", image: null, previewImage: null },
   { id: "navy", name: "Navy", image: tieNavy, previewImage: tieNavyPreview },
@@ -315,7 +322,7 @@ export default function Upload() {
   const [customDPI, setCustomDPI] = useState<string>("");
   const [customBgColor, setCustomBgColor] = useState<string>("");
   const [customFileFormat, setCustomFileFormat] = useState<string>("");
-  const [selectedTShirtColor, setSelectedTShirtColor] = useState<string>("white");
+  const [selectedTShirtColor, setSelectedTShirtColor] = useState<string>("light-blue");
   
   const primaryInputRef = useRef<HTMLInputElement>(null);
   const optionalInputRef = useRef<HTMLInputElement>(null);
@@ -411,6 +418,24 @@ export default function Upload() {
     
     return () => clearInterval(interval);
   }, [isCarouselHovered]);
+
+  // Auto-select valid T-shirt color when background color changes for ID Photo
+  useEffect(() => {
+    if (styleId !== "2" || !customBgColor) return;
+    
+    const disabledColors = disabledTShirtColorsByBackground[customBgColor] || [];
+    
+    // If current T-shirt color is disabled, auto-select first available color
+    if (disabledColors.includes(selectedTShirtColor)) {
+      const firstAvailableColor = idTShirtColors.find(
+        (color) => !disabledColors.includes(color.id)
+      );
+      
+      if (firstAvailableColor) {
+        setSelectedTShirtColor(firstAvailableColor.id);
+      }
+    }
+  }, [customBgColor, styleId, selectedTShirtColor]);
 
   const handleImageUpload = (
     event: React.ChangeEvent<HTMLInputElement>,
