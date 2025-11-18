@@ -111,7 +111,7 @@ export default function AboutUs() {
                 </h3>
               </div>
               <p className="text-gray-700 leading-relaxed" data-testid="text-mission-3-content">
-                Traditional portrait photography is costly and time-consuming. Diloo keeps it straight-forward: produce a refined, studio-quality portrait at home in a matter of minutes. No waiting, no appointments. And with customizable outfits and backgrounds, you can experiment with different looks without paying again.
+                Traditional portrait photography is expensive and slow. Diloo makes it simple: create a polished, studio-quality portrait from home in under a minute. No appointments, no waiting. And with customizable outfits and backgrounds, you also decide how much you spend on your final photo.
               </p>
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function AboutUs() {
           </p>
           <a 
             href="mailto:info@diloo.ca"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-semibold rounded-lg hover-elevate active-elevate-2 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-gray-900 font-semibold rounded-lg hover-elevate active-elevate-2 transition-colors"
             data-testid="link-contact-email"
           >
             <Mail className="w-5 h-5" />
