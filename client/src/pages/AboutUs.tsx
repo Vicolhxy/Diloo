@@ -129,8 +129,8 @@ export default function AboutUs() {
             Contact Us
           </h2>
           <p className="text-lg text-gray-700 leading-relaxed mb-8" data-testid="text-contact-description">
-            We support full remote work, so we don't maintain a fixed office. <br />
-            But that doesn't mean you can't reach us — our support is always with you.
+            We operate as a fully remote team across multiple locations, which allows us to support users faster and more efficiently. <br />
+            For any questions, you can always reach us at:
           </p>
           <a 
             href="mailto:info@diloo.ca"
