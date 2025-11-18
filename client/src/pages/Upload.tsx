@@ -119,6 +119,26 @@ import idSample02 from "@assets/Sample-ID-02_1762479461890.png";
 import idSample03 from "@assets/Sample-ID-03_1762479461893.png";
 import idSample04 from "@assets/Sample-ID-04_1762479461893.png";
 
+// Import ID Photo T-shirt color thumbnails
+import idTShirtWhite from "@assets/ID-Customized-TShirtColorThumbnail-White_1763438461437.png";
+import idTShirtLightBlue from "@assets/ID-Customized-TShirtColorThumbnail-LightBlue_1763438461435.png";
+import idTShirtPaleGrey from "@assets/ID-Customized-TShirtColorThumbnail-PaleGrey_1763438461434.png";
+import idTShirtLightPink from "@assets/ID-Customized-TShirtColorThumbnail-LightPink_1763438461436.png";
+import idTShirtIvory from "@assets/ID-Customized-TShirtColorThumbnail-Ivory_1763438461436.png";
+import idTShirtSoftBeige from "@assets/ID-Customized-TShirtColorThumbnail-SoftBeige_1763438461437.png";
+import idTShirtNavy from "@assets/ID-Customized-TShirtColorThumbnail-Navy_1763438461429.png";
+import idTShirtBlack from "@assets/ID-Customized-TShirtColorThumbnail-Black_1763438461435.png";
+
+// Import ID Photo T-shirt color preview images for hover tooltips
+import idTShirtWhitePreview from "@assets/ID-Customized-TShirtColor-White_1763438129258.png";
+import idTShirtLightBluePreview from "@assets/ID-Customized-TShirtColor-LightBlue_1763438129254.png";
+import idTShirtPaleGreyPreview from "@assets/ID-Customized-TShirtColor-PaleGrey_1763438129257.png";
+import idTShirtLightPinkPreview from "@assets/ID-Customized-TShirtColor-LightPink_1763438129256.png";
+import idTShirtIvoryPreview from "@assets/ID-Customized-TShirtColor-Ivory_1763438129254.png";
+import idTShirtSoftBeigePreview from "@assets/ID-Customized-TShirtColor-SoftBeige_1763438129257.png";
+import idTShirtNavyPreview from "@assets/ID-Customized-TShirtColor-Navy_1763438129257.png";
+import idTShirtBlackPreview from "@assets/ID-Customized-TShirtColor-Black_1763438129233.png";
+
 // All 16 professional headshot photos for Pro Headshot carousel (alternating male/female)
 const proHeadshotImages = [
   female01, male01, female02, male02, female03, male03, female04, male04,
