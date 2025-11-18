@@ -814,9 +814,9 @@ export default function Upload() {
 
                       {/* T-Shirt Color - Image thumbnails only */}
                       <div>
-                        <div className="flex items-center justify-between mb-3">
-                          <label className="block text-sm font-bold text-gray-900">
-                            T-Shirt Color
+                        <div className="flex items-center gap-4 mb-3">
+                          <label className="text-sm font-bold text-gray-900">
+                            {garmentType === 'tshirt' ? 'T-Shirt Color' : 'Shirt Color'}
                           </label>
                           <button
                             onClick={() => setGarmentType(garmentType === 'tshirt' ? 'shirt' : 'tshirt')}
