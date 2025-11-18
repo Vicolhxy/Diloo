@@ -21,13 +21,24 @@ export default function Navigation() {
             <Link 
               href="/" 
               data-testid="link-nav-home"
-              className={`text-sm font-medium cursor-pointer transition-colors inline-block ${
+              className={`text-sm cursor-pointer transition-colors inline-block ${
                 location === "/" 
-                  ? "text-primary border-b-2 border-primary pb-1" 
-                  : "text-gray-600 hover:text-gray-900"
+                  ? "text-primary border-b-2 border-primary pb-1 font-bold" 
+                  : "text-gray-600 hover:text-gray-900 font-medium"
               }`}
             >
               Home
+            </Link>
+            <Link 
+              href="/about" 
+              data-testid="link-nav-about"
+              className={`text-sm cursor-pointer transition-colors inline-block ${
+                location === "/about" 
+                  ? "text-primary border-b-2 border-primary pb-1 font-bold" 
+                  : "text-gray-600 hover:text-gray-900 font-medium"
+              }`}
+            >
+              About Us
             </Link>
             <a 
               href="mailto:info@diloo.ca" 
