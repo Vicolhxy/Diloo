@@ -234,6 +234,17 @@ const shirtColors = [
   { id: "soft-beige", name: "Soft Beige", image: shirtSoftBeige, previewImage: shirtSoftBeigePreview },
 ];
 
+const idTShirtColors = [
+  { id: "white", name: "White", image: idTShirtWhite, previewImage: idTShirtWhitePreview },
+  { id: "light-blue", name: "Light Blue", image: idTShirtLightBlue, previewImage: idTShirtLightBluePreview },
+  { id: "pale-grey", name: "Pale Grey", image: idTShirtPaleGrey, previewImage: idTShirtPaleGreyPreview },
+  { id: "light-pink", name: "Light Pink", image: idTShirtLightPink, previewImage: idTShirtLightPinkPreview },
+  { id: "ivory", name: "Ivory", image: idTShirtIvory, previewImage: idTShirtIvoryPreview },
+  { id: "soft-beige", name: "Soft Beige", image: idTShirtSoftBeige, previewImage: idTShirtSoftBeigePreview },
+  { id: "navy", name: "Navy", image: idTShirtNavy, previewImage: idTShirtNavyPreview },
+  { id: "black", name: "Black", image: idTShirtBlack, previewImage: idTShirtBlackPreview },
+];
+
 const neckTies = [
   { id: "none", name: "None", image: null, previewImage: null },
   { id: "navy", name: "Navy", image: tieNavy, previewImage: tieNavyPreview },
