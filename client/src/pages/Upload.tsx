@@ -766,6 +766,55 @@ export default function Upload() {
                         </div>
                       </div>
 
+                      {/* T-Shirt Color - Image thumbnails only */}
+                      <div>
+                        <label className="block text-sm font-bold text-gray-900 mb-3">
+                          T-Shirt Color
+                        </label>
+                        <TooltipProvider delayDuration={0} skipDelayDuration={0}>
+                          <div className="flex gap-2">
+                            {idTShirtColors.map((color) => {
+                              const colorButton = (
+                                <button
+                                  onClick={() => setSelectedTShirtColor(color.id)}
+                                  className={`flex-shrink-0 rounded-full transition-all ring-2 ring-inset p-0.5 ${
+                                    selectedTShirtColor === color.id
+                                      ? "ring-4 ring-primary"
+                                      : "ring-gray-300 hover:ring-4 hover:ring-primary"
+                                  }`}
+                                  data-testid={`tshirt-color-${color.id}`}
+                                  title={color.previewImage ? undefined : color.name}
+                                >
+                                  <img 
+                                    src={color.image} 
+                                    alt={color.name}
+                                    className="w-11 h-11 rounded-full"
+                                  />
+                                </button>
+                              );
+
+                              return (
+                                <Tooltip key={color.id}>
+                                  <TooltipTrigger asChild>
+                                    {colorButton}
+                                  </TooltipTrigger>
+                                  <TooltipContent side="top" className="p-2 bg-white border-2 border-gray-200 shadow-lg w-[490px]">
+                                    <div className="text-center">
+                                      <p className="text-sm font-semibold mb-2 text-gray-900">{color.name}</p>
+                                      <img 
+                                        src={color.previewImage} 
+                                        alt={`${color.name} preview`}
+                                        className="w-full h-auto object-contain"
+                                      />
+                                    </div>
+                                  </TooltipContent>
+                                </Tooltip>
+                              );
+                            })}
+                          </div>
+                        </TooltipProvider>
+                      </div>
+
                       {/* File Format - Button Options */}
                       <div>
                         <label className="block text-sm font-bold text-gray-900 mb-3">
