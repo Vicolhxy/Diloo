@@ -696,7 +696,11 @@ export default function Upload() {
                         </label>
                         <Select value={customSize} onValueChange={setCustomSize}>
                           <SelectTrigger className="w-full" data-testid="select-photo-size">
-                            <SelectValue placeholder="Please select a photo size" />
+                            <SelectValue placeholder="Please select a photo size">
+                              {customSize && currentDocSpec?.size === customSize 
+                                ? `${customSize} (Recommended)` 
+                                : customSize}
+                            </SelectValue>
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
@@ -823,7 +827,7 @@ export default function Upload() {
                                   <img 
                                     src={color.image} 
                                     alt={color.name}
-                                    className="w-11 h-11 rounded-full"
+                                    className="w-full h-full rounded-full object-cover"
                                   />
                                   {isDisabled && (
                                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
