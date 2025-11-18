@@ -139,6 +139,10 @@ import idTShirtSoftBeigePreview from "@assets/ID-Customized-TShirtColor-SoftBeig
 import idTShirtNavyPreview from "@assets/ID-Customized-TShirtColor-Navy_1763438129257.png";
 import idTShirtBlackPreview from "@assets/ID-Customized-TShirtColor-Black_1763438129233.png";
 
+// ID Shirt Color Preview Images (Long Sleeve)
+import idShirtNavyPreview from "@assets/ID-Customized-ShirtColor-Navy_1763499310798.png";
+import idShirtBlackPreview from "@assets/ID-Customized-ShirtColor-Black_1763499310798.png";
+
 // All 16 professional headshot photos for Pro Headshot carousel (alternating male/female)
 const proHeadshotImages = [
   female01, male01, female02, male02, female03, male03, female04, male04,
@@ -245,6 +249,18 @@ const idTShirtColors = [
   { id: "black", name: "Black", image: idTShirtBlack, previewImage: idTShirtBlackPreview },
 ];
 
+// ID Shirt Colors (Long Sleeve) - Same thumbnails as T-shirts, but different preview images
+const idShirtColors = [
+  { id: "white", name: "White", image: idTShirtWhite, previewImage: shirtWhitePreview },
+  { id: "light-blue", name: "Light Blue", image: idTShirtLightBlue, previewImage: shirtLightBluePreview },
+  { id: "pale-grey", name: "Pale Grey", image: idTShirtPaleGrey, previewImage: shirtPaleGreyPreview },
+  { id: "light-pink", name: "Light Pink", image: idTShirtLightPink, previewImage: shirtLightPinkPreview },
+  { id: "ivory", name: "Ivory", image: idTShirtIvory, previewImage: shirtIvoryPreview },
+  { id: "soft-beige", name: "Soft Beige", image: idTShirtSoftBeige, previewImage: shirtSoftBeigePreview },
+  { id: "navy", name: "Navy", image: idTShirtNavy, previewImage: idShirtNavyPreview },
+  { id: "black", name: "Black", image: idTShirtBlack, previewImage: idShirtBlackPreview },
+];
+
 // Background color and T-shirt color validation rules for ID Photo
 const disabledTShirtColorsByBackground: Record<string, string[]> = {
   "White": ["white", "ivory", "soft-beige", "pale-grey"],
@@ -323,6 +339,7 @@ export default function Upload() {
   const [customBgColor, setCustomBgColor] = useState<string>("");
   const [customFileFormat, setCustomFileFormat] = useState<string>("");
   const [selectedTShirtColor, setSelectedTShirtColor] = useState<string>("light-blue");
+  const [garmentType, setGarmentType] = useState<'tshirt' | 'shirt'>('tshirt');
   
   const primaryInputRef = useRef<HTMLInputElement>(null);
   const optionalInputRef = useRef<HTMLInputElement>(null);
@@ -797,14 +814,27 @@ export default function Upload() {
 
                       {/* T-Shirt Color - Image thumbnails only */}
                       <div>
-                        <label className="block text-sm font-bold text-gray-900 mb-3">
-                          T-Shirt Color
-                        </label>
+                        <div className="flex items-center justify-between mb-3">
+                          <label className="block text-sm font-bold text-gray-900">
+                            T-Shirt Color
+                          </label>
+                          <button
+                            onClick={() => setGarmentType(garmentType === 'tshirt' ? 'shirt' : 'tshirt')}
+                            className="text-sm text-primary hover:underline font-medium"
+                            data-testid="button-toggle-garment"
+                          >
+                            {garmentType === 'tshirt' ? 'Switch to Shirt' : 'Switch to T-Shirt'}
+                          </button>
+                        </div>
                         <TooltipProvider delayDuration={0} skipDelayDuration={0}>
                           <div className="flex gap-2">
                             {idTShirtColors.map((color) => {
                               const disabledColors = disabledTShirtColorsByBackground[customBgColor] || [];
                               const isDisabled = disabledColors.includes(color.id);
+                              
+                              // Get corresponding shirt color for preview
+                              const shirtColor = idShirtColors.find(s => s.id === color.id);
+                              const previewImage = garmentType === 'tshirt' ? color.previewImage : shirtColor?.previewImage;
                               
                               const colorButton = (
                                 <button
@@ -818,7 +848,7 @@ export default function Upload() {
                                         : "ring-gray-300 hover:ring-4 hover:ring-primary"
                                   }`}
                                   data-testid={`tshirt-color-${color.id}`}
-                                  title={!color.previewImage || isDisabled ? color.name : undefined}
+                                  title={!previewImage || isDisabled ? color.name : undefined}
                                 >
                                   <img 
                                     src={color.image} 
@@ -850,8 +880,8 @@ export default function Upload() {
                                     <div className="text-center">
                                       <p className="text-sm font-semibold mb-2 text-gray-900">{color.name}</p>
                                       <img 
-                                        src={color.previewImage} 
-                                        alt={`${color.name} preview`}
+                                        src={previewImage} 
+                                        alt={`${color.name} ${garmentType === 'tshirt' ? 'T-Shirt' : 'Shirt'} preview`}
                                         className="w-full h-auto object-contain"
                                       />
                                     </div>
