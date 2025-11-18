@@ -696,11 +696,7 @@ export default function Upload() {
                         </label>
                         <Select value={customSize} onValueChange={setCustomSize}>
                           <SelectTrigger className="w-full" data-testid="select-photo-size">
-                            <SelectValue placeholder="Please select a photo size">
-                              {customSize && currentDocSpec?.size === customSize 
-                                ? `${customSize} (Recommended)` 
-                                : customSize}
-                            </SelectValue>
+                            <SelectValue placeholder="Please select a photo size" />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
