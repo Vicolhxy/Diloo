@@ -1,6 +1,8 @@
 import whyUs01 from "@assets/WhyUs-01_1762392282574.png";
 import whyUs02 from "@assets/WhyUs-02_1762392282575.png";
 import whyUs03 from "@assets/WhyUs-03_1762392282562.png";
+import { Link } from "wouter";
+import { Button } from "@/components/ui/button";
 
 const features = [
   {
@@ -89,6 +91,21 @@ export default function WhyChooseUs() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* CTA Button */}
+        <div className="flex flex-col items-center gap-3 mt-16">
+          <Link href="/upload?style=1">
+            <Button 
+              className="bg-primary text-black hover:bg-primary/90 font-normal w-[480px] h-12"
+              data-testid="button-why-create-now"
+            >
+              Create Now
+            </Button>
+          </Link>
+          <p className="text-sm text-gray-600 text-center max-w-md" data-testid="text-payment-notice">
+            You'll see the generated results first, then decide whether to download with payment. Feel free to try it out!
+          </p>
         </div>
       </div>
     </section>
